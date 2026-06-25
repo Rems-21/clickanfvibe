@@ -8,3 +8,6 @@ python-multipart
 gradio_client
 pymysql
 cryptography
+requests
+slowapi
+python-dotenv
