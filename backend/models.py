@@ -7,19 +7,19 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
-    name = Column(String, default="Utilisateur")
-    profile_picture = Column(String, nullable=True)
-    country = Column(String, nullable=True)
+    email = Column(String(255), unique=True, index=True)
+    hashed_password = Column(String(255))
+    name = Column(String(255), default="Utilisateur")
+    profile_picture = Column(String(255), nullable=True)
+    country = Column(String(255), nullable=True)
     date_of_birth = Column(DateTime, nullable=True)
     credits = Column(Integer, default=12)
     is_premium = Column(Boolean, default=False)
     is_admin = Column(Boolean, default=False)
     is_suspended = Column(Boolean, default=False)
     is_verified = Column(Boolean, default=False)
-    verification_code = Column(String, nullable=True)
-    reset_token = Column(String, nullable=True)
+    verification_code = Column(String(255), nullable=True)
+    reset_token = Column(String(255), nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
     musics = relationship("Music", back_populates="owner")
@@ -30,13 +30,13 @@ class Music(Base):
     __tablename__ = "musics"
 
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String)
-    prompt = Column(String)
-    style = Column(String)
-    mood = Column(String)
-    duration_str = Column(String)
-    audio_url = Column(String)
-    cover_url = Column(String, nullable=True)
+    title = Column(String(255))
+    prompt = Column(String(255))
+    style = Column(String(255))
+    mood = Column(String(255))
+    duration_str = Column(String(255))
+    audio_url = Column(String(255))
+    cover_url = Column(String(255), nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     play_count = Column(Integer, default=0)
     is_trending = Column(Boolean, default=False)
@@ -52,7 +52,7 @@ class Transaction(Base):
     id = Column(Integer, primary_key=True, index=True)
     amount_credits = Column(Integer)
     price_fcfa = Column(Integer)
-    payment_method = Column(String)
+    payment_method = Column(String(255))
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     
     user_id = Column(Integer, ForeignKey("users.id"))
@@ -73,16 +73,16 @@ class Promotion(Base):
     __tablename__ = "promotions"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
+    name = Column(String(255), index=True)
     description = Column(Text, nullable=True)
-    image_url = Column(String, nullable=True)
+    image_url = Column(String(255), nullable=True)
     
     start_date = Column(DateTime, nullable=True)
     end_date = Column(DateTime, nullable=True)
-    status = Column(String, default="Brouillon") # Brouillon, Active, Terminée
+    status = Column(String(255), default="Brouillon") # Brouillon, Active, Terminée
     is_active = Column(Boolean, default=False)
     
-    promo_type = Column(String) # FREE_GENS, BONUS_RECHARGE, DISCOUNT, PROMO_CODE
+    promo_type = Column(String(255)) # FREE_GENS, BONUS_RECHARGE, DISCOUNT, PROMO_CODE
     
     # Specific fields based on type
     free_gens = Column(Integer, default=0)
@@ -90,12 +90,12 @@ class Promotion(Base):
     min_recharge = Column(Integer, default=0)
     discount_percent = Column(Integer, default=0)
     discount_amount = Column(Integer, default=0)
-    promo_code = Column(String, unique=True, index=True, nullable=True)
+    promo_code = Column(String(255), unique=True, index=True, nullable=True)
     
     # Targeting and usage
-    target_audience = Column(String, default="ALL") # ALL, NEW, PREMIUM, INACTIVE, VIP, SPECIFIC_COUNTRY, SPECIFIC_USERS
-    target_country = Column(String, nullable=True)
-    auto_event = Column(String, default="NONE") # NONE, SIGNUP, BIRTHDAY, REFERRAL, FIRST_RECHARGE, HOLIDAY
+    target_audience = Column(String(255), default="ALL") # ALL, NEW, PREMIUM, INACTIVE, VIP, SPECIFIC_COUNTRY, SPECIFIC_USERS
+    target_country = Column(String(255), nullable=True)
+    auto_event = Column(String(255), default="NONE") # NONE, SIGNUP, BIRTHDAY, REFERRAL, FIRST_RECHARGE, HOLIDAY
     
     max_uses = Column(Integer, default=0) # 0 = unlimited
     current_uses = Column(Integer, default=0)
