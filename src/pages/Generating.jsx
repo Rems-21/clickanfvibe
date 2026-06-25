@@ -88,13 +88,18 @@ function Generating() {
                   url: track.url,
                   image_url: track.image_url,
                   lyrics: track.lyrics,
-                  title: track.title && track.title.trim() !== "" ? track.title : `Création ${style}`
+                  title: track.title && track.title.trim() !== "" ? track.title : `Création ${style} (Version ${index + 1})`
                 }));
                 setGeneratedAudios(newAudios);
                 await refreshCredits(); // Deduct credits
                 
-                // Sauvegarder automatiquement dans l'historique
-                for (const track of newAudios) {
+                clearInterval(interval);
+                clearInterval(pollInterval);
+                setProgress(100);
+                setIsFinished(true);
+
+                // Sauvegarder automatiquement en arrière-plan sans bloquer l'UI
+                Promise.all(newAudios.map(async (track) => {
                   if (track.url) {
                     try {
                       const payload = {
@@ -119,11 +124,7 @@ function Generating() {
                       console.error("Erreur de sauvegarde automatique :", e);
                     }
                   }
-                }
-                clearInterval(interval);
-                clearInterval(pollInterval);
-                setProgress(100);
-                setIsFinished(true);
+                }));
               } else if (statusData.status === 'error') {
                 clearInterval(interval);
                 clearInterval(pollInterval);

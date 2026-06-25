@@ -1025,6 +1025,8 @@ def delete_promotion(promo_id: int, db: Session = Depends(get_db), current_user:
     promo = db.query(models.Promotion).filter(models.Promotion.id == promo_id).first()
     if not promo:
         raise HTTPException(status_code=404, detail="Promotion not found")
+        
+    db.query(models.PromotionUsage).filter(models.PromotionUsage.promotion_id == promo_id).delete()
     db.delete(promo)
     db.commit()
     return {"status": "success"}
