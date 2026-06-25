@@ -8,7 +8,6 @@ sqlalchemy
 passlib[bcrypt] 
 pyjwt 
 python-multipart
-g r a d i o _ c l i e n t  
+gradio_client
 pymysql
-cryptography  
- 
+cryptography
