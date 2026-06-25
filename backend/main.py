@@ -205,12 +205,16 @@ def signup(request: Request, user: UserCreate, db: Session = Depends(get_db)):
     hashed_pwd = auth.get_password_hash(user.password)
     verification_code = auth.generate_secure_code()
     verification_code_expiry = datetime.datetime.utcnow() + datetime.timedelta(minutes=15)
+    setting = db.query(models.Setting).filter(models.Setting.key == "FREE_REGISTRATION_CREDITS").first()
+    default_credits = int(setting.value) if setting and setting.value.isdigit() else 0
+
     new_user = models.User(
         email=user.email, 
         hashed_password=hashed_pwd, 
         name=user.name,
         is_verified=False,
-        verification_code=verification_code
+        verification_code=verification_code,
+        credits=default_credits
     )
     db.add(new_user)
     db.commit()
@@ -360,11 +364,15 @@ def google_auth(req: GoogleAuthRequest, db: Session = Depends(get_db)):
         
     user = db.query(models.User).filter(models.User.email == email).first()
     if not user:
+        setting = db.query(models.Setting).filter(models.Setting.key == "FREE_REGISTRATION_CREDITS").first()
+        default_credits = int(setting.value) if setting and setting.value.isdigit() else 0
+        
         user = models.User(
             email=email,
             name=name,
             hashed_password="",
-            profile_picture=picture
+            profile_picture=picture,
+            credits=default_credits
         )
         db.add(user)
         db.commit()
@@ -1217,3 +1225,23 @@ async def geniuspay_webhook(request: Request, db: Session = Depends(get_db)):
                 print(f"User {user.id} credited with {amount} + {bonus_added} bonus.")
     
     return {"success": True}
+
+class SettingsUpdate(BaseModel):
+    free_credits: int
+
+@app.get("/api/admin/settings")
+def get_settings(db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+    setting = db.query(models.Setting).filter(models.Setting.key == "FREE_REGISTRATION_CREDITS").first()
+    free_credits = int(setting.value) if setting and setting.value.isdigit() else 0
+    return {"free_credits": free_credits}
+
+@app.post("/api/admin/settings")
+def update_settings(req: SettingsUpdate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+    setting = db.query(models.Setting).filter(models.Setting.key == "FREE_REGISTRATION_CREDITS").first()
+    if not setting:
+        setting = models.Setting(key="FREE_REGISTRATION_CREDITS", value=str(req.free_credits))
+        db.add(setting)
+    else:
+        setting.value = str(req.free_credits)
+    db.commit()
+    return {"status": "success"}

@@ -13,7 +13,7 @@ class User(Base):
     profile_picture = Column(String(255), nullable=True)
     country = Column(String(255), nullable=True)
     date_of_birth = Column(DateTime, nullable=True)
-    credits = Column(Integer, default=12)
+    credits = Column(Integer, default=0)
     is_premium = Column(Boolean, default=False)
     is_admin = Column(Boolean, default=False)
     is_suspended = Column(Boolean, default=False)
@@ -57,6 +57,7 @@ class Transaction(Base):
     
     user_id = Column(Integer, ForeignKey("users.id"))
     user = relationship("User", back_populates="transactions")
+
 
 class Favorite(Base):
     __tablename__ = "favorites"
@@ -113,3 +114,10 @@ class PromotionUsage(Base):
     
     user = relationship("User")
     promotion = relationship("Promotion")
+
+class Setting(Base):
+    __tablename__ = "settings"
+
+    key = Column(String(255), primary_key=True, index=True)
+    value = Column(String(255))
+    description = Column(String(255), nullable=True)

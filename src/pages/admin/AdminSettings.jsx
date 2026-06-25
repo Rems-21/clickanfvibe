@@ -7,11 +7,44 @@ function AdminSettings() {
   const [sunoKey, setSunoKey] = useState('sk-suno-************************');
   const [freeCredits, setFreeCredits] = useState(12);
   const [saved, setSaved] = useState(false);
+  const { token } = useAuth();
 
-  const handleSave = () => {
-    // Fausse sauvegarde pour l'instant (nécessiterait une table Settings en BDD)
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch('/api/admin/settings', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setFreeCredits(data.free_credits);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    if (token) fetchSettings();
+  }, [token]);
+
+  const handleSave = async () => {
+    try {
+      const res = await fetch('/api/admin/settings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          free_credits: parseInt(freeCredits, 10)
+        })
+      });
+      if (res.ok) {
+        setSaved(true);
+        setTimeout(() => setSaved(false), 3000);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
