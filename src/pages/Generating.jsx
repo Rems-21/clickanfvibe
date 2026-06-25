@@ -71,7 +71,9 @@ function Generating() {
           // Generation is running asynchronously, start frontend polling
           const taskId = data.task_id;
           
-          const pollInterval = setInterval(async () => {
+          let isPolling = true;
+          const poll = async () => {
+            if (!isPolling) return;
             try {
               const statusRes = await fetch(`/api/generate/status/${taskId}`, {
                 headers: {
@@ -83,6 +85,7 @@ function Generating() {
               const statusData = await statusRes.json();
               
               if (statusRes.ok && statusData.status === 'success') {
+                isPolling = false;
                 const newAudios = statusData.versions.map((track, index) => ({ 
                   id: index === 0 ? 'A' : 'B', 
                   url: track.url,
@@ -94,7 +97,6 @@ function Generating() {
                 await refreshCredits(); // Deduct credits
                 
                 clearInterval(interval);
-                clearInterval(pollInterval);
                 setProgress(100);
                 setIsFinished(true);
 
@@ -126,18 +128,20 @@ function Generating() {
                   }
                 }));
               } else if (statusData.status === 'error') {
+                isPolling = false;
                 clearInterval(interval);
-                clearInterval(pollInterval);
                 setGenerationError(statusData.detail || "Erreur lors de la génération avec l'API Suno.");
+              } else {
+                if (isPolling) setTimeout(poll, 5000);
               }
-              // If pending, we just continue looping
             } catch (err) {
               console.error("Polling error:", err);
+              if (isPolling) setTimeout(poll, 5000);
             }
-          }, 5000); // Poll every 5 seconds
+          };
+          setTimeout(poll, 5000); // Start polling after 5 seconds
           
-          // Cleanup this interval specifically on unmount if needed
-          window.__currentPollInterval = pollInterval;
+          window.__stopPolling = () => { isPolling = false; };
         } else {
            console.error("Erreur serveur:", data);
            clearInterval(interval);
