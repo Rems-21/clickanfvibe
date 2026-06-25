@@ -11,7 +11,7 @@ function AdminUsers() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/admin/users', {
+      const res = await fetch('/api/admin/users', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -31,7 +31,7 @@ function AdminUsers() {
 
   const togglePremium = async (userId) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/admin/users/${userId}/toggle-premium`, {
+      const res = await fetch(`/api/admin/users/${userId}/toggle-premium`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -45,7 +45,7 @@ function AdminUsers() {
 
   const addCredits = async (userId, amount) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/admin/users/${userId}/credits`, {
+      const res = await fetch(`/api/admin/users/${userId}/credits`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -63,7 +63,7 @@ function AdminUsers() {
 
   const suspendUser = async (userId) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/admin/users/${userId}/suspend`, {
+      const res = await fetch(`/api/admin/users/${userId}/suspend`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -78,7 +78,7 @@ function AdminUsers() {
   const deleteUser = async (userId) => {
     if (!window.confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur définitivement ?")) return;
     try {
-      const res = await fetch(`http://localhost:8000/api/admin/users/${userId}`, {
+      const res = await fetch(`/api/admin/users/${userId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

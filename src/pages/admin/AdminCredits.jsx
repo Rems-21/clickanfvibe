@@ -10,7 +10,7 @@ function AdminCredits() {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const res = await fetch('http://localhost:8000/api/admin/transactions', {
+        const res = await fetch('/api/admin/transactions', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {

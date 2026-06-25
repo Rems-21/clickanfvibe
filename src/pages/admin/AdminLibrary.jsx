@@ -12,7 +12,7 @@ function AdminLibrary() {
   useEffect(() => {
     const fetchMusics = async () => {
       try {
-        const res = await fetch('http://localhost:8000/api/admin/musics', {
+        const res = await fetch('/api/admin/musics', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
@@ -30,7 +30,7 @@ function AdminLibrary() {
 
   const toggleTrending = async (musicId) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/admin/musics/${musicId}/trending`, {
+      const res = await fetch(`/api/admin/musics/${musicId}/trending`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -45,7 +45,7 @@ function AdminLibrary() {
 
   const toggleExplore = async (musicId) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/admin/musics/${musicId}/explore`, {
+      const res = await fetch(`/api/admin/musics/${musicId}/explore`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });

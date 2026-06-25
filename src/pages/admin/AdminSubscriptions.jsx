@@ -10,7 +10,7 @@ function AdminSubscriptions() {
   useEffect(() => {
     const fetchPremiumUsers = async () => {
       try {
-        const res = await fetch('http://localhost:8000/api/admin/users', {
+        const res = await fetch('/api/admin/users', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
