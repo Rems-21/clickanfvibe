@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, Zap, Check, Music, SlidersHorizontal, Sparkles, Edit2, Drum, Sunrise, AudioLines, Clock, Globe, Lightbulb, X, Compass, User, Play, Pause, Circle, CheckCircle2, Download, Share2, Headphones, RotateCcw, Heart } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useAudio } from '../context/AudioContext';
 import './Generating.css';
 import '../pages/Home.css';
 
@@ -9,6 +10,7 @@ function Generating() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, refreshCredits } = useAuth();
+  const { playTrack, currentTrack, isPlaying, togglePlay } = useAudio();
   const { prompt = "Une chanson afrobeat romantique sur l'amour sincère, avec une ambiance douce et entraînante.", style = "Afrobeat", mood = "Romantique", voice = "Féminine", tempo = "Normal", duration = "2:30", language = "Français" } = location.state || {};
   
   const [progress, setProgress] = useState(0);
@@ -309,9 +311,9 @@ function Generating() {
                 <div className="version-header">
                   <div className="version-play-btn pink-gradient" onClick={(e) => {
                     e.stopPropagation();
-                    if (generatedAudios[0]?.url) new Audio(generatedAudios[0].url).play();
+                    if (generatedAudios[0]?.url) playTrack({ ...generatedAudios[0], title: 'Version 1', style, mood });
                   }}>
-                    <Play size={20} fill="currentColor" />
+                    {currentTrack?.url === generatedAudios[0]?.url && isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
                   </div>
                   <div className="version-title">
                     <h4>Version 1</h4>
@@ -322,7 +324,7 @@ function Generating() {
                 
                 <div className="audio-player-container">
                   {generatedAudios[0]?.url ? (
-                    <audio controls src={generatedAudios[0].url} style={{ width: '100%', height: '40px', borderRadius: '8px', outline: 'none' }}></audio>
+                    <div className="waveform-mock"></div>
                   ) : (
                     <div className="waveform-mock"></div>
                   )}
@@ -347,9 +349,9 @@ function Generating() {
                 <div className="version-header">
                   <div className="version-play-btn purple-gradient" onClick={(e) => {
                     e.stopPropagation();
-                    if (generatedAudios[1]?.url) new Audio(generatedAudios[1].url).play();
+                    if (generatedAudios[1]?.url) playTrack({ ...generatedAudios[1], title: 'Version 2', style, mood });
                   }}>
-                    <Play size={20} fill="currentColor" />
+                    {currentTrack?.url === generatedAudios[1]?.url && isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
                   </div>
                   <div className="version-title">
                     <h4>Version 2</h4>
@@ -359,7 +361,7 @@ function Generating() {
                 
                 <div className="audio-player-container">
                   {generatedAudios[1]?.url ? (
-                    <audio controls src={generatedAudios[1].url} style={{ width: '100%', height: '40px', borderRadius: '8px', outline: 'none' }}></audio>
+                    <div className="waveform-mock alt"></div>
                   ) : (
                     <div className="waveform-mock alt"></div>
                   )}

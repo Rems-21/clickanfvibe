@@ -18,6 +18,30 @@ export const AudioProvider = ({ children }) => {
     stateRef.current = { playlist, currentTrack };
   }, [playlist, currentTrack]);
 
+  // Global listener to pause all other audio elements when one starts playing
+  useEffect(() => {
+    const handleGlobalPlay = (e) => {
+      // If the event target is an HTMLAudioElement
+      if (e.target && (e.target.tagName === 'AUDIO' || e.target instanceof HTMLAudioElement)) {
+        // Pause all native DOM audios
+        document.querySelectorAll('audio').forEach(a => {
+          if (a !== e.target) {
+            a.pause();
+          }
+        });
+        
+        // Pause the global player if it's not the one that triggered the play
+        if (e.target !== audioRef.current && !audioRef.current.paused) {
+           audioRef.current.pause();
+           setIsPlaying(false);
+        }
+      }
+    };
+
+    document.addEventListener('play', handleGlobalPlay, true);
+    return () => document.removeEventListener('play', handleGlobalPlay, true);
+  }, []);
+
   useEffect(() => {
     const audio = audioRef.current;
 
