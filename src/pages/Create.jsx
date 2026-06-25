@@ -1,0 +1,214 @@
+import React, { useState } from 'react';
+import { Zap, HelpCircle, Music, Settings, MessageCircle, Clock, Check, Sparkles, Heart, Drum, Piano, Mic2, Church, Star, Sunrise, CloudRain, Coffee, Flame, Compass, User } from 'lucide-react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import './Create.css';
+import '../pages/Home.css';
+
+function Create() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
+  const [style, setStyle] = useState(location.state?.style || 'Afrobeat');
+  const [mood, setMood] = useState(location.state?.mood || 'Romantique');
+  const [prompt, setPrompt] = useState(location.state?.prompt || '');
+  const [voice, setVoice] = useState('Féminine');
+  const [tempo, setTempo] = useState('Normal');
+  const [language, setLanguage] = useState('fr');
+
+  const promptIdeas = [
+    "Une chanson afrobeat rythmée sur la réussite et la persévérance",
+    "Un titre pop léger pour un road trip entre amis sous le soleil",
+    "Un beat rap sombre et puissant avec des basses lourdes",
+    "Une mélodie R'n'B douce et romantique pour une soirée chill",
+    "Une intro épique avec des violons suivie d'un drop électro",
+    "Une ballade acoustique douce sur la séparation et l'espoir"
+  ];
+
+  const suggestPrompt = () => {
+    const randomIdea = promptIdeas[Math.floor(Math.random() * promptIdeas.length)];
+    setPrompt(randomIdea);
+  };
+
+  const genres = [
+    { id: 'Afrobeat', icon: <Drum size={24} />, color: 'orange' },
+    { id: 'Amapiano', icon: <Piano size={24} />, color: 'blue' },
+    { id: 'Mbolé', icon: <Flame size={24} />, color: 'red' },
+    { id: 'Rap', icon: <Mic2 size={24} />, color: 'purple' },
+    { id: 'Gospel', icon: <Church size={24} />, color: 'pink' },
+    { id: 'R\'n\'B', icon: <Heart size={24} />, color: 'red' },
+    { id: 'Pop', icon: <Star size={24} />, color: 'orange' }
+  ];
+
+  const moods = [
+    { id: 'Romantique', icon: <Sunrise size={24} />, color: 'orange' },
+    { id: 'Motivante', icon: <Zap size={24} />, color: 'blue' },
+    { id: 'Mélancolique', icon: <CloudRain size={24} />, color: 'purple' },
+    { id: 'Chill', icon: <Coffee size={24} />, color: 'pink' },
+    { id: 'Énergétique', icon: <Flame size={24} />, color: 'red' }
+  ];
+
+  return (
+    <div className="create-container">
+      <div className="page-header-simple">
+        <div className="title-section">
+          <h1>Créer</h1>
+          <p className="subtitle">Ton idée. <span className="text-primary">Ta musique.</span> <span className="text-secondary">Ta vibe.</span></p>
+        </div>
+        <div className="header-actions">
+          <button className="icon-btn">
+            <HelpCircle size={20} />
+          </button>
+        </div>
+      </div>
+
+      <div className="create-content">
+        <section className="prompt-large-card">
+          <div className="prompt-content-top">
+            <div className="prompt-text-area">
+              <div className="prompt-header-title" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                  <Sparkles size={18} color="#FF3366" />
+                  <h3 style={{margin: 0}}>Décris ta chanson</h3>
+                </div>
+                <button 
+                  onClick={suggestPrompt}
+                  style={{background: 'rgba(255,51,102,0.1)', color: '#FF3366', border: 'none', padding: '6px 12px', borderRadius: '16px', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 'bold'}}
+                >
+                  <Sparkles size={14} /> Idée de texte
+                </button>
+              </div>
+              <p className="prompt-description" style={{marginTop: '8px'}}>
+                Parle-nous de ton idée, de l'ambiance, du thème ou des émotions que tu veux transmettre...
+              </p>
+              
+              <div className="textarea-wrapper">
+                <textarea 
+                  placeholder="Ex : Une chanson afrobeat romantique sur l'amour sincère..."
+                  rows="4"
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  maxLength={500}
+                ></textarea>
+                <span className="char-count">{prompt.length}/500</span>
+              </div>
+            </div>
+            <div className="prompt-graphic">
+               <div className="music-note-glow"><Music size={48} color="white" /></div>
+            </div>
+          </div>
+          
+          <div className="prompt-actions-bottom">
+            <button className="btn-primary-gradient" onClick={() => {
+              if (!user || user.credits < 1) {
+                navigate('/credits');
+                return;
+              }
+              navigate('/generating', { 
+                  state: { prompt, style, mood, voice, tempo } 
+                });
+            }}>
+              <Sparkles size={16} /> Générer
+            </button>
+          </div>
+        </section>
+
+        <section className="section-block">
+          <div className="section-header">
+            <h3 className="flex-title"><Music size={18} color="#C466FF" /> Choisis un style</h3>
+          </div>
+          <div className="horizontal-scroll">
+            {genres.map(g => (
+              <div 
+                key={g.id} 
+                className={`selectable-card ${style === g.id ? 'selected' : ''}`}
+                onClick={() => setStyle(g.id)}
+              >
+                {style === g.id && <div className="check-badge"><Check size={12} strokeWidth={3} /></div>}
+                <div className={`genre-icon ${g.color}`}>{g.icon}</div>
+                <span>{g.id}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="section-block">
+          <div className="section-header">
+            <h3 className="flex-title"><Heart size={18} color="#FF3366" /> Choisis une ambiance</h3>
+          </div>
+          <div className="horizontal-scroll">
+            {moods.map(m => (
+              <div 
+                key={m.id} 
+                className={`selectable-card ${mood === m.id ? 'selected' : ''}`}
+                onClick={() => setMood(m.id)}
+              >
+                {mood === m.id && <div className="check-badge"><Check size={12} strokeWidth={3} /></div>}
+                <div className={`genre-icon ${m.color}`}>{m.icon}</div>
+                <span>{m.id}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="section-block">
+          <div className="section-header">
+            <h3 className="flex-title"><Settings size={18} /> Options avancées</h3>
+          </div>
+          <div className="options-grid">
+            
+            <div className="option-select">
+              <Mic2 size={16} color="#9933FF" className="opt-icon" />
+              <div className="opt-details">
+                <span className="opt-label">Voix</span>
+                <select value={voice} onChange={(e) => setVoice(e.target.value)}>
+                  <option value="Féminine">Féminine</option>
+                  <option value="Masculine">Masculine</option>
+                  <option value="Instrumentale">Instrumentale (sans voix)</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="option-select">
+              <Drum size={16} color="#FF3366" className="opt-icon" />
+              <div className="opt-details">
+                <span className="opt-label">Tempo</span>
+                <select value={tempo} onChange={(e) => setTempo(e.target.value)}>
+                  <option value="Lent">Lent</option>
+                  <option value="Normal">Normal</option>
+                  <option value="Rapide">Rapide</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <div className="generate-footer-action">
+          <button className="btn-primary-gradient full-width large" onClick={() => {
+            if (!user || user.credits < 1) {
+              navigate('/credits');
+              return;
+            }
+            navigate('/generating', { 
+                  state: { 
+                    prompt, 
+                    style, 
+                    mood, 
+                    voice,
+                    tempo
+                  } 
+                });
+          }}>
+            Générer ma musique <span className="cost-badge">-1 <Zap size={12} fill="currentColor" /></span>
+          </button>
+          <div className="cost-estimate">
+            <Zap size={14} color={user && user.credits >= 1 ? "#9933FF" : "#FF3366"} fill={user && user.credits >= 1 ? "#9933FF" : "#FF3366"} />
+            <span style={{color: user && user.credits >= 1 ? 'inherit' : '#FF3366'}}>Coût estimé : 1 Gen {(!user || user.credits < 1) && "(Solde insuffisant)"}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Create;

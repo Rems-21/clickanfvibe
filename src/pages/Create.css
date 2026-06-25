@@ -1,0 +1,235 @@
+.create-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  padding-bottom: 90px; /* Space for bottom nav */
+}
+
+.create-header {
+  padding: 24px;
+}
+
+.title-section h1 {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.flex-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.create-content {
+  width: 100%;
+}
+
+.prompt-large-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  margin-bottom: 32px;
+  border: 1px solid var(--border-color);
+}
+
+.prompt-content-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.prompt-text-area {
+  flex: 1;
+}
+
+.prompt-header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.prompt-header-title h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.prompt-description {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.textarea-wrapper {
+  background: rgba(0,0,0,0.2);
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  position: relative;
+}
+
+.textarea-wrapper textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 13px;
+  resize: none;
+}
+
+.textarea-wrapper textarea::placeholder {
+  color: var(--text-placeholder);
+}
+
+.char-count {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.prompt-graphic {
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 10px;
+}
+
+.music-note-glow {
+  filter: drop-shadow(0 0 15px rgba(255, 51, 102, 0.6));
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.prompt-actions-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-secondary-outline {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 10px 16px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.selectable-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 80px;
+  padding: 12px 8px;
+  border-radius: var(--radius-lg);
+  border: 1px solid transparent;
+  position: relative;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.selectable-card.selected {
+  background: rgba(255, 51, 102, 0.05);
+  border-color: var(--primary);
+}
+
+.check-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  background: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.option-select {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.opt-icon {
+  flex-shrink: 0;
+}
+
+.opt-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.opt-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.option-select select {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.generate-footer-action {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-primary-gradient.large {
+  padding: 16px;
+  font-size: 16px;
+  justify-content: center;
+}
+
+.cost-estimate {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--primary);
+  font-weight: 500;
+}
