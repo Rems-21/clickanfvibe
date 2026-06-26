@@ -63,11 +63,18 @@ export const AuthProvider = ({ children }) => {
         return { success: true };
       } else {
         const errorData = await response.json();
-        if (errorData.detail === 'NOT_VERIFIED') {
+        let errorMessage = errorData.detail;
+        if (Array.isArray(errorMessage)) {
+          errorMessage = errorMessage.map(err => err.msg || "Erreur de validation").join(", ");
+        } else if (typeof errorMessage === 'object') {
+          errorMessage = JSON.stringify(errorMessage);
+        }
+        
+        if (errorMessage === 'NOT_VERIFIED') {
           navigate('/verify-email', { state: { email } });
           return { success: false, error: "Veuillez vérifier votre email." };
         }
-        return { success: false, error: errorData.detail };
+        return { success: false, error: errorMessage };
       }
     } catch (error) {
       return { success: false, error: "Erreur de connexion" };
@@ -89,7 +96,13 @@ export const AuthProvider = ({ children }) => {
         return { success: true };
       } else {
         const errorData = await response.json();
-        return { success: false, error: errorData.detail };
+        let errorMessage = errorData.detail;
+        if (Array.isArray(errorMessage)) {
+          errorMessage = errorMessage.map(err => err.msg || "Erreur de validation").join(", ");
+        } else if (typeof errorMessage === 'object') {
+          errorMessage = JSON.stringify(errorMessage);
+        }
+        return { success: false, error: errorMessage };
       }
     } catch (error) {
       return { success: false, error: "Erreur d'inscription" };
