@@ -29,6 +29,7 @@ class PaymentInitiateRequest(BaseModel):
     origin: str = None
 
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 
 from database import engine, Base, get_db
 import models
@@ -189,6 +190,36 @@ def get_current_admin_user(current_user: models.User = Depends(get_current_user)
         raise HTTPException(status_code=403, detail="Forbidden: Admin access required")
     return current_user
 
+
+@app.get("/api/admin/upgrade-db")
+def upgrade_db(db: Session = Depends(get_db)):
+    queries = [
+        "ALTER TABLE users ADD COLUMN is_verified BOOLEAN DEFAULT FALSE;",
+        "ALTER TABLE users ADD COLUMN verification_code VARCHAR(255);",
+        "ALTER TABLE users ADD COLUMN reset_token VARCHAR(255);",
+        "ALTER TABLE promotions ADD COLUMN auto_event VARCHAR(255) DEFAULT 'NONE';",
+        "ALTER TABLE promotions ADD COLUMN target_audience VARCHAR(255) DEFAULT 'ALL';",
+        "ALTER TABLE promotions ADD COLUMN target_country VARCHAR(255);"
+    ]
+    
+    results = []
+    for q in queries:
+        try:
+            db.execute(text(q))
+            db.commit()
+            results.append(f"SUCCESS: {q}")
+        except Exception as e:
+            db.rollback()
+            results.append(f"FAILED (already exists or error): {q}")
+            
+    try:
+        models.Base.metadata.create_all(bind=engine)
+        results.append("SUCCESS: created missing tables")
+    except Exception as e:
+        results.append(f"FAILED creating tables: {str(e)}")
+        
+    return {"status": "Upgrade finished", "details": results}
+
 @app.post("/api/auth/signup")
 @limiter.limit("5/minute")
 def signup(request: Request, user: UserCreate, db: Session = Depends(get_db)):
@@ -199,8 +230,13 @@ def signup(request: Request, user: UserCreate, db: Session = Depends(get_db)):
     hashed_pwd = auth.get_password_hash(user.password)
     verification_code = auth.generate_secure_code()
     verification_code_expiry = datetime.datetime.utcnow() + datetime.timedelta(minutes=15)
-    setting = db.query(models.Setting).filter(models.Setting.key == "FREE_REGISTRATION_CREDITS").first()
-    default_credits = int(setting.value) if setting and setting.value.isdigit() else 0
+    try:
+        setting = db.query(models.Setting).filter(models.Setting.key == "FREE_REGISTRATION_CREDITS").first()
+        default_credits = int(setting.value) if setting and setting.value.isdigit() else 0
+    except Exception as e:
+        print("Settings table query failed:", e)
+        db.rollback()
+        default_credits = 0
 
     new_user = models.User(
         email=user.email, 
