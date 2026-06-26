@@ -119,6 +119,8 @@ class UserCreate(BaseModel):
     def password_strength(cls, v):
         if len(v) < 6:
             raise ValueError('Le mot de passe doit contenir au moins 6 caractères')
+        if len(v.encode('utf-8')) > 72:
+            raise ValueError('Le mot de passe ne peut pas dépasser 72 caractères (limite technique)')
         return v
 
     @validator('email')
