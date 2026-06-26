@@ -210,7 +210,7 @@ def upgrade_db(db: Session = Depends(get_db)):
             results.append(f"SUCCESS: {q}")
         except Exception as e:
             db.rollback()
-            results.append(f"FAILED (already exists or error): {q}")
+            results.append(f"FAILED: {q} | Error: {str(e)}")
             
     try:
         models.Base.metadata.create_all(bind=engine)
@@ -246,9 +246,13 @@ def signup(request: Request, user: UserCreate, db: Session = Depends(get_db)):
         verification_code=verification_code,
         credits=default_credits
     )
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
+    try:
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Database insert error: {str(e)}")
     
     # Check for SIGNUP promotions (wrapped in try-except to prevent crash if DB schema is outdated)
     try:
