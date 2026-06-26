@@ -214,25 +214,29 @@ def signup(request: Request, user: UserCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_user)
     
-    # Check for SIGNUP promotions
-    now = datetime.datetime.utcnow()
-    signup_promos = db.query(models.Promotion).filter(
-        models.Promotion.promo_type == "FREE_GENS",
-        models.Promotion.auto_event == "SIGNUP",
-        models.Promotion.is_active == True
-    ).all()
-    
-    for promo in signup_promos:
-        if promo.start_date and now < promo.start_date: continue
-        if promo.end_date and now > promo.end_date: continue
-        if promo.max_uses > 0 and promo.current_uses >= promo.max_uses: continue
+    # Check for SIGNUP promotions (wrapped in try-except to prevent crash if DB schema is outdated)
+    try:
+        now = datetime.datetime.utcnow()
+        signup_promos = db.query(models.Promotion).filter(
+            models.Promotion.promo_type == "FREE_GENS",
+            models.Promotion.auto_event == "SIGNUP",
+            models.Promotion.is_active == True
+        ).all()
         
-        new_user.credits += promo.free_gens
-        usage = models.PromotionUsage(user_id=new_user.id, promotion_id=promo.id)
-        promo.current_uses += 1
-        db.add(usage)
-        
-    db.commit()
+        for promo in signup_promos:
+            if promo.start_date and now < promo.start_date: continue
+            if promo.end_date and now > promo.end_date: continue
+            if promo.max_uses > 0 and promo.current_uses >= promo.max_uses: continue
+            
+            new_user.credits += promo.free_gens
+            usage = models.PromotionUsage(user_id=new_user.id, promotion_id=promo.id)
+            promo.current_uses += 1
+            db.add(usage)
+            
+        db.commit()
+    except Exception as e:
+        print("Erreur DB Promotion lors du signup:", e)
+        db.rollback()
     
     # Send email
     try:
