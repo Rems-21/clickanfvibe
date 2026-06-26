@@ -19,6 +19,9 @@ function AdminSettings() {
         if (res.ok) {
           const data = await res.json();
           setFreeCredits(data.free_credits);
+          if (data.maintenance_mode !== undefined) {
+            setMaintenance(data.maintenance_mode);
+          }
         }
       } catch (err) {
         console.error(err);
@@ -36,7 +39,8 @@ function AdminSettings() {
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          free_credits: parseInt(freeCredits, 10)
+          free_credits: parseInt(freeCredits, 10),
+          maintenance_mode: maintenance
         })
       });
       if (res.ok) {

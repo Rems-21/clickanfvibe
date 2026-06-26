@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { AudioProvider } from './context/AudioContext';
 import GlobalAudioPlayer from './components/GlobalAudioPlayer';
 import Layout from './components/Layout';
@@ -20,6 +20,7 @@ import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentFailed from './pages/PaymentFailed';
 import History from './pages/History';
 import Help from './pages/Help';
+import Maintenance from './pages/Maintenance';
 
 // Admin imports
 import AdminRoute from './components/AdminRoute';
@@ -36,6 +37,23 @@ import AdminPromotions from './pages/admin/AdminPromotions';
 function AppContent() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
+  const { user, loading: authLoading } = useAuth();
+  const [maintenance, setMaintenance] = useState(false);
+  const [configLoading, setConfigLoading] = useState(true);
+
+  useEffect(() => {
+    // Fetch public config
+    fetch('/api/config')
+      .then(res => res.json())
+      .then(data => {
+        setMaintenance(data.maintenance_mode);
+        setConfigLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to fetch config", err);
+        setConfigLoading(false);
+      });
+  }, []);
 
   useEffect(() => {
     // Notify Facebook Pixel on route change
@@ -43,6 +61,13 @@ function AppContent() {
       window.fbq('track', 'PageView');
     }
   }, [location.pathname]);
+
+  // Handle Maintenance Mode
+  if (!configLoading && !authLoading) {
+    if (maintenance && (!user || user.role !== 'admin') && location.pathname !== '/login') {
+      return <Maintenance />;
+    }
+  }
 
   return (
     <>
