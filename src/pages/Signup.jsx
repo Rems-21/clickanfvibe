@@ -23,6 +23,11 @@ function Signup() {
     const result = await signup(name, email, password);
     if (!result.success) {
       setError(result.error);
+    } else {
+      // Track Registration
+      if (window.fbq) {
+        window.fbq('track', 'CompleteRegistration', { content_name: 'Signup' });
+      }
     }
     setLoading(false);
   };

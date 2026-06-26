@@ -189,6 +189,10 @@ function Create() {
               navigate('/credits');
               return;
             }
+            // Track Music Generation Initiation
+            if (window.fbq) {
+              window.fbq('trackCustom', 'GenerateMusic', { style, mood });
+            }
             navigate('/generating', { 
                   state: { 
                     prompt, 

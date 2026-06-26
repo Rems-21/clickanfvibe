@@ -20,6 +20,10 @@ function PaymentSuccess() {
       hasRecharged.current = true;
       try {
         await refreshCredits();
+        // Track Purchase
+        if (window.fbq) {
+          window.fbq('track', 'Purchase', { currency: 'EUR', value: 0 }); // You can adjust value if known
+        }
       } catch (err) {
         console.error("Erreur lors du refresh", err);
       } finally {
