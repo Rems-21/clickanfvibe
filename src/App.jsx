@@ -37,7 +37,7 @@ import AdminPromotions from './pages/admin/AdminPromotions';
 function AppContent() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading, logout } = useAuth();
   const [maintenance, setMaintenance] = useState(false);
   const [configLoading, setConfigLoading] = useState(true);
 
@@ -61,6 +61,15 @@ function AppContent() {
       window.fbq('track', 'PageView');
     }
   }, [location.pathname]);
+
+  useEffect(() => {
+    // Déconnexion forcée des utilisateurs non-admin si la maintenance est active
+    if (!configLoading && !authLoading) {
+      if (maintenance && user && user.role !== 'admin') {
+        logout();
+      }
+    }
+  }, [maintenance, user, configLoading, authLoading, logout]);
 
   // Handle Maintenance Mode
   if (!configLoading && !authLoading) {

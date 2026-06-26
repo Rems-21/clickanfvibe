@@ -26,9 +26,6 @@ function Maintenance() {
           </p>
         </div>
         
-        <div className="maintenance-footer">
-          <p>Si vous êtes administrateur, <a href="/login" className="admin-link">connectez-vous ici</a>.</p>
-        </div>
       </div>
       
       <div className="maintenance-bg-glow glow-pink"></div>
