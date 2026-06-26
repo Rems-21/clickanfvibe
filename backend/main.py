@@ -40,6 +40,19 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+from fastapi.responses import JSONResponse
+import traceback
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    print("GLOBAL EXCEPTION:", exc)
+    return JSONResponse(
+        status_code=400,
+        content={"detail": "GLOBAL CRASH: " + str(exc), "traceback": traceback.format_exc()}
+    )
+
+)
+
 # Rate limiter — protection brute force
 limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
