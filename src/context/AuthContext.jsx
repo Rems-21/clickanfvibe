@@ -62,8 +62,14 @@ export const AuthProvider = ({ children }) => {
         navigate('/home');
         return { success: true };
       } else {
-        const errorData = await response.json();
-        let errorMessage = errorData.detail;
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (e) {
+          return { success: false, error: "Le serveur a renvoyé une erreur. Vérifiez vos identifiants." };
+        }
+        
+        let errorMessage = errorData?.detail || "Erreur de validation";
         if (Array.isArray(errorMessage)) {
           errorMessage = errorMessage.map(err => err.msg || "Erreur de validation").join(", ");
         } else if (typeof errorMessage === 'object') {
@@ -77,7 +83,8 @@ export const AuthProvider = ({ children }) => {
         return { success: false, error: errorMessage };
       }
     } catch (error) {
-      return { success: false, error: "Erreur de connexion" };
+      console.error("Login Fetch Error:", error);
+      return { success: false, error: "Erreur réseau ou serveur inaccessible." };
     }
   };
 
@@ -95,17 +102,24 @@ export const AuthProvider = ({ children }) => {
         navigate('/verify-email', { state: { email } });
         return { success: true };
       } else {
-        const errorData = await response.json();
-        let errorMessage = errorData.detail;
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (e) {
+          return { success: false, error: "Le serveur a renvoyé une erreur (Format non valide). Vérifiez que l'email est correct et que le mot de passe est fort." };
+        }
+        
+        let errorMessage = errorData?.detail || "Erreur de validation";
         if (Array.isArray(errorMessage)) {
-          errorMessage = errorMessage.map(err => err.msg || "Erreur de validation").join(", ");
+          errorMessage = errorMessage.map(err => err.msg || "Erreur").join(", ");
         } else if (typeof errorMessage === 'object') {
           errorMessage = JSON.stringify(errorMessage);
         }
         return { success: false, error: errorMessage };
       }
     } catch (error) {
-      return { success: false, error: "Erreur d'inscription" };
+      console.error("Signup Fetch Error:", error);
+      return { success: false, error: "Erreur réseau ou serveur inaccessible." };
     }
   };
 
