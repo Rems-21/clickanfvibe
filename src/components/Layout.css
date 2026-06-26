@@ -261,3 +261,9 @@
     width: 200px;
   }
 }
+
+@media (max-width: 480px) {
+  .hide-on-mobile-small {
+    display: none;
+  }
+}
