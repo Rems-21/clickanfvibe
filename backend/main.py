@@ -103,14 +103,8 @@ class UserCreate(BaseModel):
 
     @validator('password')
     def password_strength(cls, v):
-        if len(v) < 8:
-            raise ValueError('Le mot de passe doit contenir au moins 8 caractères')
-        if not any(c.isupper() for c in v):
-            raise ValueError('Le mot de passe doit contenir au moins une lettre majuscule')
-        if not any(c.isdigit() for c in v):
-            raise ValueError('Le mot de passe doit contenir au moins un chiffre')
-        if not any(c in '!@#$%^&*()_+-=[]{}|;:,.<>?' for c in v):
-            raise ValueError('Le mot de passe doit contenir au moins un caractère spécial')
+        if len(v) < 6:
+            raise ValueError('Le mot de passe doit contenir au moins 6 caractères')
         return v
 
     @validator('email')

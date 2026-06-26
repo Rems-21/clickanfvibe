@@ -77,7 +77,7 @@ function Signup() {
             </button>
           </div>
           
-          <p className="password-hint">Le mot de passe doit contenir au moins 8 caractères, avec une lettre majuscule, un chiffre et un caractère spécial.</p>
+          <p className="password-hint">Le mot de passe doit contenir au moins 6 caractères.</p>
           
           <label className="terms-checkbox">
             <input type="checkbox" required />
