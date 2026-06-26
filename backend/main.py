@@ -51,7 +51,7 @@ async def global_exception_handler(request: Request, exc: Exception):
         content={"detail": "GLOBAL CRASH: " + str(exc), "traceback": traceback.format_exc()}
     )
 
-)
+
 
 # Rate limiter — protection brute force
 limiter = Limiter(key_func=get_remote_address)
