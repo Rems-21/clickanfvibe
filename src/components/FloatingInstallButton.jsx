@@ -44,14 +44,14 @@ function FloatingInstallButton() {
         setIsVisible(false);
       }
     } else if (isIOS) {
-      alert("Pour installer l'application sur votre iPhone/iPad :
+      alert(`Pour installer l'application sur votre iPhone/iPad :
 
 1. Appuyez sur l'icône Partager (le carré avec une flèche) en bas de l'écran.
-2. Faites défiler et sélectionnez 'Sur l'écran d'accueil'.");
+2. Faites défiler et sélectionnez 'Sur l'écran d'accueil'.`);
     } else {
-      alert("Pour installer l'application :
+      alert(`Pour installer l'application :
 
-Cliquez sur l'icône d'installation dans la barre d'adresse de votre navigateur, ou ouvrez le menu de votre navigateur et sélectionnez 'Ajouter à l'écran d'accueil' / 'Installer l'application'.");
+Cliquez sur l'icône d'installation dans la barre d'adresse de votre navigateur, ou ouvrez le menu de votre navigateur et sélectionnez 'Ajouter à l'écran d'accueil' / 'Installer l'application'.`);
     }
   };
 
