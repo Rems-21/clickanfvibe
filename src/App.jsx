@@ -23,6 +23,7 @@ import Help from './pages/Help';
 // Admin imports
 import AdminRoute from './components/AdminRoute';
 import AdminLayout from './pages/admin/AdminLayout';
+import FloatingInstallButton from './components/FloatingInstallButton';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminGenerations from './pages/admin/AdminGenerations';
 import AdminUsers from './pages/admin/AdminUsers';
@@ -81,6 +82,7 @@ function App() {
   return (
     <AuthProvider>
       <AudioProvider>
+        <FloatingInstallButton />
         <AppContent />
       </AudioProvider>
     </AuthProvider>
