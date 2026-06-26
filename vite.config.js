@@ -8,7 +8,9 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'fav.jpg', 'hero_headphones.png'],
+      injectRegister: 'auto',
+      manifestFilename: 'manifest.json',
+      includeAssets: ['favicon.svg', 'fav.jpg', 'hero_headphones.png', 'pwa-192x192.png', 'pwa-512x512.png'],
       manifest: {
         name: 'Click and Vibe',
         short_name: 'ClickVibe',

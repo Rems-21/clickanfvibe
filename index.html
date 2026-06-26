@@ -13,6 +13,15 @@
     <meta name="keywords" content="musique ia, générateur musique, ia musicale, créer musique, click and vibe, suno ai" />
     <meta name="robots" content="index, follow" />
 
+    <!-- Capture PWA install prompt very early -->
+    <script>
+      window.__deferredPrompt = null;
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        window.__deferredPrompt = e;
+      });
+    </script>
+
     <!-- SMO (Open Graph pour Facebook/WhatsApp/Discord) -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://clickandvibe.com/" />
