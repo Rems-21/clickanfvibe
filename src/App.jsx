@@ -65,7 +65,7 @@ function AppContent() {
   useEffect(() => {
     // Déconnexion forcée des utilisateurs non-admin si la maintenance est active
     if (!configLoading && !authLoading) {
-      if (maintenance && user && user.role !== 'admin') {
+      if (maintenance && user && !user.is_admin) {
         logout();
       }
     }
@@ -73,7 +73,7 @@ function AppContent() {
 
   // Handle Maintenance Mode
   if (!configLoading && !authLoading) {
-    if (maintenance && (!user || user.role !== 'admin') && location.pathname !== '/login') {
+    if (maintenance && (!user || !user.is_admin) && location.pathname !== '/login') {
       return <Maintenance />;
     }
   }
