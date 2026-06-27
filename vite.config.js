@@ -38,6 +38,9 @@ export default defineConfig({
     host: true, // Listen on all local IPs (0.0.0.0)
     allowedHosts: true, // Allow all hosts, necessary for ngrok domains
     cors: true,
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin-allow-popups'
+    },
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:8000',
