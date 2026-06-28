@@ -23,6 +23,7 @@ import Help from './pages/Help';
 import Maintenance from './pages/Maintenance';
 import Error404 from './pages/Error404';
 import Error500 from './pages/Error500';
+import Privacy from './pages/Privacy';
 
 // Admin imports
 import AdminRoute from './components/AdminRoute';
@@ -89,6 +90,7 @@ function AppContent() {
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/privacy" element={<Privacy />} />
         
         {/* User Routes */}
         <Route element={<Layout />}>

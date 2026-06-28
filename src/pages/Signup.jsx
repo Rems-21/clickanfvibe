@@ -81,7 +81,7 @@ function Signup() {
           
           <label className="terms-checkbox">
             <input type="checkbox" required />
-            <span>J'accepte les <a href="#">Conditions d'utilisation</a> et la <a href="#">Politique de confidentialité</a>.</span>
+            <span>J'accepte les <a href="#">Conditions d'utilisation</a> et la <Link to="/privacy" target="_blank">Politique de confidentialité</Link>.</span>
           </label>
           
           <button type="submit" className="btn-primary full-width" style={{ marginTop: '16px' }} disabled={loading}>
