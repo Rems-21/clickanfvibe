@@ -327,6 +327,7 @@ def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends(), db
         raise HTTPException(status_code=403, detail="NOT_VERIFIED")
         
     access_token = auth.create_access_token(data={"sub": user.email})
+    logger.info(f"Connexion réussie: {user.email}")
     return {"access_token": access_token, "token_type": "bearer"}
 
 
@@ -347,6 +348,7 @@ def verify_email(request: Request, req: VerifyEmailRequest, db: Session = Depend
     db.commit()
     
     access_token = auth.create_access_token(data={"sub": user.email})
+    logger.info(f"Connexion réussie: {user.email}")
     return {"access_token": access_token, "token_type": "bearer"}
 
 @app.post("/api/auth/resend-verification")
@@ -466,6 +468,7 @@ def google_auth(req: GoogleAuthRequest, db: Session = Depends(get_db)):
         db.commit()
         
     access_token = auth.create_access_token(data={"sub": user.email})
+    logger.info(f"Connexion réussie: {user.email}")
     return {"access_token": access_token, "token_type": "bearer"}
 
 @app.get("/api/user/me")
@@ -1059,15 +1062,22 @@ def toggle_music_explore(music_id: int, db: Session = Depends(get_db), current_u
 
 @app.delete("/api/admin/musics/{music_id}")
 def admin_delete_music(music_id: int, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+    logger.info(f"L'admin {current_user.email} tente de supprimer la musique {music_id}")
     music = db.query(models.Music).filter(models.Music.id == music_id).first()
     if not music:
+        logger.warning(f"Suppression échouée: Musique {music_id} introuvable.")
         raise HTTPException(status_code=404, detail="Music not found")
     
-    db.query(models.Favorite).filter(models.Favorite.music_id == music_id).delete()
-    
-    db.delete(music)
-    db.commit()
-    return {"status": "success", "message": "Music deleted by admin"}
+    try:
+        db.query(models.Favorite).filter(models.Favorite.music_id == music_id).delete(synchronize_session=False)
+        db.delete(music)
+        db.commit()
+        logger.info(f"Musique {music_id} supprimée avec succès par {current_user.email}.")
+        return {"status": "success", "message": "Music deleted by admin"}
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Erreur lors de la suppression de la musique {music_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erreur serveur lors de la suppression")
 
 # --- Promotions & Marketing ---
 
