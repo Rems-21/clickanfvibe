@@ -21,6 +21,8 @@ import PaymentFailed from './pages/PaymentFailed';
 import History from './pages/History';
 import Help from './pages/Help';
 import Maintenance from './pages/Maintenance';
+import Error404 from './pages/Error404';
+import Error500 from './pages/Error500';
 
 // Admin imports
 import AdminRoute from './components/AdminRoute';
@@ -36,7 +38,7 @@ import AdminPromotions from './pages/admin/AdminPromotions';
 
 function AppContent() {
   const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith('/admin');
+  const isAdminRoute = location.pathname.startsWith('/devvorx/admin-1');
   const { user, loading: authLoading, logout } = useAuth();
   const [maintenance, setMaintenance] = useState(false);
   const [configLoading, setConfigLoading] = useState(true);
@@ -105,15 +107,19 @@ function AppContent() {
         {/* Admin Routes */}
         <Route element={<AdminRoute />}>
           <Route element={<AdminLayout />}>
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/generations" element={<AdminGenerations />} />
-            <Route path="/admin/users" element={<AdminUsers />} />
-            <Route path="/admin/credits" element={<AdminCredits />} />
-            <Route path="/admin/library" element={<AdminLibrary />} />
-            <Route path="/admin/settings" element={<AdminSettings />} />
-            <Route path="/admin/promotions" element={<AdminPromotions />} />
+            <Route path="/devvorx/admin-1" element={<AdminDashboard />} />
+            <Route path="/devvorx/admin-1/generations" element={<AdminGenerations />} />
+            <Route path="/devvorx/admin-1/users" element={<AdminUsers />} />
+            <Route path="/devvorx/admin-1/credits" element={<AdminCredits />} />
+            <Route path="/devvorx/admin-1/library" element={<AdminLibrary />} />
+            <Route path="/devvorx/admin-1/settings" element={<AdminSettings />} />
+            <Route path="/devvorx/admin-1/promotions" element={<AdminPromotions />} />
           </Route>
         </Route>
+
+        {/* Error Routes */}
+        <Route path="/500" element={<Error500 />} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
       {!isAdminRoute && <GlobalAudioPlayer />}
     </>

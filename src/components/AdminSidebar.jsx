@@ -10,13 +10,13 @@ function AdminSidebar({ isOpen, closeSidebar }) {
   const { user, logout } = useAuth();
 
   const menuItems = [
-    { path: '/admin', icon: <LayoutDashboard size={20} />, label: 'Tableau de bord' },
-    { path: '/admin/generations', icon: <Music size={20} />, label: 'Générations' },
-    { path: '/admin/users', icon: <Users size={20} />, label: 'Utilisateurs' },
-    { path: '/admin/credits', icon: <CreditCard size={20} />, label: 'Achats de Générations' },
-    { path: '/admin/promotions', icon: <Megaphone size={20} />, label: 'Promotions' },
-    { path: '/admin/library', icon: <Library size={20} />, label: 'Bibliothèque globale' },
-    { path: '/admin/settings', icon: <Settings size={20} />, label: 'Paramètres' },
+    { path: '/devvorx/admin-1', icon: <LayoutDashboard size={20} />, label: 'Tableau de bord' },
+    { path: '/devvorx/admin-1/generations', icon: <Music size={20} />, label: 'Générations' },
+    { path: '/devvorx/admin-1/users', icon: <Users size={20} />, label: 'Utilisateurs' },
+    { path: '/devvorx/admin-1/credits', icon: <CreditCard size={20} />, label: 'Achats de Générations' },
+    { path: '/devvorx/admin-1/promotions', icon: <Megaphone size={20} />, label: 'Promotions' },
+    { path: '/devvorx/admin-1/library', icon: <Library size={20} />, label: 'Bibliothèque globale' },
+    { path: '/devvorx/admin-1/settings', icon: <Settings size={20} />, label: 'Paramètres' },
   ];
 
   const handleNav = (path) => {
