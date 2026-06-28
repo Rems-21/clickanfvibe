@@ -116,6 +116,24 @@ function AdminSettings() {
             {saved && <span style={{ color: '#22c55e', fontSize: '14px', fontWeight: '500' }}>Paramètres sauvegardés avec succès !</span>}
           </div>
 
+          <div style={{ marginTop: '32px', paddingTop: '24px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+            <h4 style={{ margin: '0 0 12px 0', color: '#ef4444' }}>Maintenance Avancée</h4>
+            <button 
+              onClick={async () => {
+                try {
+                  const res = await fetch('/api/admin/upgrade-db', { headers: { 'Authorization': `Bearer ${token}` } });
+                  if (res.ok) alert("Base de données mise à jour avec succès !");
+                  else alert("Erreur lors de la mise à jour de la base de données.");
+                } catch (e) {
+                  alert("Erreur réseau.");
+                }
+              }}
+              style={{ background: 'transparent', color: '#ef4444', border: '1px solid #ef4444', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
+            >
+              Mettre à jour la Base de données (Créer les nouvelles tables)
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
