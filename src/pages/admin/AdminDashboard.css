@@ -46,6 +46,14 @@
   flex-direction: column;
   gap: 8px;
   padding: 0 16px;
+  overflow-y: auto;
+}
+.admin-nav::-webkit-scrollbar {
+  width: 4px;
+}
+.admin-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
 }
 
 .admin-nav-item {
@@ -162,7 +170,6 @@
   flex: 1;
   padding: 32px 40px;
   overflow-y: auto;
-  height: 100vh;
 }
 
 /* Topbar */
@@ -708,7 +715,8 @@
   .admin-main-content {
     padding: 20px;
     height: auto;
-    overflow-y: visible;
+    flex: 1;
+    overflow-y: auto;
   }
   
   .admin-topbar {
