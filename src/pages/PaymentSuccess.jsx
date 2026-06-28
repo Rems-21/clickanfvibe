@@ -15,6 +15,15 @@ function PaymentSuccess() {
   const hasRecharged = useRef(false);
 
   useEffect(() => {
+    // Check if KPay appended a failed or cancelled status to the return URL
+    const searchParams = new URLSearchParams(location.search);
+    const status = searchParams.get('status');
+    
+    if (status === 'CANCELLED' || status === 'FAILED') {
+      navigate('/payment-failed', { replace: true });
+      return;
+    }
+
     const processRecharge = async () => {
       if (hasRecharged.current) return;
       hasRecharged.current = true;
