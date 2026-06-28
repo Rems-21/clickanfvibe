@@ -715,7 +715,11 @@ def check_generation_status(task_id: str, current_user: models.User = Depends(ge
         if not poll_response.ok:
             return JSONResponse({"status": "error", "detail": "Erreur API lors de la vérification du statut."})
             
-        poll_data = poll_response.json()
+        try:
+            poll_data = poll_response.json()
+        except Exception:
+            poll_data = {}
+            print("Suno API Poll returned invalid JSON:", poll_response.text)
         poll_result = poll_data.get("data")
         
         if isinstance(poll_result, dict):
@@ -1196,9 +1200,12 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
     response = requests.post(url, headers=headers, json=payload)
     
     if response.status_code == 201 or response.status_code == 200:
-        data = response.json()
-        if data.get("success"):
-            return {"checkout_url": data["data"].get("checkout_url") or data["data"].get("payment_url")}
+        try:
+            data = response.json()
+            if data.get("success"):
+                return {"checkout_url": data["data"].get("checkout_url") or data["data"].get("payment_url")}
+        except Exception:
+            pass # We fall through to the error handler below
     
     print("GeniusPay Init Error:", response.text)
     raise HTTPException(status_code=400, detail="Impossible d'initier le paiement avec GeniusPay.")
@@ -1213,7 +1220,10 @@ async def geniuspay_webhook(request: Request, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Headers manquants")
         
     raw_body = await request.body()
-    payload = await request.json()
+    try:
+        payload = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid JSON payload")
     
     webhook_secret = os.getenv("GENIUSPAY_WEBHOOK_SECRET")
     if not webhook_secret:
