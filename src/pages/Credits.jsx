@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Zap, HelpCircle, Music, Sparkles, Clock, ArrowRight, ShieldCheck, Gift, Loader2, X, Smartphone, CheckCircle, ChevronDown } from 'lucide-react';
+import { Zap, HelpCircle, Music, Sparkles, Clock, ArrowRight, ShieldCheck, Gift, Loader2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './Credits.css';
 import '../pages/Home.css'; // Reuse common styles
@@ -18,55 +18,6 @@ function Credits() {
   const [activePromos, setActivePromos] = useState([]);
   const [promoCode, setPromoCode] = useState('');
   const [promoMessage, setPromoMessage] = useState(null);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [selectedPackage, setSelectedPackage] = useState(null);
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [countryCode, setCountryCode] = useState('+225');
-  const [isoCode, setIsoCode] = useState('CI');
-  const [paymentNetwork, setPaymentNetwork] = useState('wave');
-  const [paymentStatus, setPaymentStatus] = useState('idle');
-  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
-
-  const countriesByNetwork = {
-    mtn_money: [
-      { iso: 'CI', code: '+225', name: "Côte d'Ivoire", flag: '🇨🇮' },
-      { iso: 'CM', code: '+237', name: 'Cameroun', flag: '🇨🇲' },
-      { iso: 'BJ', code: '+229', name: 'Bénin', flag: '🇧🇯' },
-      { iso: 'GN', code: '+224', name: 'Guinée', flag: '🇬🇳' }
-    ],
-    orange_money: [
-      { iso: 'CI', code: '+225', name: "Côte d'Ivoire", flag: '🇨🇮' },
-      { iso: 'SN', code: '+221', name: 'Sénégal', flag: '🇸🇳' },
-      { iso: 'ML', code: '+223', name: 'Mali', flag: '🇲🇱' },
-      { iso: 'BF', code: '+226', name: 'Burkina Faso', flag: '🇧🇫' },
-      { iso: 'GN', code: '+224', name: 'Guinée', flag: '🇬🇳' },
-      { iso: 'CM', code: '+237', name: 'Cameroun', flag: '🇨🇲' },
-      { iso: 'CD', code: '+243', name: 'RDC', flag: '🇨🇩' }
-    ],
-    wave: [
-      { iso: 'CI', code: '+225', name: "Côte d'Ivoire", flag: '🇨🇮' },
-      { iso: 'SN', code: '+221', name: 'Sénégal', flag: '🇸🇳' },
-      { iso: 'ML', code: '+223', name: 'Mali', flag: '🇲🇱' }
-    ],
-    moov_money: [
-      { iso: 'CI', code: '+225', name: "Côte d'Ivoire", flag: '🇨🇮' },
-      { iso: 'TG', code: '+228', name: 'Togo', flag: '🇹🇬' },
-      { iso: 'BJ', code: '+229', name: 'Bénin', flag: '🇧🇯' },
-      { iso: 'BF', code: '+226', name: 'Burkina Faso', flag: '🇧🇫' },
-      { iso: 'NE', code: '+227', name: 'Niger', flag: '🇳🇪' }
-    ]
-  };
-
-  const availableCountries = countriesByNetwork[paymentNetwork] || countriesByNetwork['wave'];
-  const currentCountry = availableCountries.find(c => c.iso === isoCode) || availableCountries[0];
-
-  useEffect(() => {
-    const isValid = availableCountries.find(c => c.iso === isoCode);
-    if (!isValid) {
-      setIsoCode(availableCountries[0].iso);
-      setCountryCode(availableCountries[0].code);
-    }
-  }, [paymentNetwork]); // We only care when the network changes
 
   useEffect(() => {
     const fetchPromos = async () => {
@@ -107,19 +58,9 @@ function Credits() {
     }
   };
 
-  const handleBuy = (amount_fcfa, gens) => {
-    setSelectedPackage({ amount: amount_fcfa, gens });
-    setShowPaymentModal(true);
-    setPaymentStatus('idle');
-  };
-
-  const confirmPayment = async () => {
-    if (!phoneNumber) {
-      alert("Veuillez entrer votre numéro de téléphone (ex: 0701020304)");
-      return;
-    }
-    setPaymentStatus('processing');
-    let isDone = false;
+  const handleBuy = async (amount_fcfa, gens) => {
+    if (isProcessing) return;
+    setIsProcessing(amount_fcfa);
     try {
       const token = localStorage.getItem('token');
       const res = await fetch('/api/payment/initiate', {
@@ -129,68 +70,21 @@ function Credits() {
               'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify({
-              amount_fcfa: selectedPackage.amount,
-              credits_to_add: selectedPackage.gens,
-              payment_method: paymentNetwork,
-              phone_number: `${countryCode}${phoneNumber.replace(/^0+/, '')}`,
-              country: isoCode,
+              amount_fcfa: amount_fcfa,
+              credits_to_add: gens,
               origin: window.location.origin
           })
       });
       const data = await res.json();
-      if (res.ok) {
-          // Si l'API retourne une URL de paiement (certains réseaux comme Wave le nécessitent parfois)
-          // Mais on essaie de garder l'utilisateur sur la page.
-          if (data.checkout_url && paymentNetwork === 'wave' && data.checkout_url.includes('wave.com')) {
-             window.location.href = data.checkout_url;
-             return;
-          }
-          
-          // Polling
-          const initialCredits = user.credits;
-          const pollInterval = setInterval(async () => {
-             if (isDone) {
-                 clearInterval(pollInterval);
-                 return;
-             }
-             try {
-                 const userRes = await fetch('/api/user/me', {
-                   headers: { 'Authorization': `Bearer ${token}` }
-                 });
-                 if (userRes.ok) {
-                    const userData = await userRes.json();
-                    if (userData.credits > initialCredits) {
-                       isDone = true;
-                       clearInterval(pollInterval);
-                       setPaymentStatus('success');
-                       if (refreshCredits) refreshCredits();
-                       setTimeout(() => {
-                          setShowPaymentModal(false);
-                          setPaymentStatus('idle');
-                       }, 4000);
-                    }
-                 }
-             } catch(err) {
-                 console.log("Polling error", err);
-             }
-          }, 3000);
-          
-          // Timeout après 5 minutes
-          setTimeout(() => {
-             if (!isDone) {
-                 isDone = true;
-                 clearInterval(pollInterval);
-                 setPaymentStatus('error');
-             }
-          }, 5 * 60 * 1000);
-
+      if (res.ok && data.checkout_url) {
+          window.location.href = data.checkout_url;
       } else {
           alert(data.detail || "Erreur d'initialisation du paiement");
-          setPaymentStatus('idle');
+          setIsProcessing(null);
       }
     } catch (e) {
         alert("Erreur réseau");
-        setPaymentStatus('idle');
+        setIsProcessing(null);
     }
   };
 
@@ -429,136 +323,6 @@ function Credits() {
           </div>
         </section>
       </div>
-      {/* Modal de Paiement Marque Blanche */}
-      {showPaymentModal && (
-        <div className="payment-modal-overlay" onClick={() => paymentStatus !== 'processing' && setShowPaymentModal(false)}>
-          <div className="payment-modal-content" onClick={e => e.stopPropagation()}>
-            <button className="payment-modal-close" onClick={() => setShowPaymentModal(false)} disabled={paymentStatus === 'processing'}>
-              <X size={20} />
-            </button>
-            
-            {paymentStatus === 'idle' && (
-                <>
-                    <h3>Paiement Sécurisé</h3>
-                    <p className="payment-modal-subtitle">Vous achetez <strong>{selectedPackage?.gens} Gens</strong> pour {selectedPackage?.amount} FCFA.</p>
-                    
-                    <div className="payment-networks">
-                        <label className={`network-option ${paymentNetwork === 'mtn_money' ? 'selected' : ''}`}>
-                            <input type="radio" name="network" value="mtn_money" checked={paymentNetwork === 'mtn_money'} onChange={(e) => setPaymentNetwork(e.target.value)} />
-                            <div className="network-details">
-                                <span className="network-name">MTN Mobile Money</span>
-                                <span className="network-badge mtn">MTN</span>
-                            </div>
-                        </label>
-                        <label className={`network-option ${paymentNetwork === 'orange_money' ? 'selected' : ''}`}>
-                            <input type="radio" name="network" value="orange_money" checked={paymentNetwork === 'orange_money'} onChange={(e) => setPaymentNetwork(e.target.value)} />
-                            <div className="network-details">
-                                <span className="network-name">Orange Money</span>
-                                <span className="network-badge orange">Orange</span>
-                            </div>
-                        </label>
-                        <label className={`network-option ${paymentNetwork === 'wave' ? 'selected' : ''}`}>
-                            <input type="radio" name="network" value="wave" checked={paymentNetwork === 'wave'} onChange={(e) => setPaymentNetwork(e.target.value)} />
-                            <div className="network-details">
-                                <span className="network-name">Wave</span>
-                                <span className="network-badge wave">Wave</span>
-                            </div>
-                        </label>
-                        <label className={`network-option ${paymentNetwork === 'moov_money' ? 'selected' : ''}`}>
-                            <input type="radio" name="network" value="moov_money" checked={paymentNetwork === 'moov_money'} onChange={(e) => setPaymentNetwork(e.target.value)} />
-                            <div className="network-details">
-                                <span className="network-name">Moov Money</span>
-                                <span className="network-badge moov">Moov</span>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div className="phone-input-group">
-                        <label>Numéro de téléphone Mobile Money</label>
-                        <div className="phone-input-wrapper-with-code">
-                            <div className="country-code-selector custom-dropdown-container">
-                                <button 
-                                    type="button"
-                                    className="custom-dropdown-btn" 
-                                    onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-                                >
-                                    <span className="flag-icon">{currentCountry.flag}</span>
-                                    <span>{currentCountry.code}</span>
-                                    <ChevronDown size={14} />
-                                </button>
-                                
-                                {showCountryDropdown && (
-                                    <div className="custom-dropdown-menu">
-                                        {availableCountries.map(country => (
-                                            <div 
-                                                key={country.iso} 
-                                                className={`custom-dropdown-item ${isoCode === country.iso ? 'active' : ''}`}
-                                                onClick={() => {
-                                                    setIsoCode(country.iso);
-                                                    setCountryCode(country.code);
-                                                    setShowCountryDropdown(false);
-                                                }}
-                                            >
-                                                <span className="flag-icon">{country.flag}</span>
-                                                <span className="country-name">{country.name}</span>
-                                                <span className="country-code-span">{country.code}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                            <input 
-                                type="tel" 
-                                placeholder="Ex: 0701020304" 
-                                value={phoneNumber} 
-                                onChange={(e) => setPhoneNumber(e.target.value)}
-                                className="phone-input phone-input-with-code"
-                            />
-                        </div>
-                    </div>
-
-                    <button className="confirm-payment-btn" onClick={confirmPayment}>
-                        Payer {selectedPackage?.amount} FCFA
-                    </button>
-                </>
-            )}
-
-            {paymentStatus === 'processing' && (
-                <div className="payment-processing">
-                    <Loader2 size={48} className="spin-icon" />
-                    <h3>Veuillez valider le paiement sur votre téléphone</h3>
-                    <p>Une demande de paiement a été envoyée au <strong>{phoneNumber}</strong>.</p>
-                    <p className="payment-instruction">Tapez votre code secret sur votre téléphone pour confirmer l'achat de {selectedPackage?.gens} Gens.</p>
-                    <div className="payment-polling-pulse">
-                        <div className="pulse-dot"></div>
-                        <span>En attente de validation...</span>
-                    </div>
-                </div>
-            )}
-
-            {paymentStatus === 'success' && (
-                <div className="payment-success-modal">
-                    <CheckCircle size={64} className="success-icon" />
-                    <h3>Paiement Réussi !</h3>
-                    <p>Vos {selectedPackage?.gens} Gens ont été ajoutés à votre compte avec succès.</p>
-                    <p className="redirecting-text">Fermeture automatique...</p>
-                </div>
-            )}
-
-            {paymentStatus === 'error' && (
-                <div className="payment-error-modal">
-                    <X size={64} className="error-icon" />
-                    <h3>Paiement Échoué ou Expiré</h3>
-                    <p>Le paiement n'a pas pu être validé. Vous pouvez réessayer.</p>
-                    <button className="retry-payment-btn" onClick={() => setPaymentStatus('idle')}>
-                        Réessayer
-                    </button>
-                </div>
-            )}
-          </div>
-        </div>
-      )}
-
     </div>
   );
 }
