@@ -24,6 +24,7 @@ import Maintenance from './pages/Maintenance';
 import Error404 from './pages/Error404';
 import Error500 from './pages/Error500';
 import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 
 // Admin imports
 import AdminRoute from './components/AdminRoute';
@@ -91,6 +92,7 @@ function AppContent() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
         
         {/* User Routes */}
         <Route element={<Layout />}>
