@@ -27,6 +27,7 @@ class PaymentInitiateRequest(BaseModel):
     credits_to_add: int
     payment_method: str = None
     origin: str = None
+    phone_number: str = None
 
 from sqlalchemy.orm import Session
 from sqlalchemy import text
@@ -1190,12 +1191,24 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
             "credits_to_add": req.credits_to_add,
             "amount_fcfa": req.amount_fcfa,
             "payment_method": req.payment_method
-        },
-        "gateway": "mtn_momo"
+        }
     }
     
+    if req.phone_number:
+        payload["customer"]["phone"] = req.phone_number
+        
     if req.payment_method:
         payload["payment_method"] = req.payment_method
+        # Mapping automatique du gateway selon le payment_method
+        gateway_map = {
+            "mtn_money": "mtn_momo",
+            "wave": "wave",
+            "orange_money": "orange_money",
+            "moov_money": "moov_money",
+            "pawapay": "pawapay"
+        }
+        if req.payment_method in gateway_map:
+            payload["gateway"] = gateway_map[req.payment_method]
 
     response = requests.post(url, headers=headers, json=payload)
     
