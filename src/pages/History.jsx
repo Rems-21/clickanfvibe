@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { ArrowLeft, Play, Clock, Music, Heart, Share2, MoreVertical, Drum, Calendar, Zap, Compass, User, Download, Trash2 } from 'lucide-react';
+import { ArrowLeft, Play, Clock, Music, Heart, Share2, MoreVertical, Drum, Calendar, Zap, Compass, User, Download } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useAudio } from '../context/AudioContext';
 import Skeleton from '../components/Skeleton';
@@ -118,27 +118,6 @@ function History() {
     }
   };
 
-  const handleDelete = async (songId) => {
-    if (!window.confirm("Voulez-vous vraiment supprimer cette création ?")) return;
-    
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) return;
-      
-      const res = await fetch(`/api/music/${songId}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (res.ok) {
-        setHistory(prev => prev.filter(m => m.id !== songId));
-      } else {
-        alert("Erreur lors de la suppression.");
-      }
-    } catch (e) {
-      console.error("Erreur de suppression", e);
-    }
-  };
-
   return (
     <div className="history-container">
       <div className="page-header-simple">
@@ -241,14 +220,6 @@ function History() {
                       onClick={() => handleDownload(music)}
                     >
                       Télécharger
-                    </button>
-                    <button 
-                      className="btn-secondary-small" 
-                      onClick={() => handleDelete(music.id)}
-                      style={{ color: '#FF3366', borderColor: 'transparent', marginLeft: 'auto' }}
-                      title="Supprimer"
-                    >
-                      <Trash2 size={14} />
                     </button>
                 </div>
               </div>

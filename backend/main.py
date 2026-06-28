@@ -846,18 +846,6 @@ def get_favorites(db: Session = Depends(get_db), current_user: models.User = Dep
     musics = db.query(models.Music).filter(models.Music.id.in_(fav_music_ids)).all()
     return musics
 
-@app.delete("/api/music/{music_id}")
-def delete_music(music_id: int, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
-    music = db.query(models.Music).filter(models.Music.id == music_id, models.Music.user_id == current_user.id).first()
-    if not music:
-        raise HTTPException(status_code=404, detail="Music not found or not owned by user")
-    
-    # Optionally delete associated favorites first
-    db.query(models.Favorite).filter(models.Favorite.music_id == music_id).delete()
-    
-    db.delete(music)
-    db.commit()
-    return {"status": "success", "message": "Music deleted"}
 
 @app.get("/api/health")
 def health():
@@ -1054,6 +1042,18 @@ def toggle_music_explore(music_id: int, db: Session = Depends(get_db), current_u
     music.is_explore = not music.is_explore
     db.commit()
     return {"status": "success", "is_explore": music.is_explore}
+
+@app.delete("/api/admin/musics/{music_id}")
+def admin_delete_music(music_id: int, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+    music = db.query(models.Music).filter(models.Music.id == music_id).first()
+    if not music:
+        raise HTTPException(status_code=404, detail="Music not found")
+    
+    db.query(models.Favorite).filter(models.Favorite.music_id == music_id).delete()
+    
+    db.delete(music)
+    db.commit()
+    return {"status": "success", "message": "Music deleted by admin"}
 
 # --- Promotions & Marketing ---
 

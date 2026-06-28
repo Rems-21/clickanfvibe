@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Play } from 'lucide-react';
+import { Search, Play, Trash2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import './AdminDashboard.css';
 
@@ -55,6 +55,23 @@ function AdminGenerations() {
       }
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  const deleteMusic = async (musicId) => {
+    if (!window.confirm("Voulez-vous vraiment supprimer cette musique de la base de données ?")) return;
+    try {
+      const res = await fetch(`/api/admin/musics/${musicId}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        setMusics(musics.filter(m => m.id !== musicId));
+      } else {
+        alert("Erreur lors de la suppression.");
+      }
+    } catch (err) {
+      console.error("Erreur de suppression", err);
     }
   };
 
@@ -140,6 +157,16 @@ function AdminGenerations() {
                         }}
                       >
                         {m.is_explore ? '★ Explorer' : '☆ Explorer'}
+                      </button>
+                      <button 
+                        onClick={() => deleteMusic(m.id)}
+                        style={{ 
+                          background: 'rgba(255, 0, 0, 0.1)', 
+                          color: '#ef4444', border: 'none', padding: '8px', borderRadius: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' 
+                        }}
+                        title="Supprimer"
+                      >
+                        <Trash2 size={16} />
                       </button>
                     </div>
                   </td>
