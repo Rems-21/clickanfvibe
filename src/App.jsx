@@ -37,6 +37,7 @@ import AdminCredits from './pages/admin/AdminCredits';
 import AdminLibrary from './pages/admin/AdminLibrary';
 import AdminSettings from './pages/admin/AdminSettings';
 import AdminPromotions from './pages/admin/AdminPromotions';
+import AdminLogs from './pages/admin/AdminLogs';
 
 function AppContent() {
   const location = useLocation();
@@ -118,6 +119,7 @@ function AppContent() {
             <Route path="/devvorx/admin-1/library" element={<AdminLibrary />} />
             <Route path="/devvorx/admin-1/settings" element={<AdminSettings />} />
             <Route path="/devvorx/admin-1/promotions" element={<AdminPromotions />} />
+            <Route path="/devvorx/admin-1/logs" element={<AdminLogs />} />
           </Route>
         </Route>
 

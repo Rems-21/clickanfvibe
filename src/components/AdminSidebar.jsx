@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Music, Users, CreditCard, ShoppingCart, Library, Settings, LogOut, Bell, User as UserIcon, X, Megaphone } from 'lucide-react';
+import { LayoutDashboard, Music, Users, CreditCard, ShoppingCart, Library, Settings, LogOut, Bell, User as UserIcon, X, Megaphone, Terminal } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import '../pages/admin/AdminDashboard.css';
 
@@ -16,6 +16,7 @@ function AdminSidebar({ isOpen, closeSidebar }) {
     { path: '/devvorx/admin-1/credits', icon: <CreditCard size={20} />, label: 'Achats de Générations' },
     { path: '/devvorx/admin-1/promotions', icon: <Megaphone size={20} />, label: 'Promotions' },
     { path: '/devvorx/admin-1/library', icon: <Library size={20} />, label: 'Bibliothèque globale' },
+    { path: '/devvorx/admin-1/logs', icon: <Terminal size={20} />, label: 'Logs Système' },
     { path: '/devvorx/admin-1/settings', icon: <Settings size={20} />, label: 'Paramètres' },
   ];
 

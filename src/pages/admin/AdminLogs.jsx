@@ -1,0 +1,118 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Terminal, RefreshCcw, Download } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import './AdminDashboard.css';
+
+function AdminLogs() {
+  const [logs, setLogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { token } = useAuth();
+  const logsEndRef = useRef(null);
+
+  const fetchLogs = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/admin/logs?lines=300', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setLogs(data.logs || []);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (token) fetchLogs();
+  }, [token]);
+
+  useEffect(() => {
+    // Auto-scroll to bottom when logs are loaded
+    if (logsEndRef.current) {
+      logsEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [logs]);
+
+  const handleDownload = () => {
+    const blob = new Blob([logs.join('')], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `clickandvibe_logs_${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  };
+
+  return (
+    <div className="admin-dashboard">
+      <header className="admin-topbar" style={{ marginBottom: '20px' }}>
+        <div className="admin-topbar-left">
+          <h1>Logs Système <Terminal size={24} style={{ marginLeft: '10px', verticalAlign: 'bottom' }} /></h1>
+          <p>Consultez les logs de l'API (erreurs, événements importants)</p>
+        </div>
+        <div className="admin-topbar-right" style={{ gap: '10px', display: 'flex' }}>
+          <button 
+            className="btn-secondary"
+            onClick={fetchLogs}
+            disabled={loading}
+            style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+          >
+            <RefreshCcw size={16} className={loading ? 'spinning' : ''} />
+            Rafraîchir
+          </button>
+          <button 
+            className="btn-primary-gradient"
+            onClick={handleDownload}
+            disabled={logs.length === 0}
+            style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+          >
+            <Download size={16} />
+            Exporter
+          </button>
+        </div>
+      </header>
+
+      <div className="admin-table-card" style={{ padding: '0', overflow: 'hidden', background: '#0a0a0a', border: '1px solid #333' }}>
+        <div style={{
+          padding: '20px',
+          height: '600px',
+          overflowY: 'auto',
+          fontFamily: 'monospace',
+          fontSize: '13px',
+          color: '#00ff00',
+          lineHeight: '1.5',
+          whiteSpace: 'pre-wrap',
+          wordBreak: 'break-all'
+        }}>
+          {loading && logs.length === 0 ? (
+            <div style={{ color: '#888' }}>Chargement des logs...</div>
+          ) : logs.length === 0 ? (
+            <div style={{ color: '#888' }}>Aucun log disponible.</div>
+          ) : (
+            logs.map((line, index) => {
+              // Basic color coding for log levels
+              let color = '#00ff00'; // Default INFO/DEBUG
+              if (line.includes('ERROR') || line.includes('EXCEPTION')) color = '#ff3366';
+              if (line.includes('WARNING')) color = '#ffb800';
+              
+              return (
+                <div key={index} style={{ color, marginBottom: '2px' }}>
+                  {line}
+                </div>
+              );
+            })
+          )}
+          <div ref={logsEndRef} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default AdminLogs;

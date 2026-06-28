@@ -2,6 +2,19 @@ import os
 import uuid
 import datetime
 import requests
+import logging
+from logging.handlers import RotatingFileHandler
+
+# Configurer les logs
+log_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+log_file = os.path.join(os.path.dirname(__file__), 'app.log')
+log_handler = RotatingFileHandler(log_file, maxBytes=5*1024*1024, backupCount=2)
+log_handler.setFormatter(log_formatter)
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+logger.addHandler(log_handler)
+logger.info("Démarrage de l'API Click & Vibe")
 import random
 from email_service import send_verification_email, send_password_reset_email
 from fastapi import FastAPI, HTTPException, Depends, status, File, UploadFile
@@ -45,6 +58,7 @@ import traceback
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
+    logger.error(f"GLOBAL EXCEPTION on {request.url}: {exc}")
     print("GLOBAL EXCEPTION:", exc)
     return JSONResponse(
         status_code=400,
@@ -1342,3 +1356,16 @@ def update_settings(req: SettingsUpdate, db: Session = Depends(get_db), current_
         
     db.commit()
     return {"status": "success"}
+
+@app.get("/api/admin/logs")
+def get_system_logs(lines: int = 200, current_user: models.User = Depends(get_current_admin_user)):
+    log_path = os.path.join(os.path.dirname(__file__), 'app.log')
+    if not os.path.exists(log_path):
+        return {"logs": ["Aucun log trouvé (app.log n'existe pas encore)."]}
+    
+    try:
+        with open(log_path, 'r', encoding='utf-8') as f:
+            all_lines = f.readlines()
+            return {"logs": all_lines[-lines:]}
+    except Exception as e:
+        return {"logs": [f"Erreur lors de la lecture des logs: {str(e)}"]}
