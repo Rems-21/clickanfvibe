@@ -25,6 +25,20 @@ class User(Base):
     musics = relationship("Music", back_populates="owner")
     transactions = relationship("Transaction", back_populates="user")
     favorites = relationship("Favorite", back_populates="user")
+    notifications = relationship("Notification", back_populates="user")
+
+class Notification(Base):
+    __tablename__ = "notifications"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True) # If null, broadcast to all
+    title = Column(String(255))
+    message = Column(Text)
+    type = Column(String(50), default="info") # info, success, warning, error
+    is_read = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+    user = relationship("User", back_populates="notifications")
 
 class Music(Base):
     __tablename__ = "musics"

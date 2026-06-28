@@ -2,12 +2,14 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { CheckCircle2, Zap, ArrowRight, Loader2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useNotification } from '../context/NotificationContext';
 import './Payment.css';
 
 function PaymentSuccess() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, refreshCredits } = useAuth();
+  const { addToast } = useNotification();
   const [recharging, setRecharging] = useState(true);
   
   // KPay redirects here without state, so we won't show exact local amounts 
@@ -33,6 +35,7 @@ function PaymentSuccess() {
         if (window.fbq) {
           window.fbq('track', 'Purchase', { currency: 'EUR', value: 0 }); // You can adjust value if known
         }
+        addToast("Paiement réussi", "Vos crédits ont été ajoutés.", "success");
       } catch (err) {
         console.error("Erreur lors du refresh", err);
       } finally {

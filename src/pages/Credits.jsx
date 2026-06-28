@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Zap, HelpCircle, Music, Sparkles, Clock, ArrowRight, ShieldCheck, Gift, Loader2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useNotification } from '../context/NotificationContext';
 import './Credits.css';
 import '../pages/Home.css'; // Reuse common styles
 
 function Credits() {
   const navigate = useNavigate();
   const { user, refreshCredits } = useAuth();
+  const { addToast } = useNotification();
 
   const credits = user ? user.credits : 0;
   const estimatedGenerations = credits; // 1 credit = 1 gen
@@ -79,11 +81,11 @@ function Credits() {
       if (res.ok && data.checkout_url) {
           window.location.href = data.checkout_url;
       } else {
-          alert(data.detail || "Erreur d'initialisation du paiement");
+          addToast("Erreur", data.detail || "Erreur d'initialisation du paiement", "error");
           setIsProcessing(null);
       }
     } catch (e) {
-        alert("Erreur réseau");
+        addToast("Erreur", "Erreur réseau", "error");
         setIsProcessing(null);
     }
   };

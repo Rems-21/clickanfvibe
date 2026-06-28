@@ -102,6 +102,24 @@ function Help() {
                 </div>
                 <ChevronRight size={20} color="var(--text-secondary)" />
               </a>
+
+              <a href="mailto:support@clickandvibe.com" className="history-card" style={{ flexDirection: 'row', alignItems: 'center', textDecoration: 'none' }}>
+                <Mail size={24} color="#0099FF" />
+                <div style={{ flex: 1, marginLeft: 16 }}>
+                  <h3 style={{ fontSize: 16, color: 'white' }}>Support Technique</h3>
+                  <p style={{ fontSize: 12, color: 'var(--text-secondary)' }}>support@clickandvibe.com</p>
+                </div>
+                <ChevronRight size={20} color="var(--text-secondary)" />
+              </a>
+
+              <a href="mailto:contact@clickandvibe.com" className="history-card" style={{ flexDirection: 'row', alignItems: 'center', textDecoration: 'none' }}>
+                <Mail size={24} color="#FFb800" />
+                <div style={{ flex: 1, marginLeft: 16 }}>
+                  <h3 style={{ fontSize: 16, color: 'white' }}>Contact Général / Partenariats</h3>
+                  <p style={{ fontSize: 12, color: 'var(--text-secondary)' }}>contact@clickandvibe.com</p>
+                </div>
+                <ChevronRight size={20} color="var(--text-secondary)" />
+              </a>
             </div>
           </div>
 

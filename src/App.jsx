@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { AudioProvider } from './context/AudioContext';
+import { NotificationProvider } from './context/NotificationContext';
 import GlobalAudioPlayer from './components/GlobalAudioPlayer';
 import Layout from './components/Layout';
 import Onboarding from './pages/Onboarding';
@@ -39,6 +40,7 @@ import AdminSettings from './pages/admin/AdminSettings';
 import AdminPromotions from './pages/admin/AdminPromotions';
 import AdminLogs from './pages/admin/AdminLogs';
 import AdminStats from './pages/admin/AdminStats';
+import AdminNotifications from './pages/admin/AdminNotifications';
 
 function AppContent() {
   const location = useLocation();
@@ -132,6 +134,7 @@ function AppContent() {
             <Route path="/devvorx/admin-1/promotions" element={<AdminPromotions />} />
             <Route path="/devvorx/admin-1/logs" element={<AdminLogs />} />
             <Route path="/devvorx/admin-1/stats" element={<AdminStats />} />
+            <Route path="/devvorx/admin-1/notifications" element={<AdminNotifications />} />
           </Route>
         </Route>
 
@@ -147,10 +150,12 @@ function AppContent() {
 function App() {
   return (
     <AuthProvider>
-      <AudioProvider>
-        <FloatingInstallButton />
-        <AppContent />
-      </AudioProvider>
+      <NotificationProvider>
+        <AudioProvider>
+          <FloatingInstallButton />
+          <AppContent />
+        </AudioProvider>
+      </NotificationProvider>
     </AuthProvider>
   );
 }

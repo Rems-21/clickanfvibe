@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { ArrowLeft, Zap, Check, Music, SlidersHorizontal, Sparkles, Edit2, Drum, Sunrise, AudioLines, Clock, Globe, Lightbulb, X, Compass, User, Play, Pause, Circle, CheckCircle2, Download, Share2, Headphones, RotateCcw, Heart } from 'lucide-react';
+import { ArrowLeft, Zap, Check, Music, SlidersHorizontal, Sparkles, Edit2, Drum, Sunrise, Globe, Lightbulb, X, Compass, User, Play, Pause, Circle, CheckCircle2, Download, Share2, RotateCcw, Heart } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useAudio } from '../context/AudioContext';
+import { useNotification } from '../context/NotificationContext';
 import './Generating.css';
 import '../pages/Home.css';
 
@@ -10,7 +11,8 @@ function Generating() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, refreshCredits } = useAuth();
-  const { playTrack, currentTrack, isPlaying, togglePlay } = useAudio();
+  const { playTrack, currentTrack, isPlaying } = useAudio();
+  const { addToast } = useNotification();
   const { prompt = "Une chanson afrobeat romantique sur l'amour sincère, avec une ambiance douce et entraînante.", style = "Afrobeat", mood = "Romantique", voice = "Féminine", tempo = "Normal", duration = "2:30", language = "Français" } = location.state || {};
   
   const [progress, setProgress] = useState(0);
@@ -19,6 +21,7 @@ function Generating() {
   const [selectedVersion, setSelectedVersion] = useState(null);
   const [generatedAudios, setGeneratedAudios] = useState([]);
   const [generationError, setGenerationError] = useState(null);
+  const [savedToLibrary, setSavedToLibrary] = useState(false);
   
   const hasRequested = useRef(false);
 
@@ -390,9 +393,10 @@ function Generating() {
               <div className="action-grid">
                 <button className="action-square active" onClick={async () => {
                   if (!selectedVersion) {
-                    alert("Sélectionnez d'abord une version !");
+                    addToast("Attention", "Sélectionnez d'abord une version !", "warning");
                     return;
                   }
+                  if (savedToLibrary) return;
                   const versionIndex = selectedVersion === 'A' ? 0 : 1;
                   const audioUrl = generatedAudios[versionIndex]?.url;
                   
@@ -420,7 +424,8 @@ function Generating() {
                       },
                       body: JSON.stringify(payload)
                     });
-                    alert("Musique ajoutée à ton historique !");
+                    setSavedToLibrary(true);
+                    addToast("Succès", "Musique ajoutée à ton historique !", "success");
                   } catch (e) {
                     console.error(e);
                   }
@@ -430,7 +435,7 @@ function Generating() {
                 </button>
                 <button className="action-square" onClick={() => {
                   if (!selectedVersion) {
-                    alert("Sélectionnez d'abord une version pour la télécharger !");
+                    addToast("Attention", "Sélectionnez d'abord une version pour la télécharger !", "warning");
                     return;
                   }
                   const versionIndex = selectedVersion === 'A' ? 0 : 1;
@@ -461,7 +466,7 @@ function Generating() {
                         url: window.location.origin + audioUrl
                       });
                     } else {
-                      alert("Le partage n'est pas supporté sur cet appareil.");
+                      addToast("Info", "Le partage n'est pas supporté sur cet appareil.", "info");
                     }
                   } catch (e) {
                     console.error("Partage annulé ou échoué", e);
