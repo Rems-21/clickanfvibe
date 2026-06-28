@@ -846,6 +846,19 @@ def get_favorites(db: Session = Depends(get_db), current_user: models.User = Dep
     musics = db.query(models.Music).filter(models.Music.id.in_(fav_music_ids)).all()
     return musics
 
+@app.delete("/api/music/{music_id}")
+def delete_music(music_id: int, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    music = db.query(models.Music).filter(models.Music.id == music_id, models.Music.user_id == current_user.id).first()
+    if not music:
+        raise HTTPException(status_code=404, detail="Music not found or not owned by user")
+    
+    # Optionally delete associated favorites first
+    db.query(models.Favorite).filter(models.Favorite.music_id == music_id).delete()
+    
+    db.delete(music)
+    db.commit()
+    return {"status": "success", "message": "Music deleted"}
+
 @app.get("/api/health")
 def health():
     return {"status": "ok", "message": "Backend is running", "db_connected": True}
