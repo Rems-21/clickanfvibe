@@ -1163,60 +1163,57 @@ def apply_promo_code(req: ApplyPromoRequest, db: Session = Depends(get_db), curr
 
 @app.post("/api/payment/initiate")
 def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
-    genius_api_key = os.getenv("GENIUS_PAY_API_KEY")
-    genius_secret = os.getenv("GENIUS_PAY_SECRET")
+    kpay_api_key = os.getenv("KPAY_API_KEY")
+    kpay_secret_key = os.getenv("KPAY_SECRET_KEY")
     
-    if not genius_api_key or not genius_secret:
-        raise HTTPException(status_code=500, detail="Genius Pay API keys not configured")
+    if not kpay_api_key or not kpay_secret_key:
+        raise HTTPException(status_code=500, detail="KPay API keys not configured")
     
-    url = "https://geniuspay.ci/api/v1/merchant/payments"
+    url = "https://admin.kpay.site/api/v1/payments/init"
     headers = {
-        "X-API-Key": genius_api_key,
-        "X-API-Secret": genius_secret,
+        "X-API-Key": kpay_api_key,
+        "X-Secret-Key": kpay_secret_key,
         "Content-Type": "application/json"
     }
     
+    import uuid
+    external_id = f"ORDER-{uuid.uuid4().hex[:12]}"
+    origin_url = req.origin or request.headers.get('origin', 'http://localhost:5173')
+    
     payload = {
         "amount": req.amount_fcfa,
-        "description": f"Recharge de {req.credits_to_add} Gens - Click & Vibe",
-        "customer": {
-            "name": current_user.name,
-            "email": current_user.email,
-        },
-        "success_url": f"{req.origin or request.headers.get('origin', 'http://localhost:5173')}/payment-success",
-        "error_url": f"{req.origin or request.headers.get('origin', 'http://localhost:5173')}/payment-failed",
+        "externalId": external_id,
+        "returnUrl": f"{origin_url}/payment-success",
+        "cancelUrl": f"{origin_url}/payment-failed",
         "metadata": {
-            "user_id": current_user.id,
+            "user_id": str(current_user.id),
             "credits_to_add": req.credits_to_add,
             "amount_fcfa": req.amount_fcfa,
-            "payment_method": req.payment_method
+            "payment_method": req.payment_method or "kpay"
         }
     }
-    
-    if req.payment_method:
-        payload["payment_method"] = req.payment_method
 
-    response = requests.post(url, headers=headers, json=payload)
-    
-    if response.status_code == 201 or response.status_code == 200:
-        try:
+    try:
+        response = requests.post(url, headers=headers, json=payload)
+        
+        if response.status_code == 201:
             data = response.json()
-            if data.get("success"):
-                return {"checkout_url": data["data"].get("checkout_url") or data["data"].get("payment_url")}
-        except Exception:
-            pass # We fall through to the error handler below
-    
-    print("GeniusPay Init Error:", response.text)
-    raise HTTPException(status_code=400, detail="Impossible d'initier le paiement avec GeniusPay.")
+            gateway_url = data.get("gatewayUrl")
+            if gateway_url:
+                return {"checkout_url": gateway_url}
+        
+        print("KPay Init Error:", response.text)
+        raise HTTPException(status_code=400, detail="Impossible d'initier le paiement avec KPay.")
+    except Exception as e:
+        print("KPay Init Exception:", str(e))
+        raise HTTPException(status_code=500, detail="Erreur interne lors de l'initialisation du paiement.")
 
-@app.post("/api/webhooks/geniuspay")
-async def geniuspay_webhook(request: Request, db: Session = Depends(get_db)):
-    signature = request.headers.get("X-Webhook-Signature")
-    timestamp = request.headers.get("X-Webhook-Timestamp")
-    event = request.headers.get("X-Webhook-Event")
+@app.post("/api/webhooks/kpay")
+async def kpay_webhook(request: Request, db: Session = Depends(get_db)):
+    signature = request.headers.get("X-KPAY-Signature")
     
-    if not signature or not timestamp or not event:
-        raise HTTPException(status_code=400, detail="Headers manquants")
+    if not signature:
+        raise HTTPException(status_code=400, detail="Header X-KPAY-Signature manquant")
         
     raw_body = await request.body()
     try:
@@ -1224,36 +1221,33 @@ async def geniuspay_webhook(request: Request, db: Session = Depends(get_db)):
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid JSON payload")
     
-    webhook_secret = os.getenv("GENIUSPAY_WEBHOOK_SECRET")
+    webhook_secret = os.getenv("KPAY_WEBHOOK_SECRET")
     if not webhook_secret:
-        print("GENIUSPAY_WEBHOOK_SECRET not set")
+        print("KPAY_WEBHOOK_SECRET not set")
         raise HTTPException(status_code=500, detail="Webhook secret not configured")
         
-    data_str = f"{timestamp}.{raw_body.decode('utf-8')}"
     expected_signature = hmac.new(
         webhook_secret.encode('utf-8'),
-        data_str.encode('utf-8'),
+        raw_body,
         hashlib.sha256
     ).hexdigest()
     
     if not hmac.compare_digest(signature, expected_signature):
-        raise HTTPException(status_code=401, detail="Signature invalide")
+        raise HTTPException(status_code=400, detail="Signature invalide")
         
-    current_time = int(time.time())
-    if abs(current_time - int(timestamp)) > 300:
-        raise HTTPException(status_code=400, detail="Timestamp trop ancien")
-        
-    if event == "payment.success":
-        data = payload.get("data", {})
-        metadata = data.get("metadata", {})
+    event = payload.get("event")
+    status = payload.get("status")
+    
+    if event == "payment.completed" and status == "COMPLETED":
+        metadata = payload.get("metadata", {})
         
         user_id = metadata.get("user_id")
         amount = metadata.get("credits_to_add", 0)
         price_fcfa = metadata.get("amount_fcfa", 0)
-        payment_method = metadata.get("payment_method", "geniuspay")
+        payment_method = metadata.get("payment_method", "kpay")
         
         if user_id and amount:
-            user = db.query(models.User).filter(models.User.id == user_id).first()
+            user = db.query(models.User).filter(models.User.id == int(user_id)).first()
             if user:
                 user.credits += int(amount)
                 
@@ -1287,7 +1281,7 @@ async def geniuspay_webhook(request: Request, db: Session = Depends(get_db)):
                 )
                 db.add(tx)
                 db.commit()
-                print(f"User {user.id} credited with {amount} + {bonus_added} bonus.")
+                print(f"User {user.id} credited with {amount} + {bonus_added} bonus via KPay.")
     
     return {"success": True}
 
