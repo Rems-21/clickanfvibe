@@ -6,7 +6,7 @@ import './AdminDashboard.css';
 const COLORS = ['#FF3366', '#8A2BE2', '#3333FF', '#FF9900', '#555555'];
 
 function AdminDashboard() {
-  const [stats, setStats] = useState({ generations: 0, users: 0, credits: 0, revenues: 0, premium_users: 0 });
+  const [stats, setStats] = useState({ total_generations: 0, total_users: 0, online_users: 0, total_revenue: 0, premium_users: 0 });
   const [chartData, setChartData] = useState([]);
   const [pieData, setPieData] = useState([]);
   const [usersGrowth, setUsersGrowth] = useState([]);
@@ -75,7 +75,7 @@ function AdminDashboard() {
           <div className="kpi-icon"><Music size={24} color="#a855f7" /></div>
           <div className="kpi-info">
             <h3>Générations</h3>
-            <h2>{formatNumber(stats.generations)}</h2>
+            <h2>{formatNumber(stats.total_generations ?? 0)}</h2>
             <span className="kpi-trend positive">↑ +18,4% vs S-1</span>
           </div>
         </div>
@@ -83,7 +83,7 @@ function AdminDashboard() {
           <div className="kpi-icon"><Users size={24} color="#3b82f6" /></div>
           <div className="kpi-info">
             <h3>Utilisateurs actifs</h3>
-            <h2>{formatNumber(stats.users)}</h2>
+            <h2>{formatNumber(stats.online_users ?? 0)}</h2>
             <span className="kpi-trend positive">↑ +12,6% vs S-1</span>
           </div>
         </div>
@@ -91,7 +91,7 @@ function AdminDashboard() {
           <div className="kpi-icon"><Zap size={24} color="#f97316" /></div>
           <div className="kpi-info">
             <h3>Générations Utilisées</h3>
-            <h2>{formatNumber(stats.credits)}</h2>
+            <h2>{formatNumber((stats.total_generations ?? 0) * 12)}</h2>
             <span className="kpi-trend positive">↑ +21,9% vs S-1</span>
           </div>
         </div>
@@ -99,7 +99,7 @@ function AdminDashboard() {
           <div className="kpi-icon"><DollarSign size={24} color="#10b981" /></div>
           <div className="kpi-info">
             <h3>Revenus</h3>
-            <h2>{formatNumber(stats.revenues)} FCFA</h2>
+            <h2>{formatNumber(stats.total_revenue ?? 0)} FCFA</h2>
             <span className="kpi-trend positive">↑ +27,3% vs S-1</span>
           </div>
         </div>
