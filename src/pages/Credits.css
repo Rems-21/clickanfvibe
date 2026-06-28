@@ -587,7 +587,7 @@
     border-radius: 10px;
     background: rgba(0, 0, 0, 0.3);
     transition: border-color 0.2s;
-    overflow: hidden;
+    /* overflow: hidden; Removed to allow dropdown to be visible */
 }
 
 .phone-input-wrapper-with-code:focus-within {

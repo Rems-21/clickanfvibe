@@ -66,7 +66,7 @@ function Credits() {
       setIsoCode(availableCountries[0].iso);
       setCountryCode(availableCountries[0].code);
     }
-  }, [paymentNetwork, availableCountries, isoCode]);
+  }, [paymentNetwork]); // We only care when the network changes
 
   useEffect(() => {
     const fetchPromos = async () => {
