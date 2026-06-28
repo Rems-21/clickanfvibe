@@ -105,31 +105,31 @@ function AdminStats() {
         <StatCard 
           icon={<Activity size={32} />} 
           title="En Ligne (Actifs < 5m)" 
-          value={stats.online_users} 
+          value={stats.online_users ?? 0} 
           color="#10b981" 
         />
         <StatCard 
           icon={<Users size={32} />} 
           title="Utilisateurs Inscrits" 
-          value={stats.total_users} 
+          value={stats.total_users ?? 0} 
           color="#3b82f6" 
         />
         <StatCard 
           icon={<Download size={32} />} 
           title="App Installée (PWA)" 
-          value={stats.total_downloads} 
+          value={stats.total_downloads ?? 0} 
           color="#f59e0b" 
         />
         <StatCard 
           icon={<Music size={32} />} 
           title="Générations Totales" 
-          value={stats.total_generations} 
+          value={stats.total_generations ?? 0} 
           color="#8b5cf6" 
         />
         <StatCard 
           icon={<CreditCard size={32} />} 
           title="Chiffre d'Affaires (FCFA)" 
-          value={new Intl.NumberFormat('fr-FR').format(stats.total_revenue)} 
+          value={new Intl.NumberFormat('fr-FR').format(stats.total_revenue ?? 0)} 
           color="#ef4444" 
         />
       </div>
