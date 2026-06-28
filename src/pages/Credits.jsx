@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Zap, HelpCircle, Music, Sparkles, Clock, ArrowRight, ShieldCheck, Gift, Loader2, X, Smartphone, CheckCircle } from 'lucide-react';
+import { Zap, HelpCircle, Music, Sparkles, Clock, ArrowRight, ShieldCheck, Gift, Loader2, X, Smartphone, CheckCircle, ChevronDown } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './Credits.css';
 import '../pages/Home.css'; // Reuse common styles
@@ -25,6 +25,48 @@ function Credits() {
   const [isoCode, setIsoCode] = useState('CI');
   const [paymentNetwork, setPaymentNetwork] = useState('wave');
   const [paymentStatus, setPaymentStatus] = useState('idle');
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+
+  const countriesByNetwork = {
+    mtn_money: [
+      { iso: 'CI', code: '+225', name: "Côte d'Ivoire", flag: '🇨🇮' },
+      { iso: 'CM', code: '+237', name: 'Cameroun', flag: '🇨🇲' },
+      { iso: 'BJ', code: '+229', name: 'Bénin', flag: '🇧🇯' },
+      { iso: 'GN', code: '+224', name: 'Guinée', flag: '🇬🇳' }
+    ],
+    orange_money: [
+      { iso: 'CI', code: '+225', name: "Côte d'Ivoire", flag: '🇨🇮' },
+      { iso: 'SN', code: '+221', name: 'Sénégal', flag: '🇸🇳' },
+      { iso: 'ML', code: '+223', name: 'Mali', flag: '🇲🇱' },
+      { iso: 'BF', code: '+226', name: 'Burkina Faso', flag: '🇧🇫' },
+      { iso: 'GN', code: '+224', name: 'Guinée', flag: '🇬🇳' },
+      { iso: 'CM', code: '+237', name: 'Cameroun', flag: '🇨🇲' },
+      { iso: 'CD', code: '+243', name: 'RDC', flag: '🇨🇩' }
+    ],
+    wave: [
+      { iso: 'CI', code: '+225', name: "Côte d'Ivoire", flag: '🇨🇮' },
+      { iso: 'SN', code: '+221', name: 'Sénégal', flag: '🇸🇳' },
+      { iso: 'ML', code: '+223', name: 'Mali', flag: '🇲🇱' }
+    ],
+    moov_money: [
+      { iso: 'CI', code: '+225', name: "Côte d'Ivoire", flag: '🇨🇮' },
+      { iso: 'TG', code: '+228', name: 'Togo', flag: '🇹🇬' },
+      { iso: 'BJ', code: '+229', name: 'Bénin', flag: '🇧🇯' },
+      { iso: 'BF', code: '+226', name: 'Burkina Faso', flag: '🇧🇫' },
+      { iso: 'NE', code: '+227', name: 'Niger', flag: '🇳🇪' }
+    ]
+  };
+
+  const availableCountries = countriesByNetwork[paymentNetwork] || countriesByNetwork['wave'];
+  const currentCountry = availableCountries.find(c => c.iso === isoCode) || availableCountries[0];
+
+  useEffect(() => {
+    const isValid = availableCountries.find(c => c.iso === isoCode);
+    if (!isValid) {
+      setIsoCode(availableCountries[0].iso);
+      setCountryCode(availableCountries[0].code);
+    }
+  }, [paymentNetwork, availableCountries, isoCode]);
 
   useEffect(() => {
     const fetchPromos = async () => {
@@ -434,22 +476,36 @@ function Credits() {
                     <div className="phone-input-group">
                         <label>Numéro de téléphone Mobile Money</label>
                         <div className="phone-input-wrapper-with-code">
-                            <div className="country-code-selector">
-                                <select 
-                                    value={`${isoCode}|${countryCode}`} 
-                                    onChange={(e) => {
-                                        const [iso, code] = e.target.value.split('|');
-                                        setIsoCode(iso);
-                                        setCountryCode(code);
-                                    }}
+                            <div className="country-code-selector custom-dropdown-container">
+                                <button 
+                                    type="button"
+                                    className="custom-dropdown-btn" 
+                                    onClick={() => setShowCountryDropdown(!showCountryDropdown)}
                                 >
-                                    <option value="CI|+225">🇨🇮 +225</option>
-                                    <option value="SN|+221">🇸🇳 +221</option>
-                                    <option value="ML|+223">🇲🇱 +223</option>
-                                    <option value="BF|+226">🇧🇫 +226</option>
-                                    <option value="CM|+237">🇨🇲 +237</option>
-                                    <option value="CD|+243">🇨🇩 +243</option>
-                                </select>
+                                    <span className="flag-icon">{currentCountry.flag}</span>
+                                    <span>{currentCountry.code}</span>
+                                    <ChevronDown size={14} />
+                                </button>
+                                
+                                {showCountryDropdown && (
+                                    <div className="custom-dropdown-menu">
+                                        {availableCountries.map(country => (
+                                            <div 
+                                                key={country.iso} 
+                                                className={`custom-dropdown-item ${isoCode === country.iso ? 'active' : ''}`}
+                                                onClick={() => {
+                                                    setIsoCode(country.iso);
+                                                    setCountryCode(country.code);
+                                                    setShowCountryDropdown(false);
+                                                }}
+                                            >
+                                                <span className="flag-icon">{country.flag}</span>
+                                                <span className="country-name">{country.name}</span>
+                                                <span className="country-code-span">{country.code}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                             <input 
                                 type="tel" 

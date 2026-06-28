@@ -628,3 +628,76 @@
 .phone-input-with-code:focus {
     border-color: transparent;
 }
+
+/* Custom Dropdown for Country Code */
+.custom-dropdown-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.custom-dropdown-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    outline: none;
+}
+
+.custom-dropdown-btn .flag-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.custom-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: max-content;
+    min-width: 200px;
+    background: #1e1b4b;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    z-index: 100;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.custom-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.custom-dropdown-item:hover {
+    background: rgba(139, 92, 246, 0.2);
+}
+
+.custom-dropdown-item.active {
+    background: rgba(139, 92, 246, 0.4);
+}
+
+.custom-dropdown-item .flag-icon {
+    font-size: 1.2rem;
+}
+
+.custom-dropdown-item .country-name {
+    flex: 1;
+    font-size: 0.9rem;
+    color: #cbd5e1;
+}
+
+.custom-dropdown-item .country-code-span {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    font-weight: bold;
+}
