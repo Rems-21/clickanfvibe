@@ -131,7 +131,7 @@ function Home() {
       </div>
 
       {activePromos.length > 0 && (
-        <div className="promo-banner" onClick={() => navigate('/recharge')}>
+        <div className="promo-banner" onClick={() => navigate('/credits')}>
           <div style={{display: 'flex'}}>
             <Gift size={24} color="var(--primary-color)" />
           </div>
