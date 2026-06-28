@@ -579,3 +579,52 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+.phone-input-wrapper-with-code {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    transition: border-color 0.2s;
+    overflow: hidden;
+}
+
+.phone-input-wrapper-with-code:focus-within {
+    border-color: #8b5cf6;
+}
+
+.country-code-selector {
+    background: rgba(255, 255, 255, 0.05);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+.country-code-selector select {
+    background: transparent;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+    appearance: none; /* remove default arrow */
+    -webkit-appearance: none;
+}
+
+.country-code-selector select option {
+    background: #1e1b4b;
+    color: white;
+}
+
+.phone-input-with-code {
+    border: none;
+    background: transparent;
+    padding: 12px;
+    border-radius: 0;
+}
+
+.phone-input-with-code:focus {
+    border-color: transparent;
+}

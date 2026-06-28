@@ -21,6 +21,8 @@ function Credits() {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [countryCode, setCountryCode] = useState('+225');
+  const [isoCode, setIsoCode] = useState('CI');
   const [paymentNetwork, setPaymentNetwork] = useState('wave');
   const [paymentStatus, setPaymentStatus] = useState('idle');
 
@@ -88,7 +90,8 @@ function Credits() {
               amount_fcfa: selectedPackage.amount,
               credits_to_add: selectedPackage.gens,
               payment_method: paymentNetwork,
-              phone_number: phoneNumber,
+              phone_number: `${countryCode}${phoneNumber.replace(/^0+/, '')}`,
+              country: isoCode,
               origin: window.location.origin
           })
       });
@@ -430,14 +433,30 @@ function Credits() {
 
                     <div className="phone-input-group">
                         <label>Numéro de téléphone Mobile Money</label>
-                        <div className="phone-input-wrapper">
-                            <Smartphone size={20} className="phone-icon" />
+                        <div className="phone-input-wrapper-with-code">
+                            <div className="country-code-selector">
+                                <select 
+                                    value={`${isoCode}|${countryCode}`} 
+                                    onChange={(e) => {
+                                        const [iso, code] = e.target.value.split('|');
+                                        setIsoCode(iso);
+                                        setCountryCode(code);
+                                    }}
+                                >
+                                    <option value="CI|+225">🇨🇮 +225</option>
+                                    <option value="SN|+221">🇸🇳 +221</option>
+                                    <option value="ML|+223">🇲🇱 +223</option>
+                                    <option value="BF|+226">🇧🇫 +226</option>
+                                    <option value="CM|+237">🇨🇲 +237</option>
+                                    <option value="CD|+243">🇨🇩 +243</option>
+                                </select>
+                            </div>
                             <input 
                                 type="tel" 
                                 placeholder="Ex: 0701020304" 
                                 value={phoneNumber} 
                                 onChange={(e) => setPhoneNumber(e.target.value)}
-                                className="phone-input"
+                                className="phone-input phone-input-with-code"
                             />
                         </div>
                     </div>

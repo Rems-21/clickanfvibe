@@ -28,6 +28,7 @@ class PaymentInitiateRequest(BaseModel):
     payment_method: str = None
     origin: str = None
     phone_number: str = None
+    country: str = "CI"
 
 from sqlalchemy.orm import Session
 from sqlalchemy import text
@@ -1196,6 +1197,8 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
     
     if req.phone_number:
         payload["customer"]["phone"] = req.phone_number
+    if req.country:
+        payload["customer"]["country"] = req.country
         
     if req.payment_method:
         payload["payment_method"] = req.payment_method
