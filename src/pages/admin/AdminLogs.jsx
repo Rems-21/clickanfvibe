@@ -9,8 +9,8 @@ function AdminLogs() {
   const { token } = useAuth();
   const logsEndRef = useRef(null);
 
-  const fetchLogs = async () => {
-    setLoading(true);
+  const fetchLogs = async (silent = false) => {
+    if (!silent) setLoading(true);
     try {
       const res = await fetch('/api/admin/logs?lines=300', {
         headers: { 'Authorization': `Bearer ${token}` }
@@ -22,12 +22,19 @@ function AdminLogs() {
     } catch (err) {
       console.error(err);
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   };
 
   useEffect(() => {
     if (token) fetchLogs();
+    
+    // Auto-refresh every 3 seconds for "real-time" feel
+    const interval = setInterval(() => {
+      if (token) fetchLogs(true);
+    }, 3000);
+    
+    return () => clearInterval(interval);
   }, [token]);
 
   useEffect(() => {
