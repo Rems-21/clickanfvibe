@@ -1190,8 +1190,7 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
             "credits_to_add": req.credits_to_add,
             "amount_fcfa": req.amount_fcfa,
             "payment_method": req.payment_method
-        },
-        "gateway": "mtn_momo"
+        }
     }
     
     if req.payment_method:
