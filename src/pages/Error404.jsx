@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Home, AlertTriangle } from 'lucide-react';
-import './Error.css'; // Let's use an inline style or a generic css. I'll just use inline for simplicity.
 
 function Error404() {
   const navigate = useNavigate();
