@@ -1,6 +1,7 @@
 .admin-layout {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background-color: #050505; /* Very dark background from mockup */
   color: #fff;
   font-family: 'Inter', system-ui, sans-serif;
