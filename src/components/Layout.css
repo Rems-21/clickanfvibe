@@ -249,16 +249,21 @@
   }
 
   .app-topbar {
-    display: none; /* Hide top bar on mobile */
+    padding: 12px 16px;
+  }
+
+  .topbar-search {
+    display: none;
+  }
+
+  .topbar-actions {
+    width: 100%;
+    justify-content: flex-end;
   }
 
   .main-content {
     padding: 0;
     padding-bottom: 140px; /* Space for mobile nav and audio player */
-  }
-  
-  .topbar-search {
-    width: 200px;
   }
 }
 
