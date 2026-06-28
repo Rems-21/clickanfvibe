@@ -68,10 +68,12 @@ function AdminGenerations() {
       if (res.ok) {
         setMusics(musics.filter(m => m.id !== musicId));
       } else {
-        alert("Erreur lors de la suppression.");
+        const text = await res.text();
+        alert(`Erreur lors de la suppression (Code ${res.status}): ${text}`);
       }
     } catch (err) {
       console.error("Erreur de suppression", err);
+      alert(`Erreur réseau: ${err.message}`);
     }
   };
 
