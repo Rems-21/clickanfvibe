@@ -101,8 +101,7 @@ function AdminLogs() {
       <div className="admin-table-card" style={{ padding: '0', overflow: 'hidden', background: '#0a0a0a', border: '1px solid #333' }}>
         <div style={{
           padding: '20px',
-          height: '600px',
-          overflowY: 'auto',
+          minHeight: '600px',
           fontFamily: 'monospace',
           fontSize: '13px',
           color: '#00ff00',
