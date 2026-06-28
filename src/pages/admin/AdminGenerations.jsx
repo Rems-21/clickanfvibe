@@ -77,9 +77,7 @@ function AdminGenerations() {
     }
   };
 
-  const uniqueMusics = Array.from(new Map(musics.map(m => [m.title, m])).values());
-
-  const filteredMusics = uniqueMusics.filter(m => 
+  const filteredMusics = musics.filter(m => 
     (m.title && m.title.toLowerCase().includes(searchTerm.toLowerCase())) || 
     (m.user_name && m.user_name.toLowerCase().includes(searchTerm.toLowerCase()))
   );
