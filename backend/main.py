@@ -874,20 +874,39 @@ def health():
 
 from sqlalchemy import func
 
+@app.post("/api/track/download")
+def track_download(db: Session = Depends(get_db)):
+    setting = db.query(models.Setting).filter(models.Setting.key == "APP_DOWNLOAD_COUNT").first()
+    if not setting:
+        setting = models.Setting(key="APP_DOWNLOAD_COUNT", value="1", description="Nombre de téléchargements de la PWA")
+        db.add(setting)
+    else:
+        setting.value = str(int(setting.value) + 1)
+    db.commit()
+    return {"status": "success"}
+
 @app.get("/api/admin/stats")
 def get_admin_stats(db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
-    generations_count = db.query(models.Music).count()
-    users_count = db.query(models.User).count()
-    credits_consumed = generations_count * 12
-    revenues = db.query(func.sum(models.Transaction.price_fcfa)).scalar() or 0
-    premium_count = db.query(models.User).filter(models.User.is_premium == True).count()
+    total_users = db.query(models.User).count()
+    
+    # Online Users
+    now = time.time()
+    online_users = sum(1 for ts in active_sessions.values() if now - ts < 300)
+    
+    total_generations = db.query(models.Music).count()
+    total_revenue = db.query(func.sum(models.Transaction.price_fcfa)).scalar() or 0
+    
+    # App Downloads
+    setting = db.query(models.Setting).filter(models.Setting.key == "APP_DOWNLOAD_COUNT").first()
+    total_downloads = int(setting.value) if setting else 0
     
     return {
-        "generations": generations_count,
-        "users": users_count,
-        "credits": credits_consumed,
-        "revenues": revenues,
-        "premium_users": premium_count
+        "total_users": total_users,
+        "online_users": online_users,
+        "total_generations": total_generations,
+        "total_revenue": total_revenue,
+        "total_downloads": total_downloads,
+        "premium_users": db.query(models.User).filter(models.User.is_premium == True).count()
     }
 
 @app.get("/api/admin/recent-generations")
