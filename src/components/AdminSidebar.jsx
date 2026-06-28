@@ -11,6 +11,7 @@ function AdminSidebar({ isOpen, closeSidebar }) {
 
   const menuItems = [
     { path: '/devvorx/admin-1', icon: <LayoutDashboard size={20} />, label: 'Tableau de bord' },
+    { path: '/devvorx/admin-1/stats', icon: <LayoutDashboard size={20} />, label: 'Statistiques' },
     { path: '/devvorx/admin-1/generations', icon: <Music size={20} />, label: 'Générations' },
     { path: '/devvorx/admin-1/users', icon: <Users size={20} />, label: 'Utilisateurs' },
     { path: '/devvorx/admin-1/credits', icon: <CreditCard size={20} />, label: 'Achats de Générations' },

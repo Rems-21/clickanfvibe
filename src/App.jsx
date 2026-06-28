@@ -38,6 +38,7 @@ import AdminLibrary from './pages/admin/AdminLibrary';
 import AdminSettings from './pages/admin/AdminSettings';
 import AdminPromotions from './pages/admin/AdminPromotions';
 import AdminLogs from './pages/admin/AdminLogs';
+import AdminStats from './pages/admin/AdminStats';
 
 function AppContent() {
   const location = useLocation();
@@ -48,17 +49,27 @@ function AppContent() {
 
   useEffect(() => {
     // Fetch public config
-    fetch('/api/config')
-      .then(res => res.json())
-      .then(data => {
+    const fetchConfig = async () => {
+      try {
+        const res = await fetch('/api/config');
+        const data = await res.json();
         setMaintenance(data.maintenance_mode);
+      } catch (err) {
+        console.error(err);
+      } finally {
         setConfigLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to fetch config", err);
-        setConfigLoading(false);
-      });
-  }, []);
+      }
+    };
+    fetchConfig();
+    
+    // Listen for PWA installation
+    const handleAppInstalled = () => {
+      fetch('/api/track/download', { method: 'POST' }).catch(console.error);
+    };
+    window.addEventListener('appinstalled', handleAppInstalled);
+    
+    return () => window.removeEventListener('appinstalled', handleAppInstalled);
+  }, [logout]);
 
   useEffect(() => {
     // Notify Facebook Pixel on route change
@@ -120,6 +131,7 @@ function AppContent() {
             <Route path="/devvorx/admin-1/settings" element={<AdminSettings />} />
             <Route path="/devvorx/admin-1/promotions" element={<AdminPromotions />} />
             <Route path="/devvorx/admin-1/logs" element={<AdminLogs />} />
+            <Route path="/devvorx/admin-1/stats" element={<AdminStats />} />
           </Route>
         </Route>
 

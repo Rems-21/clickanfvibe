@@ -10,8 +10,8 @@ function PaymentSuccess() {
   const { user, refreshCredits } = useAuth();
   const [recharging, setRecharging] = useState(true);
   
-  // GeniusPay redirects here without state, so we won't show exact local amounts 
-  // We just fetch the updated user object.
+  // KPay redirects here without state, so we won't show exact local amounts 
+  // unless we pass them in URL params, but we'll keep it simple.
   const hasRecharged = useRef(false);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ function PaymentSuccess() {
     }, 1500);
   }, [refreshCredits]);
 
-  const methodName = 'GeniusPay';
+  const methodName = 'KPay';
 
   if (recharging) {
     return (
@@ -54,7 +54,7 @@ function PaymentSuccess() {
         <div className="processing-content text-center">
           <Loader2 size={48} className="spinner" color="#9933FF" style={{ animation: 'spin 2s linear infinite' }} />
           <h2 className="mt-20">Validation de votre paiement...</h2>
-          <p className="text-muted mt-10">Veuillez patienter pendant que nous confirmons la transaction auprès de GeniusPay.</p>
+          <p className="text-muted mt-10">Veuillez patienter pendant que nous confirmons la transaction auprès de KPay.</p>
         </div>
       </div>
     );

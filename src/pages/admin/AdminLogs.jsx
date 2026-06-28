@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Terminal, RefreshCcw, Download } from 'lucide-react';
+import { Terminal, RefreshCcw, Download, Search } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import './AdminDashboard.css';
 
 function AdminLogs() {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
   const { token } = useAuth();
   const logsEndRef = useRef(null);
 
@@ -56,6 +57,8 @@ function AdminLogs() {
     window.URL.revokeObjectURL(url);
   };
 
+  const filteredLogs = logs.filter(line => line.toLowerCase().includes(searchTerm.toLowerCase()));
+
   return (
     <div className="admin-dashboard">
       <header className="admin-topbar" style={{ marginBottom: '20px' }}>
@@ -63,7 +66,17 @@ function AdminLogs() {
           <h1>Logs Système <Terminal size={24} style={{ marginLeft: '10px', verticalAlign: 'bottom' }} /></h1>
           <p>Consultez les logs de l'API (erreurs, événements importants)</p>
         </div>
-        <div className="admin-topbar-right" style={{ gap: '10px', display: 'flex' }}>
+        <div className="admin-topbar-right" style={{ gap: '10px', display: 'flex', alignItems: 'center' }}>
+          <div className="admin-search" style={{ margin: 0, marginRight: '10px' }}>
+            <Search size={18} color="#9ca3af" />
+            <input 
+              type="text" 
+              placeholder="Filtrer les logs..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ width: '200px' }}
+            />
+          </div>
           <button 
             className="btn-secondary"
             onClick={fetchLogs}
@@ -101,8 +114,10 @@ function AdminLogs() {
             <div style={{ color: '#888' }}>Chargement des logs...</div>
           ) : logs.length === 0 ? (
             <div style={{ color: '#888' }}>Aucun log disponible.</div>
+          ) : filteredLogs.length === 0 ? (
+            <div style={{ color: '#888' }}>Aucun log ne correspond à votre recherche.</div>
           ) : (
-            logs.map((line, index) => {
+            filteredLogs.map((line, index) => {
               // Basic color coding for log levels
               let color = '#00ff00'; // Default INFO/DEBUG
               if (line.includes('ERROR') || line.includes('EXCEPTION')) color = '#ff3366';

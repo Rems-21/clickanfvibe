@@ -250,7 +250,7 @@ function Credits() {
           </div>
           <div className="secure-payment">
             <ShieldCheck size={14} />
-            <span>Paiement 100% sécurisé via GeniusPay</span>
+            <span>Paiement 100% sécurisé via KPay</span>
           </div>
         </section>
 

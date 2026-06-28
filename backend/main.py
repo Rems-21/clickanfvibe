@@ -1,6 +1,9 @@
 import os
 import uuid
 import datetime
+import time
+
+active_sessions = {}
 import requests
 import logging
 from logging.handlers import RotatingFileHandler
@@ -212,6 +215,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
         raise credentials_exception
     if user.is_suspended:
         raise HTTPException(status_code=403, detail="Votre compte a été suspendu.")
+    active_sessions[user.id] = time.time()
     return user
 
 def get_current_admin_user(current_user: models.User = Depends(get_current_user)):
