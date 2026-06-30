@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Zap, HelpCircle, Music, Settings, MessageCircle, Clock, Check, Sparkles, Heart, Drum, Piano, Mic2, Church, Star, Sunrise, CloudRain, Coffee, Flame, Compass, User } from 'lucide-react';
+import { Zap, HelpCircle, Music, Settings, Check, Sparkles, Heart, Drum, Piano, Mic2, Church, Star, Sunrise, CloudRain, Coffee, Flame } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Create.css';
@@ -15,6 +15,7 @@ function Create() {
   const [voice, setVoice] = useState('Féminine');
   const [tempo, setTempo] = useState('Normal');
   const [language, setLanguage] = useState('fr');
+  const [eventType, setEventType] = useState(location.state?.eventType || null);
 
   const promptIdeas = [
     "Une chanson afrobeat rythmée sur la réussite et la persévérance",
@@ -28,6 +29,30 @@ function Create() {
   const suggestPrompt = () => {
     const randomIdea = promptIdeas[Math.floor(Math.random() * promptIdeas.length)];
     setPrompt(randomIdea);
+  };
+
+  const eventTypes = [
+    { id: 'Anniversaire', emoji: '🎂', color: 'orange', hint: 'Une chanson joyeuse pour célébrer' },
+    { id: 'Mariage', emoji: '💍', color: 'pink', hint: 'Une chanson romantique et élégante' },
+    { id: 'Déclaration d\'amour', emoji: '❤️', color: 'red', hint: 'Pour exprimer ses sentiments' },
+    { id: 'Gospel / Prière', emoji: '🙏', color: 'purple', hint: 'Une chanson spirituelle et inspirante' },
+    { id: 'Naissance', emoji: '👶', color: 'blue', hint: 'Pour accueillir le nouveau-né' },
+    { id: 'Jingle Entreprise', emoji: '🏢', color: 'blue', hint: 'Pour promouvoir une marque' },
+    { id: 'Félicitations', emoji: '🎉', color: 'orange', hint: 'Pour célébrer une réussite' },
+    { id: 'Remise de diplôme', emoji: '🎓', color: 'purple', hint: 'Pour célébrer l\'académique' },
+    { id: 'Deuil / Hommage', emoji: '🕊️', color: 'pink', hint: 'Une chanson douce et respectueuse' },
+    { id: 'Chanson originale', emoji: '🎤', color: 'red', hint: 'Totalement libre et personnel' },
+  ];
+
+  const handleEventTypeSelect = (ev) => {
+    if (eventType === ev.id) {
+      setEventType(null);
+      return;
+    }
+    setEventType(ev.id);
+    if (!prompt) {
+      setPrompt(ev.hint);
+    }
   };
 
   const genres = [
@@ -105,11 +130,33 @@ function Create() {
                 return;
               }
               navigate('/generating', { 
-                  state: { prompt, style, mood, voice, tempo } 
+                  state: { prompt, style, mood, voice, tempo, eventType } 
                 });
             }}>
               <Sparkles size={16} /> Générer
             </button>
+          </div>
+        </section>
+
+        {/* Carrousel Type d'évènement */}
+        <section className="section-block">
+          <div className="section-header">
+            <h3 className="flex-title">🎯 Pour quelle occasion ?</h3>
+            {eventType && <button onClick={() => setEventType(null)} style={{background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: 12, cursor: 'pointer'}}>✕ Effacer</button>}
+          </div>
+          <div className="horizontal-scroll">
+            {eventTypes.map(ev => (
+              <div
+                key={ev.id}
+                className={`selectable-card ${eventType === ev.id ? 'selected' : ''}`}
+                onClick={() => handleEventTypeSelect(ev)}
+                style={{minWidth: 90}}
+              >
+                {eventType === ev.id && <div className="check-badge"><Check size={12} strokeWidth={3} /></div>}
+                <div className="genre-icon" style={{fontSize: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.05)'}}>{ev.emoji}</div>
+                <span style={{fontSize: 11, textAlign: 'center', lineHeight: 1.3}}>{ev.id}</span>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -199,7 +246,8 @@ function Create() {
                     style, 
                     mood, 
                     voice,
-                    tempo
+                    tempo,
+                    eventType
                   } 
                 });
           }}>

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Bell, Zap, Music, Play, Heart, Plus, Compass, User, MoreVertical, Share2, Drum, Piano, Mic2, Church, Gift } from 'lucide-react';
+import { Bell, Zap, Music, Play, Pause, Heart, Compass, MoreVertical, Share2, Drum, Piano, Mic2, Church, Gift, Star, Flame, Users, ShieldCheck, Headphones } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useAudio } from '../context/AudioContext';
 import './Home.css';
@@ -11,9 +11,12 @@ function Home() {
   const { playTrack } = useAudio();
   const [history, setHistory] = useState([]);
   const [trending, setTrending] = useState([]);
+  const [genreMusics, setGenreMusics] = useState({});
   const [prompt, setPrompt] = useState('');
   const [activePromos, setActivePromos] = useState([]);
   const [timeLeft, setTimeLeft] = useState('');
+  const [demoPlaying, setDemoPlaying] = useState(null);
+  const demoRefs = useRef({});
 
   const calculateTimeLeft = (endDateStr) => {
     if (!endDateStr) return null;
@@ -105,6 +108,19 @@ function Home() {
     };
     fetchHistoryAndTrending();
   }, []);
+
+  const styleCarousels = [
+    { label: '🥁 Afrobeat', style: 'Afrobeat' },
+    { label: '🎹 Amapiano', style: 'Amapiano' },
+    { label: '🙏 Gospel', style: 'Gospel' },
+    { label: '🎤 Rap', style: 'Rap' },
+    { label: "❤️ R'n'B", style: "R'n'B" },
+    { label: '🔥 Mbolé', style: 'Mbolé' },
+  ];
+
+  const handleDemoPlay = (trackId, url, title, style, duration_str, lyrics, allTracks) => {
+    playTrack({ url, title, style, duration_str, lyrics }, allTracks);
+  };
   return (
     <div className="home-container">
       <header className="home-header mobile-only">
@@ -151,14 +167,14 @@ function Home() {
       <div className="home-content">
         <section className="hero-banner-new glass-panel desktop-only">
           <div className="hero-content">
-            <h2>Crée ta musique avec l'IA</h2>
+            <h2>Quelle chanson souhaites-tu créer aujourd'hui ?</h2>
             <p>Décris ton idée, choisis un style et une ambiance,<br/>et laisse notre IA composer pour toi.</p>
             <div className="hero-actions">
               <button className="btn-primary-gradient" onClick={() => navigate('/create')}>
-                <Zap size={16} /> Créer une musique
+                <Zap size={16} /> Créer ma chanson
               </button>
               <button className="btn-outline" onClick={() => navigate('/explore')}>
-                <Music size={16} /> Découvrir nos styles
+                <Music size={16} /> Explorer
               </button>
             </div>
           </div>
@@ -170,7 +186,7 @@ function Home() {
         <section className="prompt-section glass-panel mobile-only">
           <div className="prompt-header">
             <Zap size={16} fill="currentColor" />
-            <span>Création rapide</span>
+            <span>Quelle chanson souhaites-tu créer ?</span>
           </div>
           <textarea 
             placeholder="Décris le style, l'humeur, les instruments... ex: Un beat trap lourd avec une flûte mélancolique"
@@ -217,13 +233,42 @@ function Home() {
           </div>
         </section>
 
+        {/* CARROUSELS PAR STYLE */}
+        {styleCarousels.map(({ label, style }) => {
+          const tracks = trending.filter(t => t.style === style);
+          if (tracks.length === 0) return null;
+          return (
+            <section className="section-block" key={style}>
+              <div className="section-header">
+                <h3>{label}</h3>
+                <button className="link-secondary" onClick={() => navigate('/create', { state: { style } })} style={{background:'none',border:'none',cursor:'pointer',color:'var(--primary-color)',fontSize:13}}>Créer →</button>
+              </div>
+              <div className="horizontal-scroll">
+                {tracks.map((music) => (
+                  <div className="trend-card" key={music.id}>
+                    <div className="trend-img-container">
+                      <img src={music.cover_url || "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=300&h=300&fit=crop"} alt={music.title} className="trend-img" />
+                      <button className="play-btn" onClick={() => handleDemoPlay(music.id, music.audio_url, music.title, music.style, music.duration_str, music.lyrics, tracks)}><Play size={16} fill="white" /></button>
+                    </div>
+                    <div className="trend-info">
+                      <h4>{music.title}</h4>
+                      <p>{music.style} • {music.duration_str}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+
+        {/* SECTION TENDANCES GLOBALES */}
         <section className="section-block">
           <div className="section-header">
-            <h3>Tendances</h3>
+            <h3>🔥 Tendances</h3>
             <a href="#" className="link-secondary">Voir tout</a>
           </div>
           <div className="horizontal-scroll">
-            {trending.length > 0 ? trending.map((music) => (
+            {trending.length > 0 ? trending.slice(0, 8).map((music) => (
               <div className="trend-card" key={music.id}>
                 <div className="trend-img-container">
                   <img src={music.cover_url || "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=300&h=300&fit=crop"} alt={music.title} className="trend-img" />
@@ -244,6 +289,41 @@ function Home() {
             )) : (
               <p style={{color: 'var(--text-secondary)', fontSize: 14, marginLeft: '20px'}}>Aucune musique en tendance pour le moment.</p>
             )}
+          </div>
+        </section>
+
+        {/* SECTION ELEMENTS DE CONFIANCE */}
+        <section className="section-block trust-section">
+          <h3 style={{textAlign:'center', marginBottom: 20}}>Pourquoi choisir Click & Vibe ?</h3>
+          <div className="trust-grid">
+            <div className="trust-item">
+              <div className="trust-icon"><Headphones size={28} color="#C466FF" /></div>
+              <div className="trust-text">
+                <strong>Qualité Professionnelle</strong>
+                <span>Des chansons générées en moins de 2 minutes</span>
+              </div>
+            </div>
+            <div className="trust-item">
+              <div className="trust-icon"><ShieldCheck size={28} color="#10b981" /></div>
+              <div className="trust-text">
+                <strong>Paiement Sécurisé</strong>
+                <span>Orange Money · MTN MoMo · Wave</span>
+              </div>
+            </div>
+            <div className="trust-item">
+              <div className="trust-icon"><Star size={28} color="#FFB800" fill="#FFB800" /></div>
+              <div className="trust-text">
+                <strong>Apprécié par nos utilisateurs</strong>
+                <span>⭐⭐⭐⭐⭐ Satisfaction garantie</span>
+              </div>
+            </div>
+            <div className="trust-item">
+              <div className="trust-icon"><Users size={28} color="#FF3366" /></div>
+              <div className="trust-text">
+                <strong>Support disponible</strong>
+                <span>Assistance via WhatsApp</span>
+              </div>
+            </div>
           </div>
         </section>
 
