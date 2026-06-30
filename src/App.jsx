@@ -98,7 +98,6 @@ function AppContent() {
       } catch (e) {}
     };
     trackVisit();
-  }, []);
 
     // Listen for PWA installation
     const handleAppInstalled = () => {
