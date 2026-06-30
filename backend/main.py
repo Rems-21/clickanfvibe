@@ -986,7 +986,7 @@ def get_admin_users_growth(db: Session = Depends(get_db), current_user: models.U
     return data
 
 @app.get("/api/admin/users")
-def get_admin_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+def get_admin_users(skip: int = 0, limit: int = 5000, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
     users = db.query(models.User).order_by(models.User.id.desc()).offset(skip).limit(limit).all()
     return [{"id": u.id, "email": u.email, "name": u.name, "credits": u.credits, "is_premium": u.is_premium, "is_suspended": u.is_suspended, "created_at": u.created_at} for u in users]
 
@@ -1036,7 +1036,7 @@ def admin_delete_user(user_id: int, db: Session = Depends(get_db), current_user:
     return {"status": "success", "message": "User deleted"}
 
 @app.get("/api/admin/transactions")
-def get_admin_transactions(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+def get_admin_transactions(skip: int = 0, limit: int = 5000, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
     transactions = db.query(models.Transaction).order_by(models.Transaction.created_at.desc()).offset(skip).limit(limit).all()
     result = []
     for t in transactions:
@@ -1053,7 +1053,7 @@ def get_admin_transactions(skip: int = 0, limit: int = 100, db: Session = Depend
     return result
 
 @app.get("/api/admin/musics")
-def get_admin_musics(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+def get_admin_musics(skip: int = 0, limit: int = 5000, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
     musics = db.query(models.Music).order_by(models.Music.created_at.desc()).offset(skip).limit(limit).all()
     result = []
     for m in musics:
