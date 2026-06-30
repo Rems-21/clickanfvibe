@@ -17,6 +17,7 @@ function AdminSidebar({ isOpen, closeSidebar }) {
     { path: '/devvorx/admin-1/users', icon: <Users size={20} />, label: 'Utilisateurs' },
     { path: '/devvorx/admin-1/credits', icon: <CreditCard size={20} />, label: 'Achats de Générations' },
     { path: '/devvorx/admin-1/promotions', icon: <Megaphone size={20} />, label: 'Promotions' },
+    { path: '/devvorx/admin-1/pricing', icon: <ShoppingCart size={20} />, label: 'Tarifs & Forfaits' },
     { path: '/devvorx/admin-1/library', icon: <Library size={20} />, label: 'Bibliothèque globale' },
     { path: '/devvorx/admin-1/logs', icon: <Terminal size={20} />, label: 'Logs Système' },
     { path: '/devvorx/admin-1/settings', icon: <Settings size={20} />, label: 'Paramètres' },

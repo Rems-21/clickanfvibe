@@ -148,3 +148,20 @@ class AnalyticsEvent(Base):
     country = Column(String(100), nullable=True)
     extra = Column(Text, nullable=True)           # JSON for extra data (style, amount, etc.)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class PricingPlan(Base):
+    __tablename__ = "pricing_plans"
+
+    id = Column(Integer, primary_key=True, index=True)
+    category = Column(String(50), default="single") # single or kit
+    credits = Column(Integer)
+    price_fcfa = Column(Integer)
+    original_price_fcfa = Column(Integer, nullable=True) # crossed out price
+    title = Column(String(255))
+    badge = Column(String(100), nullable=True)
+    badge_color = Column(String(50), nullable=True) # e.g. orange
+    icon_color = Column(String(50), default="pink")
+    description = Column(String(255), nullable=True)
+    is_active = Column(Boolean, default=True)
+    display_order = Column(Integer, default=0)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)

@@ -1421,6 +1421,33 @@ class NotificationCreate(BaseModel):
     message: str
     type: str = "info"
 
+class PricingPlanCreate(BaseModel):
+    category: str
+    credits: int
+    price_fcfa: int
+    original_price_fcfa: int = None
+    title: str
+    badge: str = None
+    badge_color: str = None
+    icon_color: str = "pink"
+    description: str = None
+    display_order: int = 0
+    is_active: bool = True
+
+class PricingPlanUpdate(BaseModel):
+    category: str = None
+    credits: int = None
+    price_fcfa: int = None
+    original_price_fcfa: int = None
+    title: str = None
+    badge: str = None
+    badge_color: str = None
+    icon_color: str = None
+    description: str = None
+    display_order: int = None
+    is_active: bool = None
+
+
 @app.get("/api/notifications")
 def get_user_notifications(db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     # Get user specific and broadcast (user_id is None) notifications
@@ -1572,3 +1599,57 @@ def get_analytics(db: Session = Depends(get_db), current_user: models.User = Dep
         "active_today": active_today,
         "gens_today": gens_today
     }
+
+
+# ─── PRICING PLANS ────────────────────────────────────────────────────────────
+
+def seed_default_plans(db: Session):
+    existing = db.query(models.PricingPlan).count()
+    if existing == 0:
+        plans = [
+            models.PricingPlan(category="single", credits=1, price_fcfa=1250, title="1 Gen", icon_color="pink", display_order=1),
+            models.PricingPlan(category="single", credits=2, price_fcfa=2300, original_price_fcfa=2500, title="2 Gens", badge="-8%", icon_color="purple", display_order=2),
+            models.PricingPlan(category="single", credits=3, price_fcfa=3200, original_price_fcfa=3750, title="3 Gens", badge="Meilleur prix", badge_color="orange", icon_color="orange", display_order=3),
+            
+            models.PricingPlan(category="kit", credits=5, price_fcfa=5000, title="5 Gens", badge="🥉 Starter", icon_color="pink", description="Idéal pour découvrir Click & Vibe.", display_order=4),
+            models.PricingPlan(category="kit", credits=10, price_fcfa=9000, original_price_fcfa=12500, title="10 Gens", badge="🥈 Populaire", badge_color="purple", icon_color="purple", description="Économie par rapport aux achats à l'unité.", display_order=5),
+            models.PricingPlan(category="kit", credits=25, price_fcfa=20000, original_price_fcfa=31250, title="25 Gens", badge="🥇 Premium", badge_color="orange", icon_color="orange", description="Pour les créateurs réguliers.", display_order=6)
+        ]
+        db.add_all(plans)
+        db.commit()
+
+@app.get("/api/plans")
+def get_plans(db: Session = Depends(get_db)):
+    seed_default_plans(db)
+    plans = db.query(models.PricingPlan).filter(models.PricingPlan.is_active == True).order_by(models.PricingPlan.display_order).all()
+    return plans
+
+@app.get("/api/admin/plans")
+def admin_get_plans(db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+    seed_default_plans(db)
+    return db.query(models.PricingPlan).order_by(models.PricingPlan.display_order).all()
+
+@app.post("/api/admin/plans")
+def admin_create_plan(req: PricingPlanCreate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+    new_plan = models.PricingPlan(**req.dict())
+    db.add(new_plan)
+    db.commit()
+    return {"status": "success", "id": new_plan.id}
+
+@app.put("/api/admin/plans/{plan_id}")
+def admin_update_plan(plan_id: int, req: PricingPlanUpdate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+    plan = db.query(models.PricingPlan).filter(models.PricingPlan.id == plan_id).first()
+    if not plan:
+        raise HTTPException(status_code=404, detail="Plan not found")
+    for k, v in req.dict(exclude_unset=True).items():
+        setattr(plan, k, v)
+    db.commit()
+    return {"status": "success"}
+
+@app.delete("/api/admin/plans/{plan_id}")
+def admin_delete_plan(plan_id: int, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+    plan = db.query(models.PricingPlan).filter(models.PricingPlan.id == plan_id).first()
+    if plan:
+        db.delete(plan)
+        db.commit()
+    return {"status": "success"}

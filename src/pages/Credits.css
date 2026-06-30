@@ -266,6 +266,20 @@
   color: #FF6B00;
 }
 
+.package-price-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.package-price-original {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-decoration: line-through;
+  margin-bottom: -2px;
+}
+
 .package-price {
   font-size: 14px;
   font-weight: 600;

@@ -18,10 +18,11 @@ function Credits() {
   const [loadingTxs, setLoadingTxs] = useState(true);
   const [isProcessing, setIsProcessing] = useState(null); // stores the id of the package being processed
   const [activePromos, setActivePromos] = useState([]);
+  const [plans, setPlans] = useState({ single: [], kit: [] });
+  const [loadingPlans, setLoadingPlans] = useState(true);
   const [promoCode, setPromoCode] = useState('');
   const [promoMessage, setPromoMessage] = useState(null);
 
-  useEffect(() => {
     const fetchPromos = async () => {
       try {
         const res = await fetch('/api/promotions/active');
@@ -32,7 +33,26 @@ function Credits() {
         console.error("Erreur promos", e);
       }
     };
+    
+    const fetchPlans = async () => {
+      try {
+        const res = await fetch('/api/plans');
+        if (res.ok) {
+          const data = await res.json();
+          setPlans({
+            single: data.filter(p => p.category === 'single'),
+            kit: data.filter(p => p.category === 'kit')
+          });
+        }
+      } catch (e) {
+        console.error("Erreur plans", e);
+      } finally {
+        setLoadingPlans(false);
+      }
+    };
+    
     fetchPromos();
+    fetchPlans();
   }, []);
 
   const handleApplyPromo = async () => {
@@ -160,96 +180,73 @@ function Credits() {
 
         <section className="section-block">
           <h3 className="section-title">Achète plus de Gens</h3>
-          <div className="packages-list">
-            <div className="package-card popular">
-              <div className="package-icon pink"><Zap size={24} fill="#FF3366" color="#FF3366" /></div>
-              <div className="package-details">
-                <h4>1 Gen</h4>
-              </div>
-              <div className="package-price text-primary">1 250 FCFA</div>
-              <button className="btn-buy primary" onClick={() => handleBuy(1250, 1)} disabled={isProcessing === 1250}>
-                {isProcessing === 1250 ? <Loader2 size={20} className="spinner" /> : <ArrowRight size={20} />}
-              </button>
-            </div>
-
-            <div className="package-card popular">
-              <div className="package-badge">Populaire</div>
-              <div className="package-icon purple"><Zap size={24} fill="#9933FF" color="#9933FF" /></div>
-              <div className="package-details">
-                <div className="package-title-row">
-                  <h4>2 Gens</h4>
-                  <div className="package-discount">-8%</div>
+          {loadingPlans ? (
+            <div style={{textAlign: 'center', padding: '20px'}}><Loader2 className="spinner" size={24} /></div>
+          ) : (
+            <div className="packages-list">
+              {plans.single.map(plan => (
+                <div key={plan.id} className="package-card popular">
+                  {plan.badge && <div className="package-badge">{plan.badge}</div>}
+                  <div className={`package-icon ${plan.icon_color || 'pink'}`}>
+                    <Zap size={24} fill="currentColor" color="currentColor" />
+                  </div>
+                  <div className="package-details">
+                    <div className="package-title-row">
+                      <h4>{plan.title}</h4>
+                      {plan.badge_color && plan.badge && plan.badge.includes('%') && (
+                        <div className={`package-discount ${plan.badge_color}`}>{plan.badge}</div>
+                      )}
+                    </div>
+                    {plan.description && <p>{plan.description}</p>}
+                  </div>
+                  <div className="package-price-container">
+                    {plan.original_price_fcfa && (
+                      <span className="package-price-original">
+                        <del>{plan.original_price_fcfa.toLocaleString()} FCFA</del>
+                      </span>
+                    )}
+                    <div className="package-price text-primary">{plan.price_fcfa.toLocaleString()} FCFA</div>
+                  </div>
+                  <button className="btn-buy primary" onClick={() => handleBuy(plan.price_fcfa, plan.credits)} disabled={isProcessing === plan.price_fcfa}>
+                    {isProcessing === plan.price_fcfa ? <Loader2 size={20} className="spinner" /> : <ArrowRight size={20} />}
+                  </button>
                 </div>
-              </div>
-              <div className="package-price">2 300 FCFA</div>
-              <button className="btn-buy primary" onClick={() => handleBuy(2300, 2)} disabled={isProcessing === 2300}>
-                {isProcessing === 2300 ? <Loader2 size={20} className="spinner" /> : <ArrowRight size={20} />}
-              </button>
+              ))}
             </div>
-
-            <div className="package-card popular">
-              <div className="package-badge">Meilleur prix</div>
-              <div className="package-icon orange"><Zap size={24} fill="#FF6B00" color="#FF6B00" /></div>
-              <div className="package-details">
-                <div className="package-title-row">
-                  <h4>3 Gens</h4>
-                  <div className="package-discount orange">-15%</div>
-                </div>
-              </div>
-              <div className="package-price">3 200 FCFA</div>
-              <button className="btn-buy primary" onClick={() => handleBuy(3200, 3)} disabled={isProcessing === 3200}>
-                {isProcessing === 3200 ? <Loader2 size={20} className="spinner" /> : <ArrowRight size={20} />}
-              </button>
-            </div>
-          </div>
+          )}
           
           <h3 className="section-title" style={{marginTop: '2rem'}}>Kits Créateur</h3>
-          <div className="packages-list">
-
-            <div className="package-card popular">
-              <div className="package-badge">🥉 Starter</div>
-              <div className="package-icon pink"><Zap size={24} fill="#FF3366" color="#FF3366" /></div>
-              <div className="package-details">
-                <h4>5 Gens</h4>
-                <p>Idéal pour découvrir Click & Vibe.</p>
-              </div>
-              <div className="package-price text-primary">5 000 FCFA</div>
-              <button className="btn-buy primary" onClick={() => handleBuy(5000, 5)} disabled={isProcessing === 5000}>
-                {isProcessing === 5000 ? <Loader2 size={20} className="spinner" /> : <ArrowRight size={20} />}
-              </button>
-            </div>
-
-            <div className="package-card popular">
-              <div className="package-badge">🥈 Populaire</div>
-              <div className="package-icon purple"><Zap size={24} fill="#9933FF" color="#9933FF" /></div>
-              <div className="package-details">
-                <div className="package-title-row">
-                  <h4>10 Gens</h4>
-                  <div className="package-discount">Creator</div>
+          {loadingPlans ? (
+            <div style={{textAlign: 'center', padding: '20px'}}><Loader2 className="spinner" size={24} /></div>
+          ) : (
+            <div className="packages-list">
+              {plans.kit.map(plan => (
+                <div key={plan.id} className="package-card popular">
+                  {plan.badge && <div className="package-badge">{plan.badge}</div>}
+                  <div className={`package-icon ${plan.icon_color || 'purple'}`}>
+                    <Zap size={24} fill="currentColor" color="currentColor" />
+                  </div>
+                  <div className="package-details">
+                    <div className="package-title-row">
+                      <h4>{plan.title}</h4>
+                    </div>
+                    {plan.description && <p>{plan.description}</p>}
+                  </div>
+                  <div className="package-price-container" style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center'}}>
+                    {plan.original_price_fcfa && (
+                      <span className="package-price-original" style={{fontSize: 11, color: 'var(--text-secondary)', textDecoration: 'line-through'}}>
+                        {plan.original_price_fcfa.toLocaleString()} FCFA
+                      </span>
+                    )}
+                    <div className="package-price">{plan.price_fcfa.toLocaleString()} FCFA</div>
+                  </div>
+                  <button className="btn-buy primary" onClick={() => handleBuy(plan.price_fcfa, plan.credits)} disabled={isProcessing === plan.price_fcfa}>
+                    {isProcessing === plan.price_fcfa ? <Loader2 size={20} className="spinner" /> : <ArrowRight size={20} />}
+                  </button>
                 </div>
-                <p>Économie par rapport aux achats à l'unité.</p>
-              </div>
-              <div className="package-price">9 000 FCFA</div>
-              <button className="btn-buy primary" onClick={() => handleBuy(9000, 10)} disabled={isProcessing === 9000}>
-                {isProcessing === 9000 ? <Loader2 size={20} className="spinner" /> : <ArrowRight size={20} />}
-              </button>
+              ))}
             </div>
-
-            <div className="package-card popular">
-              <div className="package-badge">🥇 Premium</div>
-              <div className="package-icon orange"><Zap size={24} fill="#FF6B00" color="#FF6B00" /></div>
-              <div className="package-details">
-                <div className="package-title-row">
-                  <h4>25 Gens</h4>
-                </div>
-                <p>Pour les créateurs réguliers.</p>
-              </div>
-              <div className="package-price">20 000 FCFA</div>
-              <button className="btn-buy primary" onClick={() => handleBuy(20000, 25)} disabled={isProcessing === 20000}>
-                {isProcessing === 20000 ? <Loader2 size={20} className="spinner" /> : <ArrowRight size={20} />}
-              </button>
-            </div>
-          </div>
+          )}
           <div className="secure-payment">
             <ShieldCheck size={14} />
             <span>Paiement 100% sécurisé via KPay</span>

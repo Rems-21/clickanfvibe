@@ -41,6 +41,7 @@ import AdminPromotions from './pages/admin/AdminPromotions';
 import AdminLogs from './pages/admin/AdminLogs';
 import AdminStats from './pages/admin/AdminStats';
 import AdminNotifications from './pages/admin/AdminNotifications';
+import AdminPricing from './pages/admin/AdminPricing';
 
 function AppContent() {
   const location = useLocation();
@@ -145,6 +146,7 @@ function AppContent() {
             <Route path="/devvorx/admin-1/logs" element={<AdminLogs />} />
             <Route path="/devvorx/admin-1/stats" element={<AdminStats />} />
             <Route path="/devvorx/admin-1/notifications" element={<AdminNotifications />} />
+            <Route path="/devvorx/admin-1/pricing" element={<AdminPricing />} />
           </Route>
         </Route>
 
