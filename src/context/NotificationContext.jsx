@@ -70,14 +70,20 @@ export function NotificationProvider({ children }) {
       {/* Toast Container */}
       <div style={{
         position: 'fixed',
-        top: '20px',
-        right: '20px',
         zIndex: 9999,
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
-        pointerEvents: 'none'
-      }}>
+        pointerEvents: 'none',
+        // Desktop : coin supérieur droit
+        top: '20px',
+        right: '20px',
+        left: 'auto',
+        bottom: 'auto',
+        width: '320px',
+      }}
+      className="toast-container"
+      >
         {toasts.map(toast => {
           let Icon = Info;
           let color = '#3b82f6'; // info
@@ -87,26 +93,26 @@ export function NotificationProvider({ children }) {
           
           return (
             <div key={toast.id} style={{
-              background: '#1a1a1a',
+              background: '#1c1c1c',
               borderLeft: `4px solid ${color}`,
-              padding: '16px',
-              borderRadius: '8px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+              padding: '14px 16px',
+              borderRadius: '12px',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
               display: 'flex',
               alignItems: 'flex-start',
               gap: '12px',
-              width: '300px',
+              width: '100%',
               pointerEvents: 'auto',
               animation: 'slideInRight 0.3s ease-out'
             }}>
-              <Icon color={color} size={24} style={{ flexShrink: 0 }} />
-              <div style={{ flex: 1 }}>
-                <h4 style={{ margin: '0 0 4px 0', color: '#fff', fontSize: '14px' }}>{toast.title}</h4>
-                <p style={{ margin: 0, color: '#9ca3af', fontSize: '13px' }}>{toast.message}</p>
+              <Icon color={color} size={22} style={{ flexShrink: 0, marginTop: 2 }} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <h4 style={{ margin: '0 0 3px 0', color: '#fff', fontSize: '14px', fontWeight: 700 }}>{toast.title}</h4>
+                <p style={{ margin: 0, color: '#9ca3af', fontSize: '12px', lineHeight: 1.4 }}>{toast.message}</p>
               </div>
               <button 
                 onClick={() => removeToast(toast.id)}
-                style={{ background: 'transparent', border: 'none', color: '#6b7280', cursor: 'pointer', padding: 0 }}
+                style={{ background: 'transparent', border: 'none', color: '#6b7280', cursor: 'pointer', padding: 0, flexShrink: 0 }}
               >
                 <X size={16} />
               </button>
@@ -118,6 +124,19 @@ export function NotificationProvider({ children }) {
         @keyframes slideInRight {
           from { transform: translateX(100%); opacity: 0; }
           to { transform: translateX(0); opacity: 1; }
+        }
+        @media (max-width: 480px) {
+          .toast-container {
+            top: auto !important;
+            right: 12px !important;
+            left: 12px !important;
+            bottom: 80px !important;
+            width: auto !important;
+          }
+          @keyframes slideInRight {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+          }
         }
       `}</style>
     </NotificationContext.Provider>
