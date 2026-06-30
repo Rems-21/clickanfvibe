@@ -1417,7 +1417,7 @@ def get_system_logs(lines: int = 200, current_user: models.User = Depends(get_cu
 from pydantic import BaseModel
 
 class NotificationCreate(BaseModel):
-    user_id: int = None
+    user_id: Optional[int] = None
     title: str
     message: str
     type: str = "info"

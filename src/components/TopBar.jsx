@@ -42,20 +42,7 @@ function TopBar() {
           </button>
 
           {showDropdown && (
-            <div style={{
-              position: 'absolute',
-              top: '40px',
-              right: '0',
-              width: '300px',
-              background: '#1a1a1a',
-              border: '1px solid #333',
-              borderRadius: '8px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
-              zIndex: 1000,
-              maxHeight: '400px',
-              overflowY: 'auto',
-              padding: '10px 0'
-            }}>
+            <div className="notifications-dropdown">
               <h4 style={{ margin: '0 0 10px 15px', color: '#fff', fontSize: '14px' }}>Notifications</h4>
               {notifications.length === 0 ? (
                 <p style={{ margin: '15px', color: '#666', fontSize: '13px', textAlign: 'center' }}>Aucune notification.</p>
