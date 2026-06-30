@@ -63,101 +63,97 @@ function Onboarding() {
       {/* HERO WRAPPER */}
       <div className="hero-section-wrapper">
         {/* TOPBAR */}
-        <div className="landing-topbar">
-        <div className="landing-logo">
-          <div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
-            <span style={{width: '3px', height: '12px', background: 'var(--neon-pink)', borderRadius: '3px'}}></span>
-            <span style={{width: '3px', height: '20px', background: 'var(--neon-purple)', borderRadius: '3px'}}></span>
-            <span style={{width: '3px', height: '14px', background: 'var(--neon-pink)', borderRadius: '3px'}}></span>
+        <div className="landing-topbar" style={{justifyContent: 'space-between'}}>
+          <div className="landing-logo">
+            <div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
+              <span style={{width: '3px', height: '12px', background: 'var(--neon-pink)', borderRadius: '3px'}}></span>
+              <span style={{width: '3px', height: '20px', background: 'var(--neon-purple)', borderRadius: '3px'}}></span>
+              <span style={{width: '3px', height: '14px', background: 'var(--neon-pink)', borderRadius: '3px'}}></span>
+            </div>
+            <span>Click <span className="amp">&</span> Vibe</span>
           </div>
-          <span>Click <span className="amp">&</span> Vibe</span>
-        </div>
-        
-        <div className="landing-nav">
-          <Link to="/">Accueil</Link>
-          <a href="#features">Fonctionnalités</a>
-          <a href="#examples">Exemples</a>
-          <a href="#pricing">Tarifs</a>
-          <a href="#how">Comment ça marche</a>
-          <a href="#faq">FAQ</a>
-        </div>
-
-        <div className="landing-nav-actions">
-          {!user && <button className="btn-nav-outline" onClick={() => navigate('/login')}>Se connecter</button>}
-          <button className="btn-nav-fill" onClick={navigateAction}>Essayer gratuitement</button>
-        </div>
-      </div>
-
-      {/* HERO */}
-      <div className="landing-hero">
-        <div className="landing-content">
-          <div className="hero-badge">
-            <Sparkles size={14} /> L'IA qui transforme vos idées en chansons
-          </div>
-          <h1 className="landing-title">
-            Votre histoire.<br/>
-            Votre <span className="text-gradient">chanson.</span><br/>
-            Notre magie.
-          </h1>
-          <p className="landing-subtitle">
-            Click & Vibe crée pour vous des chansons 100% personnalisées<br/>
-            en quelques minutes grâce à l'intelligence artificielle.<br/>
-            Aucun talent musical requis.
-          </p>
           
-          <div className="landing-buttons">
-            <button className="btn-primary-large" onClick={navigateAction}>
-              Créer ma première chanson <Music size={18}/>
-            </button>
-            <button className="btn-outline-large" onClick={() => { document.getElementById('examples').scrollIntoView({behavior: 'smooth'}) }}>
-              <Play size={18}/> Écouter des exemples
-            </button>
+          <div className="hero-badge" style={{margin: 0}}>
+            <Sparkles size={14} /> L'IA au service de ta créativité
           </div>
+        </div>
 
-          <div className="hero-social-proof">
-            <div className="hero-avatars">
-              <img src="https://ui-avatars.com/api/?name=J&background=333&color=fff" alt="User" />
-              <img src="https://ui-avatars.com/api/?name=M&background=555&color=fff" alt="User" />
-              <img src="https://ui-avatars.com/api/?name=A&background=222&color=fff" alt="User" />
-              <img src="https://ui-avatars.com/api/?name=S&background=111&color=fff" alt="User" />
+        {/* HERO */}
+        <div className="landing-hero">
+          <div className="landing-content">
+            <h1 className="landing-title">
+              Crée des<br/>
+              chansons<br/>
+              <span className="text-gradient">incroyables<br/>grâce à l'IA.</span>
+            </h1>
+            <p className="landing-subtitle">
+              Décris simplement ton idée, choisis ton style musical<br/>
+              et laisse <span style={{color: 'var(--neon-pink)', fontWeight: 600}}>Click & Vibe</span> composer une chanson unique<br/>
+              en quelques secondes.
+            </p>
+            
+            <div className="landing-buttons" style={{marginTop: '40px', gap: '20px'}}>
+              <button className="btn-primary-large" onClick={navigateAction} style={{display: 'flex', alignItems: 'center', gap: '10px', width: '220px', justifyContent: 'center'}}>
+                <Sparkles size={18}/> Commencer <span style={{marginLeft: 'auto'}}>→</span>
+              </button>
+              <button className="btn-outline-large" onClick={() => navigate('/login')} style={{display: 'flex', alignItems: 'center', width: '220px', justifyContent: 'center'}}>
+                Se connecter <span style={{marginLeft: 'auto'}}>→</span>
+              </button>
             </div>
-            <div>
-              <div className="hero-stars">
-                <Star fill="currentColor" size={14}/><Star fill="currentColor" size={14}/><Star fill="currentColor" size={14}/><Star fill="currentColor" size={14}/><Star fill="currentColor" size={14}/>
+          </div>
+          
+          <div className="landing-image-wrapper">
+             {/* If hero_bg.png includes the guy, this img might be redundant, but we keep it if it's separate */}
+             <img src="/hero_headphones.png" alt="Hero" className="landing-hero-img" />
+          </div>
+        </div>
+
+        {/* HERO BOTTOM FEATURES */}
+        <div className="hero-bottom-features">
+          <div className="hbf-grid">
+            <div className="hbf-item">
+              <div className="hbf-icon"><div style={{color:'#FF3366'}}>⚡</div></div>
+              <div className="hbf-text">
+                <h4>Rapide</h4>
+                <p>Ta chanson en quelques secondes</p>
               </div>
-              <div className="hero-proof-text">Plus de 500+ chansons créées<br/>et des utilisateurs conquis</div>
+            </div>
+            <div className="hbf-item">
+              <div className="hbf-icon"><div style={{color:'#9933FF'}}>🪄</div></div>
+              <div className="hbf-text">
+                <h4>Personnalisé</h4>
+                <p>Tous les styles, toutes les ambiances</p>
+              </div>
+            </div>
+            <div className="hbf-item">
+              <div className="hbf-icon"><div style={{color:'#FF3388'}}>🎛️</div></div>
+              <div className="hbf-text">
+                <h4>IA Avancée</h4>
+                <p>Une technologie de pointe au service de ta créativité</p>
+              </div>
+            </div>
+            <div className="hbf-item">
+              <div className="hbf-icon"><div style={{color:'#9933FF'}}>🔒</div></div>
+              <div className="hbf-text">
+                <h4>Sécurisé</h4>
+                <p>Tes créations t'appartiennent à 100%</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="hero-community">
+            <div className="hc-avatars">
+               <img src="https://ui-avatars.com/api/?name=J&background=333&color=fff" alt="User" />
+               <img src="https://ui-avatars.com/api/?name=M&background=555&color=fff" alt="User" />
+               <img src="https://ui-avatars.com/api/?name=A&background=222&color=fff" alt="User" />
+               <img src="https://ui-avatars.com/api/?name=S&background=111&color=fff" alt="User" />
+               <img src="https://ui-avatars.com/api/?name=D&background=444&color=fff" alt="User" />
+            </div>
+            <div className="hc-text">
+               <Heart size={14} color="#FF3366" fill="#FF3366" /> Plus de <strong style={{color:'#FF3366'}}>10 000</strong> chansons créées par notre communauté
             </div>
           </div>
         </div>
-        
-        <div className="landing-image-wrapper">
-           <div className="landing-glow-circle"></div>
-           <img src="/hero_headphones.png" alt="Hero" className="landing-hero-img" />
-           
-           <div className="hero-player-card">
-              <div className="player-card-top">
-                <button className="player-play-btn" onClick={() => showcaseMusics[0] && handlePlay(showcaseMusics[0])}>
-                  {(currentTrack?.id === showcaseMusics[0]?.id && isPlaying) ? <Pause fill="white" size={24}/> : <Play fill="white" size={24} style={{marginLeft:3}}/>}
-                </button>
-                <div className="player-track-info">
-                  <h4>{showcaseMusics[0]?.title || "Chanson d'amour personnalisée"}</h4>
-                  <p>{showcaseMusics[0]?.style || "Pour celle qui fait battre mon cœur."}</p>
-                </div>
-              </div>
-              <div className="player-waveform">
-                {Array.from({length: 40}).map((_, i) => (
-                  <div key={i} className="waveform-bar" style={{height: Math.random() * 20 + 10 + 'px', animationDelay: `${i*0.05}s`}}></div>
-                ))}
-              </div>
-              <div className="player-time">03:24</div>
-              <div className="player-tags">
-                <div className="player-tag"><Heart size={14}/> Personnalisé<br/>pour vous</div>
-                <div className="player-tag"><Sparkles size={14}/> Généré par IA</div>
-                <div className="player-tag"><Download size={14}/> Téléchargement<br/>instantané</div>
-              </div>
-           </div>
-        </div>
-      </div>
       </div> {/* END HERO WRAPPER */}
 
       {/* CAS D'UTILISATION */}
