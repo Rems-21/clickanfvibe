@@ -204,6 +204,37 @@ function Home() {
           </div>
         </section>
 
+        {/* SECTION TENDANCES GLOBALES - en premier */}
+        <section className="section-block">
+          <div className="section-header">
+            <h3>🔥 Tendances</h3>
+            <a href="#" className="link-secondary">Voir tout</a>
+          </div>
+          <div className="horizontal-scroll">
+            {trending.length > 0 ? trending.slice(0, 8).map((music) => (
+              <div className="trend-card" key={music.id}>
+                <div className="trend-img-container">
+                  <img src={music.cover_url || "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=300&h=300&fit=crop"} alt={music.title} className="trend-img" />
+                  <button className="play-btn" onClick={() => playTrack({
+                    url: music.audio_url,
+                    title: music.title || 'Tendance',
+                    style: music.style,
+                    duration_str: music.duration_str,
+                    lyrics: music.lyrics
+                  }, trending)}><Play size={16} fill="white" /></button>
+                </div>
+                <div className="trend-info">
+                  <h4>{music.title}</h4>
+                  <p>{music.style} • {music.duration_str}</p>
+                  <span className="trend-plays"><Play size={10} fill="#FF3366" color="#FF3366" /> Tendance</span>
+                </div>
+              </div>
+            )) : (
+              <p style={{color: 'var(--text-secondary)', fontSize: 14, marginLeft: '20px'}}>Aucune musique en tendance pour le moment.</p>
+            )}
+          </div>
+        </section>
+
         <section className="section-block">
           <div className="section-header">
             <h3>Démarrer rapidement</h3>
@@ -261,36 +292,6 @@ function Home() {
           );
         })}
 
-        {/* SECTION TENDANCES GLOBALES */}
-        <section className="section-block">
-          <div className="section-header">
-            <h3>🔥 Tendances</h3>
-            <a href="#" className="link-secondary">Voir tout</a>
-          </div>
-          <div className="horizontal-scroll">
-            {trending.length > 0 ? trending.slice(0, 8).map((music) => (
-              <div className="trend-card" key={music.id}>
-                <div className="trend-img-container">
-                  <img src={music.cover_url || "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=300&h=300&fit=crop"} alt={music.title} className="trend-img" />
-                  <button className="play-btn" onClick={() => playTrack({
-                    url: music.audio_url,
-                    title: music.title || 'Tendance',
-                    style: music.style,
-                    duration_str: music.duration_str,
-                    lyrics: music.lyrics
-                  }, trending)}><Play size={16} fill="white" /></button>
-                </div>
-                <div className="trend-info">
-                  <h4>{music.title}</h4>
-                  <p>{music.style} • {music.duration_str}</p>
-                  <span className="trend-plays"><Play size={10} fill="#FF3366" color="#FF3366" /> Tendance</span>
-                </div>
-              </div>
-            )) : (
-              <p style={{color: 'var(--text-secondary)', fontSize: 14, marginLeft: '20px'}}>Aucune musique en tendance pour le moment.</p>
-            )}
-          </div>
-        </section>
 
         {/* SECTION ELEMENTS DE CONFIANCE */}
         <section className="section-block trust-section">
