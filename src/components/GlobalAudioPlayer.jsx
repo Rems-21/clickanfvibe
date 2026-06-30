@@ -29,8 +29,12 @@ function GlobalAudioPlayer() {
           {!showLyrics ? (
             <div className="full-screen-art-container">
               <div className={`record-disk ${isPlaying ? 'spinning glow-pulse' : ''}`}>
-                <div className="record-center-label">
-                  <Music size={40} color="white" />
+                <div className="record-center-label" style={{ overflow: 'hidden' }}>
+                  {currentTrack.cover_url ? (
+                    <img src={currentTrack.cover_url} alt="cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <Music size={40} color="white" />
+                  )}
                 </div>
                 <div className="record-hole"></div>
               </div>
@@ -91,8 +95,12 @@ function GlobalAudioPlayer() {
       </div>
       <div className="global-player-content">
         <div className="global-player-info" onClick={() => setIsFullScreen(true)} style={{cursor: 'pointer'}}>
-          <div className="global-player-icon">
-            <Music size={16} />
+          <div className="global-player-icon" style={{ overflow: 'hidden' }}>
+            {currentTrack.cover_url ? (
+              <img src={currentTrack.cover_url} alt="cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            ) : (
+              <Music size={16} />
+            )}
           </div>
           <div className="global-player-text">
             <h4>{currentTrack.title || "Titre inconnu"}</h4>
