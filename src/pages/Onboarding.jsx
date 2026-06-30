@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { 
-  Music, Sparkles, Play, CheckCircle2, Star, Download, Gift, 
+  Music, Sparkles, Play, Pause, CheckCircle2, Star, Download, Gift, 
   Heart, Gem, Megaphone, Mic, PartyPopper, ClipboardList, 
   Plus, MessageCircle, Clock, ShieldCheck 
 } from 'lucide-react';
@@ -120,10 +120,12 @@ function Onboarding() {
            
            <div className="hero-player-card">
               <div className="player-card-top">
-                <button className="player-play-btn"><Play fill="white" size={24} style={{marginLeft:3}}/></button>
+                <button className="player-play-btn" onClick={() => showcaseMusics[0] && handlePlay(showcaseMusics[0])}>
+                  {(currentTrack?.id === showcaseMusics[0]?.id && isPlaying) ? <Pause fill="white" size={24}/> : <Play fill="white" size={24} style={{marginLeft:3}}/>}
+                </button>
                 <div className="player-track-info">
-                  <h4>Chanson d'amour personnalisée</h4>
-                  <p>Pour celle qui fait battre mon cœur.</p>
+                  <h4>{showcaseMusics[0]?.title || "Chanson d'amour personnalisée"}</h4>
+                  <p>{showcaseMusics[0]?.style || "Pour celle qui fait battre mon cœur."}</p>
                 </div>
               </div>
               <div className="player-waveform">
