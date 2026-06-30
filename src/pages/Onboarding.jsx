@@ -365,11 +365,11 @@ function Onboarding() {
               <Music color="var(--neon-pink)" size={40}/>
             </div>
             <div className="pricing-text">
-              <h3>Commencez gratuitement</h3>
-              <p>Testez Click & Vibe avec vos générations offertes.<br/>Puis choisissez le pack qui vous convient.</p>
+              <h3>Commencez maintenant</h3>
+              <p>Créez votre première chanson avec Click & Vibe.<br/>Choisissez le pack qui correspond à vos besoins.</p>
               <div className="pricing-tags">
-                <div className="pricing-tag"><CheckCircle2 size={16}/> 2 générations offertes</div>
-                <div className="pricing-tag"><ShieldCheck size={16}/> Aucune carte bancaire</div>
+                <div className="pricing-tag"><CheckCircle2 size={16}/> Qualité professionnelle</div>
+                <div className="pricing-tag"><ShieldCheck size={16}/> Paiement sécurisé</div>
               </div>
             </div>
           </div>
