@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Settings, Plus, Edit2, Trash2, Check, X, Loader2 } from 'lucide-react';
 import { useNotification } from '../../context/NotificationContext';
-import './AdminSettings.css';
+import './AdminDashboard.css';
 
 function AdminPricing() {
   const [plans, setPlans] = useState([]);

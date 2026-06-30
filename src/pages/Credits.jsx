@@ -23,6 +23,7 @@ function Credits() {
   const [promoCode, setPromoCode] = useState('');
   const [promoMessage, setPromoMessage] = useState(null);
 
+  useEffect(() => {
     const fetchPromos = async () => {
       try {
         const res = await fetch('/api/promotions/active');
