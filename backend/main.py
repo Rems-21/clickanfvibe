@@ -292,6 +292,9 @@ def signup(request: Request, user: UserCreate, db: Session = Depends(get_db)):
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Database insert error: {str(e)}")
 
     # TRACK SIGNUP
     try:
@@ -301,9 +304,6 @@ def signup(request: Request, user: UserCreate, db: Session = Depends(get_db)):
         db.commit()
     except Exception as e:
         print("Analytics error signup:", e)
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=500, detail=f"Database insert error: {str(e)}")
     
     # Check for SIGNUP promotions (wrapped in try-except to prevent crash if DB schema is outdated)
     try:
