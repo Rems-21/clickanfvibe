@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Zap, HelpCircle, Music, Settings, Check, Sparkles, Heart, Drum, Piano, Mic2, Church, Star, Sunrise, CloudRain, Coffee, Flame } from 'lucide-react';
+import { Zap, HelpCircle, Music, Settings, Check, Sparkles, Heart, Drum, Piano, Mic2, Church, Star, Sunrise, CloudRain, Coffee, Flame, Cake, Gem, Baby, Building2, PartyPopper, GraduationCap, Dove, Target, HandHeart } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Create.css';
@@ -32,16 +32,16 @@ function Create() {
   };
 
   const eventTypes = [
-    { id: 'Anniversaire', emoji: '🎂', color: 'orange', hint: 'Une chanson joyeuse pour célébrer' },
-    { id: 'Mariage', emoji: '💍', color: 'pink', hint: 'Une chanson romantique et élégante' },
-    { id: 'Déclaration d\'amour', emoji: '❤️', color: 'red', hint: 'Pour exprimer ses sentiments' },
-    { id: 'Gospel / Prière', emoji: '🙏', color: 'purple', hint: 'Une chanson spirituelle et inspirante' },
-    { id: 'Naissance', emoji: '👶', color: 'blue', hint: 'Pour accueillir le nouveau-né' },
-    { id: 'Jingle Entreprise', emoji: '🏢', color: 'blue', hint: 'Pour promouvoir une marque' },
-    { id: 'Félicitations', emoji: '🎉', color: 'orange', hint: 'Pour célébrer une réussite' },
-    { id: 'Remise de diplôme', emoji: '🎓', color: 'purple', hint: 'Pour célébrer l\'académique' },
-    { id: 'Deuil / Hommage', emoji: '🕊️', color: 'pink', hint: 'Une chanson douce et respectueuse' },
-    { id: 'Chanson originale', emoji: '🎤', color: 'red', hint: 'Totalement libre et personnel' },
+    { id: 'Anniversaire', icon: <Cake size={24} />, color: 'orange', hint: 'Une chanson joyeuse pour célébrer un anniversaire' },
+    { id: 'Mariage', icon: <Gem size={24} />, color: 'pink', hint: 'Une chanson romantique et élégante pour un mariage' },
+    { id: 'Déclaration d\'amour', icon: <Heart size={24} />, color: 'red', hint: 'Une chanson pour exprimer ses sentiments amoureux' },
+    { id: 'Gospel / Prière', icon: <Church size={24} />, color: 'purple', hint: 'Une chanson spirituelle et inspirante' },
+    { id: 'Naissance', icon: <Baby size={24} />, color: 'blue', hint: 'Une chanson douce pour accueillir le nouveau-né' },
+    { id: 'Jingle Entreprise', icon: <Building2 size={24} />, color: 'blue', hint: 'Un jingle professionnel pour promouvoir une marque' },
+    { id: 'Félicitations', icon: <PartyPopper size={24} />, color: 'orange', hint: 'Une chanson festive pour célébrer une réussite' },
+    { id: 'Remise de diplôme', icon: <GraduationCap size={24} />, color: 'purple', hint: 'Une chanson inspiring pour une remise de diplôme' },
+    { id: 'Deuil / Hommage', icon: <Dove size={24} />, color: 'pink', hint: 'Une chanson douce et respectueuse en hommage' },
+    { id: 'Chanson originale', icon: <Mic2 size={24} />, color: 'red', hint: 'Une chanson totalement libre et personnelle' },
   ];
 
   const handleEventTypeSelect = (ev) => {
@@ -141,7 +141,7 @@ function Create() {
         {/* Carrousel Type d'évènement */}
         <section className="section-block">
           <div className="section-header">
-            <h3 className="flex-title">🎯 Pour quelle occasion ?</h3>
+            <h3 className="flex-title"><Target size={18} color="#FF3366" /> Pour quelle occasion ?</h3>
             {eventType && <button onClick={() => setEventType(null)} style={{background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: 12, cursor: 'pointer'}}>✕ Effacer</button>}
           </div>
           <div className="horizontal-scroll">
@@ -150,11 +150,10 @@ function Create() {
                 key={ev.id}
                 className={`selectable-card ${eventType === ev.id ? 'selected' : ''}`}
                 onClick={() => handleEventTypeSelect(ev)}
-                style={{minWidth: 90}}
               >
                 {eventType === ev.id && <div className="check-badge"><Check size={12} strokeWidth={3} /></div>}
-                <div className="genre-icon" style={{fontSize: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 48, height: 48, borderRadius: 12, background: 'rgba(255,255,255,0.05)'}}>{ev.emoji}</div>
-                <span style={{fontSize: 11, textAlign: 'center', lineHeight: 1.3}}>{ev.id}</span>
+                <div className={`genre-icon ${ev.color}`}>{ev.icon}</div>
+                <span>{ev.id}</span>
               </div>
             ))}
           </div>
