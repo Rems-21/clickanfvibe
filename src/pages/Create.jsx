@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Zap, HelpCircle, Music, Settings, Check, Sparkles, Heart, Drum, Piano, Mic2, Church, Star, Sunrise, CloudRain, Coffee, Flame, Cake, Gem, Baby, Building2, PartyPopper, GraduationCap, Dove, Target, HandHeart } from 'lucide-react';
+import { Zap, HelpCircle, Music, Settings, Check, Sparkles, Heart, Drum, Piano, Mic2, Church, Star, Sunrise, CloudRain, Coffee, Flame, Cake, Gem, Baby, Building2, PartyPopper, GraduationCap, Bird, Target } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Create.css';
@@ -40,7 +40,7 @@ function Create() {
     { id: 'Jingle Entreprise', icon: <Building2 size={24} />, color: 'blue', hint: 'Un jingle professionnel pour promouvoir une marque' },
     { id: 'Félicitations', icon: <PartyPopper size={24} />, color: 'orange', hint: 'Une chanson festive pour célébrer une réussite' },
     { id: 'Remise de diplôme', icon: <GraduationCap size={24} />, color: 'purple', hint: 'Une chanson inspiring pour une remise de diplôme' },
-    { id: 'Deuil / Hommage', icon: <Dove size={24} />, color: 'pink', hint: 'Une chanson douce et respectueuse en hommage' },
+    { id: 'Deuil / Hommage', icon: <Bird size={24} />, color: 'pink', hint: 'Une chanson douce et respectueuse en hommage' },
     { id: 'Chanson originale', icon: <Mic2 size={24} />, color: 'red', hint: 'Une chanson totalement libre et personnelle' },
   ];
 
