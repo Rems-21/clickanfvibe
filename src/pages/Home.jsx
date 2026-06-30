@@ -142,7 +142,7 @@ function Home() {
       </header>
 
       <div className="user-greeting-global desktop-only">
-        <h2>Bienvenue, {user ? user.name : 'Créateur'} !</h2>
+        <h2>Bienvenue, {user ? user.name : 'Artiste'} !</h2>
         <p>Prêt à donner vie à tes <span className="text-secondary">idées musicales</span> ?</p>
       </div>
 
