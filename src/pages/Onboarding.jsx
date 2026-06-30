@@ -82,6 +82,26 @@ function Onboarding() {
         </div>
       </div>
 
+      {/* ANCIENNE SECTION FEATURES */}
+      <div className="landing-features">
+         <div className="feature">
+            <div className="f-icon bg-pink"><Zap size={20} color="#FF3366"/></div>
+            <div className="f-text"><h4>Rapide</h4><p>Ta chanson en quelques secondes</p></div>
+         </div>
+         <div className="feature">
+            <div className="f-icon bg-purple"><Sparkles size={20} color="#9933FF"/></div>
+            <div className="f-text"><h4>Personnalisé</h4><p>Tous les styles, toutes les ambiances</p></div>
+         </div>
+         <div className="feature">
+            <div className="f-icon bg-violet"><Settings size={20} color="#C466FF"/></div>
+            <div className="f-text"><h4>IA Avancée</h4><p>Une technologie de pointe au service de ta créativité</p></div>
+         </div>
+         <div className="feature">
+            <div className="f-icon bg-blue"><Lock size={20} color="#33CCFF"/></div>
+            <div className="f-text"><h4>Sécurisé</h4><p>Tes créations t'appartiennent à 100%</p></div>
+         </div>
+      </div>
+
       {/* CAS D'UTILISATION */}
       <div className="section">
         <h2 className="section-title">Cas d'utilisation<br/><span style={{fontSize: 20, color: 'var(--text-secondary)', fontWeight: 500}}>À quoi servira votre prochaine chanson ?</span></h2>
