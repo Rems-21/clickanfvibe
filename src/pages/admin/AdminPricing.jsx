@@ -179,11 +179,11 @@ function AdminPricing() {
               <div style={{display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap: 16}}>
                 <div className="form-group">
                   <label>Crédits générés</label>
-                  <input type="number" value={editingPlan.credits} onChange={e => setEditingPlan({...editingPlan, credits: parseInt(e.target.value)})} required />
+                  <input type="number" value={editingPlan.credits !== null ? editingPlan.credits : ''} onChange={e => setEditingPlan({...editingPlan, credits: e.target.value ? parseInt(e.target.value) : ''})} required />
                 </div>
                 <div className="form-group">
                   <label>Prix (FCFA)</label>
-                  <input type="number" value={editingPlan.price_fcfa} onChange={e => setEditingPlan({...editingPlan, price_fcfa: parseInt(e.target.value)})} required />
+                  <input type="number" value={editingPlan.price_fcfa !== null ? editingPlan.price_fcfa : ''} onChange={e => setEditingPlan({...editingPlan, price_fcfa: e.target.value ? parseInt(e.target.value) : ''})} required />
                 </div>
                 <div className="form-group">
                   <label>Prix Barré (optionnel)</label>
@@ -224,7 +224,7 @@ function AdminPricing() {
               <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap: 16}}>
                 <div className="form-group">
                   <label>Ordre d'affichage (ex: 1, 2, 3)</label>
-                  <input type="number" value={editingPlan.display_order} onChange={e => setEditingPlan({...editingPlan, display_order: parseInt(e.target.value)})} />
+                  <input type="number" value={editingPlan.display_order !== null ? editingPlan.display_order : ''} onChange={e => setEditingPlan({...editingPlan, display_order: e.target.value ? parseInt(e.target.value) : 0})} />
                 </div>
                 <div className="form-group" style={{display:'flex', alignItems:'center', gap: 10, marginTop: 30}}>
                   <input type="checkbox" id="active" checked={editingPlan.is_active} onChange={e => setEditingPlan({...editingPlan, is_active: e.target.checked})} style={{width:'auto'}} />
