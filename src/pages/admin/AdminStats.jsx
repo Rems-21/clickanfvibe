@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Activity, Music, CreditCard, TrendingUp, Zap, Globe, BarChart2, RefreshCw, ArrowRight } from 'lucide-react';
+import { Users, Activity, Music, CreditCard, TrendingUp, Zap, Globe, BarChart2, RefreshCw, MessageCircle, Share2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import './AdminDashboard.css';
 
@@ -32,7 +32,11 @@ function AdminStats() {
   }, [token]);
 
   const funnel = analytics?.funnel || {};
-  const sources = analytics?.sources || [];
+  let sources = analytics?.sources || [];
+  
+  // Ensure whatsapp and facebook always appear
+  if (!sources.find(s => s.source === 'whatsapp')) sources.push({ source: 'whatsapp', count: 0 });
+  if (!sources.find(s => s.source === 'facebook')) sources.push({ source: 'facebook', count: 0 });
 
   const funnelSteps = [
     { key: 'visit', label: '🌍 Visites', color: '#6366f1' },
@@ -122,18 +126,29 @@ function AdminStats() {
             {sources.length === 0 ? (
               <p style={{ color: 'var(--text-secondary)', fontSize: 13 }}>Aucune donnée de source disponible. Les sources s'alimenteront dès que les utilisateurs viendront via vos liens publicitaires (UTM).</p>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 15 }}>
                 {sources.sort((a, b) => b.count - a.count).map((s, i) => {
                   const maxSrc = Math.max(...sources.map(x => x.count), 1);
                   const pct = Math.round((s.count / maxSrc) * 100);
+                  
+                  let icon = <Globe size={14} />;
+                  let color = '#a855f7';
+                  let name = s.source || 'Direct';
+                  
+                  if (name === 'whatsapp') { icon = <MessageCircle size={14} color="#25D366" />; color = '#25D366'; name = 'WhatsApp'; }
+                  else if (name === 'facebook') { icon = <Share2 size={14} color="#1877F2" />; color = '#1877F2'; name = 'Facebook'; }
+                  else if (name === 'instagram') { icon = <Share2 size={14} color="#E1306C" />; color = '#E1306C'; name = 'Instagram'; }
+
                   return (
                     <div key={i}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                        <span style={{ fontSize: 13, textTransform: 'capitalize' }}>🔗 {s.source || 'Direct'}</span>
-                        <strong style={{ color: '#a855f7' }}>{s.count}</strong>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6, alignItems: 'center' }}>
+                        <span style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 6, fontWeight: 500 }}>
+                          {icon} {name}
+                        </span>
+                        <strong style={{ color: color }}>{s.count}</strong>
                       </div>
-                      <div style={{ background: 'rgba(255,255,255,0.06)', borderRadius: 6, height: 6 }}>
-                        <div style={{ width: `${pct}%`, height: '100%', background: 'linear-gradient(90deg, #8b5cf6, #ec4899)', borderRadius: 6 }} />
+                      <div style={{ background: 'rgba(255,255,255,0.06)', borderRadius: 6, height: 8 }}>
+                        <div style={{ width: `${pct}%`, height: '100%', background: color, borderRadius: 6, transition: 'width 0.5s ease' }} />
                       </div>
                     </div>
                   );

@@ -58,13 +58,48 @@ function AppContent() {
         const data = await res.json();
         setMaintenance(data.maintenance_mode);
       } catch (err) {
-        console.error(err);
+        console.error('Config fetch error', err);
       } finally {
         setConfigLoading(false);
       }
     };
     fetchConfig();
-    
+
+    // Track unique visits and sources (WhatsApp, Facebook, etc.)
+    const trackVisit = async () => {
+      if (sessionStorage.getItem('visited')) return;
+      sessionStorage.setItem('visited', '1');
+
+      const params = new URLSearchParams(window.location.search);
+      let source = params.get('source') || params.get('ref') || params.get('utm_source');
+      
+      if (!source) {
+        const ref = document.referrer.toLowerCase();
+        if (ref.includes('facebook.com') || ref.includes('fb.me')) source = 'facebook';
+        else if (ref.includes('whatsapp.com') || ref.includes('wa.me')) source = 'whatsapp';
+        else if (ref.includes('instagram.com')) source = 'instagram';
+        else if (ref.includes('tiktok.com')) source = 'tiktok';
+        else if (ref.includes('google.com')) source = 'google';
+        else if (ref) source = 'referral';
+        else source = 'direct';
+      }
+
+      localStorage.setItem('traffic_source', source.toLowerCase());
+
+      try {
+        await fetch('/api/analytics/track', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event_type: 'visit',
+            source: source.toLowerCase()
+          })
+        });
+      } catch (e) {}
+    };
+    trackVisit();
+  }, []);
+
     // Listen for PWA installation
     const handleAppInstalled = () => {
       fetch('/api/track/download', { method: 'POST' }).catch(console.error);
