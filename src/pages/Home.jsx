@@ -265,7 +265,7 @@ function Home() {
         </section>
 
         {/* CARROUSELS PAR STYLE */}
-        {styleCarousels.map(({ label, style }) => {
+        {styleCarousels.map(({ label, icon, style }) => {
           const tracks = trending.filter(t => t.style === style);
           if (tracks.length === 0) return null;
           return (
