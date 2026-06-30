@@ -292,6 +292,15 @@ def signup(request: Request, user: UserCreate, db: Session = Depends(get_db)):
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
+
+    # TRACK SIGNUP
+    try:
+        source_val = user.utm_source if hasattr(user, "utm_source") and user.utm_source else "direct"
+        evt = models.AnalyticsEvent(event_type="signup", source=source_val, user_id=new_user.id)
+        db.add(evt)
+        db.commit()
+    except Exception as e:
+        print("Analytics error signup:", e)
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Database insert error: {str(e)}")
@@ -341,6 +350,14 @@ def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends(), db
         
     access_token = auth.create_access_token(data={"sub": user.email})
     logger.info(f"Connexion réussie: {user.email}")
+    # TRACK LOGIN
+    try:
+        evt = models.AnalyticsEvent(event_type="login", source="direct", user_id=user.id)
+        db.add(evt)
+        db.commit()
+    except Exception as e:
+        print("Analytics error login:", e)
+        
     return {"access_token": access_token, "token_type": "bearer"}
 
 
@@ -362,6 +379,14 @@ def verify_email(request: Request, req: VerifyEmailRequest, db: Session = Depend
     
     access_token = auth.create_access_token(data={"sub": user.email})
     logger.info(f"Connexion réussie: {user.email}")
+    # TRACK LOGIN
+    try:
+        evt = models.AnalyticsEvent(event_type="login", source="direct", user_id=user.id)
+        db.add(evt)
+        db.commit()
+    except Exception as e:
+        print("Analytics error login:", e)
+        
     return {"access_token": access_token, "token_type": "bearer"}
 
 @app.post("/api/auth/resend-verification")
@@ -482,6 +507,14 @@ def google_auth(req: GoogleAuthRequest, db: Session = Depends(get_db)):
         
     access_token = auth.create_access_token(data={"sub": user.email})
     logger.info(f"Connexion réussie: {user.email}")
+    # TRACK LOGIN
+    try:
+        evt = models.AnalyticsEvent(event_type="login", source="direct", user_id=user.id)
+        db.add(evt)
+        db.commit()
+    except Exception as e:
+        print("Analytics error login:", e)
+        
     return {"access_token": access_token, "token_type": "bearer"}
 
 @app.get("/api/user/me")
