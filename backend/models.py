@@ -10,7 +10,7 @@ class User(Base):
     email = Column(String(255), unique=True, index=True)
     hashed_password = Column(String(255))
     name = Column(String(255), default="Utilisateur")
-    profile_picture = Column(String(255), nullable=True)
+    profile_picture = Column(Text, nullable=True)
     country = Column(String(255), nullable=True)
     date_of_birth = Column(DateTime, nullable=True)
     credits = Column(Integer, default=0)

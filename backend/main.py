@@ -232,7 +232,8 @@ def upgrade_db(db: Session = Depends(get_db)):
         "ALTER TABLE users ADD COLUMN reset_token VARCHAR(255);",
         "ALTER TABLE promotions ADD COLUMN auto_event VARCHAR(255) DEFAULT 'NONE';",
         "ALTER TABLE promotions ADD COLUMN target_audience VARCHAR(255) DEFAULT 'ALL';",
-        "ALTER TABLE promotions ADD COLUMN target_country VARCHAR(255);"
+        "ALTER TABLE promotions ADD COLUMN target_country VARCHAR(255);",
+        "ALTER TABLE users MODIFY profile_picture LONGTEXT;"
     ]
     
     results = []
