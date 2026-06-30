@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Bell, Zap, Music, Play, Pause, Heart, Compass, MoreVertical, Share2, Drum, Piano, Mic2, Church, Gift, Star, Flame, Users, ShieldCheck, Headphones } from 'lucide-react';
+import { Bell, Zap, Music, Play, Pause, Heart, Compass, MoreVertical, Share2, Drum, Piano, Mic2, Church, Gift, Star, Flame, Users, ShieldCheck, Headphones, TrendingUp } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useAudio } from '../context/AudioContext';
 import './Home.css';
@@ -110,12 +110,12 @@ function Home() {
   }, []);
 
   const styleCarousels = [
-    { label: '🥁 Afrobeat', style: 'Afrobeat' },
-    { label: '🎹 Amapiano', style: 'Amapiano' },
-    { label: '🙏 Gospel', style: 'Gospel' },
-    { label: '🎤 Rap', style: 'Rap' },
-    { label: "❤️ R'n'B", style: "R'n'B" },
-    { label: '🔥 Mbolé', style: 'Mbolé' },
+    { label: 'Afrobeat', icon: <Drum size={16} color="#FF6B00" />, style: 'Afrobeat' },
+    { label: 'Amapiano', icon: <Piano size={16} color="#3b82f6" />, style: 'Amapiano' },
+    { label: 'Gospel', icon: <Church size={16} color="#ec4899" />, style: 'Gospel' },
+    { label: 'Rap', icon: <Mic2 size={16} color="#a855f7" />, style: 'Rap' },
+    { label: "R'n'B", icon: <Heart size={16} color="#ef4444" />, style: "R'n'B" },
+    { label: 'Mbolé', icon: <Flame size={16} color="#f97316" />, style: 'Mbolé' },
   ];
 
   const handleDemoPlay = (trackId, url, title, style, duration_str, lyrics, allTracks) => {
@@ -207,7 +207,7 @@ function Home() {
         {/* SECTION TENDANCES GLOBALES - en premier */}
         <section className="section-block">
           <div className="section-header">
-            <h3>🔥 Tendances</h3>
+            <h3 style={{display:'flex',alignItems:'center',gap:6}}><TrendingUp size={18} color="#FF3366" /> Tendances</h3>
             <a href="#" className="link-secondary">Voir tout</a>
           </div>
           <div className="horizontal-scroll">
@@ -271,7 +271,7 @@ function Home() {
           return (
             <section className="section-block" key={style}>
               <div className="section-header">
-                <h3>{label}</h3>
+                <h3 style={{display:'flex',alignItems:'center',gap:6}}>{label.icon}{label.label}</h3>
                 <button className="link-secondary" onClick={() => navigate('/create', { state: { style } })} style={{background:'none',border:'none',cursor:'pointer',color:'var(--primary-color)',fontSize:13}}>Créer →</button>
               </div>
               <div className="horizontal-scroll">
