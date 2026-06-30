@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Activity, Music, CreditCard, TrendingUp, Zap, Globe, BarChart2, RefreshCw, MessageCircle, Share2 } from 'lucide-react';
+import { Users, Activity, Music, CreditCard, TrendingUp, Zap, Globe, BarChart2, RefreshCw, MessageCircle, Share2, Download } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import './AdminDashboard.css';
 
@@ -31,8 +31,26 @@ function AdminStats() {
     return () => clearInterval(interval);
   }, [token]);
 
-  const funnel = analytics?.funnel || {};
-  let sources = analytics?.sources || [];
+  const isDemo = stats?.total_users === 0 && (!analytics?.funnel || !analytics.funnel.visit);
+
+  const demoFunnel = {
+    visit: 12500,
+    signup: 3200,
+    login: 2800,
+    create_click: 2100,
+    generate: 1850,
+    payment_init: 450,
+    payment_success: 310
+  };
+
+  const funnel = isDemo ? demoFunnel : (analytics?.funnel || {});
+  let sources = isDemo ? [
+    { source: 'facebook', count: 5200 },
+    { source: 'whatsapp', count: 3100 },
+    { source: 'instagram', count: 1200 },
+    { source: 'tiktok', count: 850 },
+    { source: 'direct', count: 2150 }
+  ] : (analytics?.sources || []);
   
   // Ensure whatsapp and facebook always appear
   if (!sources.find(s => s.source === 'whatsapp')) sources.push({ source: 'whatsapp', count: 0 });
@@ -50,11 +68,23 @@ function AdminStats() {
 
   const maxFunnelVal = Math.max(...funnelSteps.map(s => funnel[s.key] || 0), 1);
 
-  const kpiCards = stats ? [
-    { icon: <Users size={22} />, label: 'Utilisateurs', value: stats.total_users ?? 0, color: '#8b5cf6', sub: `${stats.online_users ?? 0} en ligne`, glowName: 'purple' },
-    { icon: <Music size={22} />, label: 'Générations totales', value: stats.total_generations ?? 0, color: '#ec4899', sub: `${analytics?.gens_today ?? 0} aujourd'hui`, glowName: 'pink' },
-    { icon: <CreditCard size={22} />, label: 'Revenu mensuel', value: `${(analytics?.monthly_revenue ?? 0).toLocaleString()} FCFA`, color: '#10b981', sub: `${(analytics?.daily_revenue ?? 0).toLocaleString()} FCFA aujourd'hui`, glowName: 'green' },
-    { icon: <Activity size={22} />, label: 'Actifs aujourd\'hui', value: analytics?.active_today ?? 0, color: '#f97316', sub: 'utilisateurs uniques', glowName: 'orange' },
+  const demoStats = {
+    total_users: 1245,
+    online_users: 84,
+    total_generations: 3420,
+    total_revenue: 1450000,
+    total_downloads: 850
+  };
+
+  const s = isDemo ? demoStats : stats;
+  const a = isDemo ? { gens_today: 145, monthly_revenue: 1450000, daily_revenue: 45000, active_today: 320 } : analytics;
+
+  const kpiCards = s ? [
+    { icon: <Users size={22} />, label: 'Utilisateurs', value: s.total_users ?? 0, color: '#8b5cf6', sub: `${s.online_users ?? 0} en ligne`, glowName: 'purple' },
+    { icon: <Music size={22} />, label: 'Générations totales', value: s.total_generations ?? 0, color: '#ec4899', sub: `${a?.gens_today ?? 0} aujourd'hui`, glowName: 'pink' },
+    { icon: <CreditCard size={22} />, label: 'Revenu mensuel', value: `${(a?.monthly_revenue ?? 0).toLocaleString()} FCFA`, color: '#10b981', sub: `${(a?.daily_revenue ?? 0).toLocaleString()} FCFA aujourd'hui`, glowName: 'green' },
+    { icon: <Download size={22} />, label: 'Téléchargements PWA', value: s.total_downloads ?? 0, color: '#f59e0b', sub: `Installations de l'app`, glowName: 'orange' },
+    { icon: <Activity size={22} />, label: 'Actifs aujourd\'hui', value: a?.active_today ?? 0, color: '#3b82f6', sub: 'utilisateurs uniques', glowName: 'blue' },
   ] : [];
 
   return (
@@ -62,7 +92,7 @@ function AdminStats() {
       <header className="admin-topbar" style={{ marginBottom: 30 }}>
         <div className="admin-topbar-left">
           <h1>Statistiques & Analytics <BarChart2 size={22} style={{ verticalAlign: 'bottom', marginLeft: 8 }} /></h1>
-          <p>Tunnel de conversion, revenus et sources de trafic en temps réel</p>
+          <p>Tunnel de conversion, revenus et sources de trafic en temps réel {isDemo && <span style={{ color: '#f59e0b', fontWeight: 'bold', marginLeft: 10 }}>[Mode Démo actif]</span>}</p>
         </div>
         <button onClick={() => fetchAll()} className="btn-outline" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <RefreshCw size={16} /> Actualiser
