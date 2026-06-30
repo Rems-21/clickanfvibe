@@ -36,7 +36,6 @@ import AdminGenerations from './pages/admin/AdminGenerations';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminCredits from './pages/admin/AdminCredits';
 import AdminLibrary from './pages/admin/AdminLibrary';
-import AdminTransactions from './pages/admin/AdminTransactions';
 import AdminPaymentAttempts from './pages/admin/AdminPaymentAttempts';
 import AdminSettings from './pages/admin/AdminSettings';
 import AdminPromotions from './pages/admin/AdminPromotions';
