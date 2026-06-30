@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Play, Trash2 } from 'lucide-react';
+import Pagination from '../../components/Pagination';
 import { useAuth } from '../../context/AuthContext';
 import './AdminDashboard.css';
 
@@ -7,6 +8,8 @@ function AdminGenerations() {
   const [musics, setMusics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
   const { token } = useAuth();
 
   useEffect(() => {
@@ -82,6 +85,8 @@ function AdminGenerations() {
     (m.user_name && m.user_name.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
+  const paginatedMusics = filteredMusics.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
   return (
     <div className="admin-dashboard">
       <header className="admin-topbar">
@@ -96,7 +101,7 @@ function AdminGenerations() {
               type="text" 
               placeholder="Rechercher par titre ou créateur..." 
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
             />
           </div>
         </div>
@@ -106,6 +111,7 @@ function AdminGenerations() {
         {loading ? (
           <p>Chargement des musiques...</p>
         ) : (
+          <>
           <table className="admin-table">
             <thead>
               <tr>
@@ -119,7 +125,7 @@ function AdminGenerations() {
               </tr>
             </thead>
             <tbody>
-              {filteredMusics.map(m => (
+              {paginatedMusics.map(m => (
                 <tr key={m.id}>
                   <td>
                     {m.cover_url ? (
@@ -174,6 +180,13 @@ function AdminGenerations() {
               ))}
             </tbody>
           </table>
+          <Pagination 
+            currentPage={currentPage} 
+            totalItems={filteredMusics.length} 
+            itemsPerPage={itemsPerPage} 
+            onPageChange={setCurrentPage} 
+          />
+        </>
         )}
       </div>
     </div>

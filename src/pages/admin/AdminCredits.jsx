@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import Pagination from '../../components/Pagination';
 import './AdminDashboard.css';
 
 function AdminCredits() {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
   const { token } = useAuth();
 
   useEffect(() => {
@@ -26,6 +29,8 @@ function AdminCredits() {
     if (token) fetchTransactions();
   }, [token]);
 
+  const paginatedTransactions = transactions.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
   return (
     <div className="admin-dashboard">
       <header className="admin-topbar">
@@ -38,6 +43,7 @@ function AdminCredits() {
         {loading ? (
           <p>Chargement des transactions...</p>
         ) : (
+          <>
           <table className="admin-table">
             <thead>
               <tr>
@@ -50,7 +56,7 @@ function AdminCredits() {
               </tr>
             </thead>
             <tbody>
-              {transactions.map(t => (
+              {paginatedTransactions.map(t => (
                 <tr key={t.id}>
                   <td>#{t.id}</td>
                   <td>
@@ -74,6 +80,13 @@ function AdminCredits() {
               )}
             </tbody>
           </table>
+          <Pagination 
+            currentPage={currentPage} 
+            totalItems={transactions.length} 
+            itemsPerPage={itemsPerPage} 
+            onPageChange={setCurrentPage} 
+          />
+        </>
         )}
       </div>
     </div>

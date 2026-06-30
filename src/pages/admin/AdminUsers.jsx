@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Star, PlusCircle, Check, Trash2 } from 'lucide-react';
+import Pagination from '../../components/Pagination';
 import { useAuth } from '../../context/AuthContext';
 import './AdminDashboard.css';
 
@@ -7,6 +8,8 @@ function AdminUsers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
   const { token } = useAuth();
 
   const fetchUsers = async () => {
@@ -95,6 +98,8 @@ function AdminUsers() {
     (u.email && u.email.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
+  const paginatedUsers = filteredUsers.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
   return (
     <div className="admin-dashboard">
       <header className="admin-topbar">
@@ -109,7 +114,7 @@ function AdminUsers() {
               type="text" 
               placeholder="Rechercher par email ou nom..." 
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
             />
           </div>
         </div>
@@ -119,6 +124,7 @@ function AdminUsers() {
         {loading ? (
           <p>Chargement des utilisateurs...</p>
         ) : (
+          <>
           <table className="admin-table">
             <thead>
               <tr>
@@ -130,7 +136,7 @@ function AdminUsers() {
               </tr>
             </thead>
             <tbody>
-              {filteredUsers.map(u => (
+              {paginatedUsers.map(u => (
                 <tr key={u.id}>
                   <td>#{u.id}</td>
                   <td>{u.name}</td>
@@ -182,6 +188,13 @@ function AdminUsers() {
               ))}
             </tbody>
           </table>
+          <Pagination 
+            currentPage={currentPage} 
+            totalItems={filteredUsers.length} 
+            itemsPerPage={itemsPerPage} 
+            onPageChange={setCurrentPage} 
+          />
+        </>
         )}
       </div>
     </div>
