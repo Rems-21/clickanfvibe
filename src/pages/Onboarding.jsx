@@ -14,6 +14,20 @@ function Onboarding() {
   const { user } = useAuth();
   const { currentTrack, isPlaying, togglePlay, playTrack } = useAudio();
   const [showcaseMusics, setShowcaseMusics] = useState([]);
+  const [openFaq, setOpenFaq] = useState(null);
+
+  const toggleFaq = (index) => {
+    setOpenFaq(openFaq === index ? null : index);
+  };
+
+  const faqData = [
+    { q: "Dois-je savoir chanter ou composer ?", a: "Pas du tout ! Notre IA se charge de tout : de l'écriture des paroles à la composition de la mélodie et même du chant." },
+    { q: "Combien de temps faut-il pour recevoir ma chanson ?", a: "La création ne prend que quelques secondes. Vous pourrez l'écouter, la télécharger ou la partager instantanément." },
+    { q: "Puis-je utiliser ma chanson à des fins commerciales ?", a: "Oui, selon le pack que vous choisissez, vous pouvez obtenir les droits commerciaux complets sur vos créations." },
+    { q: "Quels styles musicaux sont disponibles ?", a: "Nous proposons tous les styles majeurs : Pop, Rap, RnB, Classique, Afrobeat, EDM, Jazz, et bien d'autres !" },
+    { q: "Puis-je modifier ma chanson après génération ?", a: "Absolument. Vous pouvez générer des variantes pour obtenir exactement ce que vous souhaitez." },
+    { q: "Comment fonctionne le système de générations ?", a: "Chaque génération correspond à une création musicale unique. Nos packs vous offrent un certain nombre de crédits de génération." }
+  ];
 
   useEffect(() => {
     // Fetch showcase musics (admin picks via "is_trending")
@@ -46,8 +60,10 @@ function Onboarding() {
 
   return (
     <div className="landing-container">
-      {/* TOPBAR */}
-      <div className="landing-topbar">
+      {/* HERO WRAPPER */}
+      <div className="hero-section-wrapper">
+        {/* TOPBAR */}
+        <div className="landing-topbar">
         <div className="landing-logo">
           <div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
             <span style={{width: '3px', height: '12px', background: 'var(--neon-pink)', borderRadius: '3px'}}></span>
@@ -142,6 +158,7 @@ function Onboarding() {
            </div>
         </div>
       </div>
+      </div> {/* END HERO WRAPPER */}
 
       {/* CAS D'UTILISATION */}
       <div id="features" className="section section-panel">
@@ -369,17 +386,19 @@ function Onboarding() {
       {/* FAQ */}
       <div id="faq" className="section">
         <h2 className="section-title">Questions fréquentes</h2>
-        <div className="faq-row-2">
-          <div className="faq-grid">
-            <div className="faq-item"><h4>Dois-je savoir chanter ou composer ?</h4><Plus size={18} color="var(--text-dim)"/></div>
-            <div className="faq-item"><h4>Combien de temps faut-il pour recevoir ma chanson ?</h4><Plus size={18} color="var(--text-dim)"/></div>
-            <div className="faq-item"><h4>Puis-je utiliser ma chanson à des fins commerciales ?</h4><Plus size={18} color="var(--text-dim)"/></div>
-          </div>
-          <div className="faq-grid">
-            <div className="faq-item"><h4>Quels styles musicaux sont disponibles ?</h4><Plus size={18} color="var(--text-dim)"/></div>
-            <div className="faq-item"><h4>Puis-je modifier ma chanson après génération ?</h4><Plus size={18} color="var(--text-dim)"/></div>
-            <div className="faq-item"><h4>Comment fonctionne le système de générations ?</h4><Plus size={18} color="var(--text-dim)"/></div>
-          </div>
+        <div className="faq-grid">
+          {faqData.map((faq, index) => (
+            <div 
+              key={index} 
+              className={`faq-item ${openFaq === index ? 'open' : ''}`}
+              onClick={() => toggleFaq(index)}
+            >
+              <h4>{faq.q} <Plus size={18} /></h4>
+              <div className="faq-answer">
+                {faq.a}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
