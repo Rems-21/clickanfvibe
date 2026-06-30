@@ -78,6 +78,16 @@ function AppContent() {
     if (window.fbq) {
       window.fbq('track', 'PageView');
     }
+    // Track visit with UTM source
+    const params = new URLSearchParams(window.location.search);
+    const source = params.get('utm_source') || params.get('ref') || document.referrer.includes('facebook') ? 'facebook' : document.referrer.includes('google') ? 'google' : document.referrer.includes('tiktok') ? 'tiktok' : document.referrer ? 'referral' : 'direct';
+    const utm_campaign = params.get('utm_campaign') || null;
+    const utm_medium = params.get('utm_medium') || null;
+    fetch('/api/analytics/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ event_type: 'visit', source, utm_campaign, utm_medium, user_id: null })
+    }).catch(() => {});
   }, [location.pathname]);
 
   useEffect(() => {

@@ -135,3 +135,16 @@ class Setting(Base):
     key = Column(String(255), primary_key=True, index=True)
     value = Column(String(255))
     description = Column(String(255), nullable=True)
+
+class AnalyticsEvent(Base):
+    __tablename__ = "analytics_events"
+
+    id = Column(Integer, primary_key=True, index=True)
+    event_type = Column(String(100), index=True)  # visit, signup, login, create_click, generate, payment_init, payment_success
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    source = Column(String(255), nullable=True)   # facebook, google, direct, tiktok, etc.
+    utm_campaign = Column(String(255), nullable=True)
+    utm_medium = Column(String(255), nullable=True)
+    country = Column(String(100), nullable=True)
+    extra = Column(Text, nullable=True)           # JSON for extra data (style, amount, etc.)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)

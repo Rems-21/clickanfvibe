@@ -13,7 +13,7 @@ function Generating() {
   const { user, refreshCredits } = useAuth();
   const { playTrack, currentTrack, isPlaying } = useAudio();
   const { addToast } = useNotification();
-  const { prompt = "Une chanson afrobeat romantique sur l'amour sincère, avec une ambiance douce et entraînante.", style = "Afrobeat", mood = "Romantique", voice = "Féminine", tempo = "Normal", duration = "2:30", language = "Français" } = location.state || {};
+  const { prompt = "Une chanson afrobeat romantique sur l'amour sincère, avec une ambiance douce et entraînante.", style = "Afrobeat", mood = "Romantique", voice = "Féminine", tempo = "Normal", duration = "2:30", language = "Français", eventType = null } = location.state || {};
   
   const [progress, setProgress] = useState(0);
   const [showHint, setShowHint] = useState(true);
@@ -51,10 +51,17 @@ function Generating() {
             'ngrok-skip-browser-warning': '69420'
           },
           body: JSON.stringify({
-            prompt: `${style} ${mood} ${language} Voix ${voice} Tempo ${tempo} ${prompt}`,
+            prompt: `${eventType ? `[${eventType}] ` : ''}${style} ${mood} ${language} Voix ${voice} Tempo ${tempo} ${prompt}`,
             duration: 150
           })
         });
+
+        // Track generate event
+        fetch('/api/analytics/track', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ event_type: 'generate', user_id: user?.id || null, extra: { style, mood, eventType } })
+        }).catch(() => {});
 
         const data = await response.json();
 
@@ -451,9 +458,19 @@ function Generating() {
                   <Edit2 size={24} />
                   <span>Modifier</span>
                 </button>
-                <button className="action-square">
+                <button className="action-square" onClick={() => {
+                  if (!user || user.credits < 1) {
+                    addToast("Solde insuffisant", "Rechargez vos générations pour créer une nouvelle version.", "warning");
+                    navigate('/credits');
+                    return;
+                  }
+                  // Reset state and re-navigate to regenerate
+                  navigate('/generating', {
+                    state: { prompt, style, mood, voice, tempo, language, eventType }
+                  });
+                }}>
                   <RotateCcw size={24} />
-                  <span>Régénérer</span>
+                  <span>Nouvelle version <span style={{fontSize:10, opacity:0.7}}>-1 ⚡</span></span>
                 </button>
                 <button className="action-square" onClick={async () => {
                   try {

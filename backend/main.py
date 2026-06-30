@@ -71,7 +71,14 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 
 # Rate limiter — protection brute force
-limiter = Limiter(key_func=get_remote_address)
+# Use X-Forwarded-For header (set by Nginx reverse proxy) to get real client IP
+def get_real_ip(request: Request) -> str:
+    forwarded_for = request.headers.get("X-Forwarded-For")
+    if forwarded_for:
+        return forwarded_for.split(",")[0].strip()
+    return request.client.host
+
+limiter = Limiter(key_func=get_real_ip)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -1432,13 +1439,136 @@ def mark_notification_read(notif_id: int, db: Session = Depends(get_db), current
 
 @app.post("/api/admin/notifications")
 def create_notification(req: NotificationCreate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
-    new_notif = models.Notification(
-        user_id=req.user_id,
-        title=req.title,
-        message=req.message,
-        type=req.type
+    if req.user_id is None:
+        # Broadcast: create one notification per user
+        all_users = db.query(models.User).filter(models.User.is_suspended == False).all()
+        for u in all_users:
+            notif = models.Notification(
+                user_id=u.id,
+                title=req.title,
+                message=req.message,
+                type=req.type
+            )
+            db.add(notif)
+        db.commit()
+        logger.info(f"Admin {current_user.email} a diffusé une notification globale '{req.title}' à {len(all_users)} utilisateurs")
+        return {"status": "success", "recipients": len(all_users)}
+    else:
+        new_notif = models.Notification(
+            user_id=req.user_id,
+            title=req.title,
+            message=req.message,
+            type=req.type
+        )
+        db.add(new_notif)
+        db.commit()
+        logger.info(f"Admin {current_user.email} a envoyé une notification '{req.title}'")
+        return {"status": "success", "id": new_notif.id}
+
+# ─── ANALYTICS ────────────────────────────────────────────────────────────────
+
+@app.post("/api/analytics/event")
+def track_event(request: Request, db: Session = Depends(get_db)):
+    """Track a conversion funnel event (public endpoint, no auth required)"""
+    import json as json_lib
+    try:
+        body = {}
+        # We accept both sync and async; use raw body stored in state if set
+    except Exception:
+        pass
+    return {"status": "ok"}
+
+@app.post("/api/analytics/track")
+async def track_event_body(request: Request, db: Session = Depends(get_db)):
+    """Track a conversion funnel event with body"""
+    import json as json_lib
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+
+    event_type = body.get("event_type", "unknown")
+    user_id = body.get("user_id", None)
+    source = body.get("source", None)
+    utm_campaign = body.get("utm_campaign", None)
+    utm_medium = body.get("utm_medium", None)
+    country = body.get("country", None)
+    extra = body.get("extra", None)
+    if isinstance(extra, dict):
+        extra = json_lib.dumps(extra)
+
+    event = models.AnalyticsEvent(
+        event_type=event_type,
+        user_id=user_id,
+        source=source,
+        utm_campaign=utm_campaign,
+        utm_medium=utm_medium,
+        country=country,
+        extra=extra
     )
-    db.add(new_notif)
+    db.add(event)
     db.commit()
-    logger.info(f"Admin {current_user.email} a envoyé une notification '{req.title}'")
-    return {"status": "success", "id": new_notif.id}
+    return {"status": "ok"}
+
+@app.get("/api/admin/analytics")
+def get_analytics(db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+    """Return conversion funnel stats for admin dashboard"""
+    import json as json_lib
+    from sqlalchemy import func
+
+    # Funnel counts
+    def count_event(evt):
+        return db.query(func.count(models.AnalyticsEvent.id)).filter(
+            models.AnalyticsEvent.event_type == evt
+        ).scalar() or 0
+
+    funnel = {
+        "visit": count_event("visit"),
+        "signup": count_event("signup"),
+        "login": count_event("login"),
+        "create_click": count_event("create_click"),
+        "generate": count_event("generate"),
+        "payment_init": count_event("payment_init"),
+        "payment_success": count_event("payment_success"),
+    }
+
+    # Sources
+    sources_raw = db.query(
+        models.AnalyticsEvent.source,
+        func.count(models.AnalyticsEvent.id).label("count")
+    ).filter(
+        models.AnalyticsEvent.source != None
+    ).group_by(models.AnalyticsEvent.source).all()
+
+    sources = [{"source": r.source, "count": r.count} for r in sources_raw]
+
+    # Revenue stats
+    from datetime import date, timedelta
+    today = datetime.datetime.utcnow().date()
+    month_start = today.replace(day=1)
+
+    daily_revenue = db.query(func.coalesce(func.sum(models.Transaction.price_fcfa), 0)).filter(
+        func.date(models.Transaction.created_at) == today
+    ).scalar() or 0
+
+    monthly_revenue = db.query(func.coalesce(func.sum(models.Transaction.price_fcfa), 0)).filter(
+        models.Transaction.created_at >= datetime.datetime(month_start.year, month_start.month, month_start.day)
+    ).scalar() or 0
+
+    # Active users today
+    active_today = db.query(func.count(func.distinct(models.AnalyticsEvent.user_id))).filter(
+        func.date(models.AnalyticsEvent.created_at) == today,
+        models.AnalyticsEvent.user_id != None
+    ).scalar() or 0
+
+    # Generations today
+    gens_today = count_event("generate")
+
+    return {
+        "funnel": funnel,
+        "sources": sources,
+        "daily_revenue": daily_revenue,
+        "monthly_revenue": monthly_revenue,
+        "active_today": active_today,
+        "gens_today": gens_today
+    }
