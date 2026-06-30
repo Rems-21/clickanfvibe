@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Music, Sparkles, Zap, Settings, Lock, Heart, Play, Pause, CheckCircle2, Star, Gift, Briefcase, Mic, BookOpen, GraduationCap, Baby } from 'lucide-react';
+import { Music, Sparkles, Zap, Settings, Lock, Heart, Play, Pause, CheckCircle2, Star, Gift, Briefcase, Mic, BookOpen, GraduationCap, Baby, Gem, HandHeart } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useAudio } from '../context/AudioContext';
 import './Onboarding.css';
@@ -106,14 +106,14 @@ function Onboarding() {
       <div className="section">
         <h2 className="section-title">Cas d'utilisation<br/><span style={{fontSize: 20, color: 'var(--text-secondary)', fontWeight: 500}}>À quoi servira votre prochaine chanson ?</span></h2>
         <div className="grid-4">
-          <div className="use-case-card"><div className="use-case-icon">❤️</div><div className="use-case-title">Déclaration d'amour</div></div>
-          <div className="use-case-card"><div className="use-case-icon">🎂</div><div className="use-case-title">Anniversaire</div></div>
-          <div className="use-case-card"><div className="use-case-icon">💍</div><div className="use-case-title">Mariage</div></div>
-          <div className="use-case-card"><div className="use-case-icon">🏪</div><div className="use-case-title">Jingle pour entreprise</div></div>
-          <div className="use-case-card"><div className="use-case-icon">🎤</div><div className="use-case-title">Maquette pour artiste</div></div>
-          <div className="use-case-card"><div className="use-case-icon">🙏</div><div className="use-case-title">Gospel</div></div>
-          <div className="use-case-card"><div className="use-case-icon">🎓</div><div className="use-case-title">Diplôme</div></div>
-          <div className="use-case-card"><div className="use-case-icon">👶</div><div className="use-case-title">Naissance</div></div>
+          <div className="use-case-card"><div className="use-case-icon"><Heart color="#FF3366" size={28}/></div><div className="use-case-title">Déclaration d'amour</div></div>
+          <div className="use-case-card"><div className="use-case-icon"><Gift color="#C466FF" size={28}/></div><div className="use-case-title">Anniversaire</div></div>
+          <div className="use-case-card"><div className="use-case-icon"><Gem color="#33CCFF" size={28}/></div><div className="use-case-title">Mariage</div></div>
+          <div className="use-case-card"><div className="use-case-icon"><Briefcase color="#FFB033" size={28}/></div><div className="use-case-title">Jingle pour entreprise</div></div>
+          <div className="use-case-card"><div className="use-case-icon"><Mic color="#FF3366" size={28}/></div><div className="use-case-title">Maquette pour artiste</div></div>
+          <div className="use-case-card"><div className="use-case-icon"><HandHeart color="#C466FF" size={28}/></div><div className="use-case-title">Gospel</div></div>
+          <div className="use-case-card"><div className="use-case-icon"><GraduationCap color="#33CCFF" size={28}/></div><div className="use-case-title">Diplôme</div></div>
+          <div className="use-case-card"><div className="use-case-icon"><Baby color="#FFB033" size={28}/></div><div className="use-case-title">Naissance</div></div>
         </div>
       </div>
 
@@ -147,14 +147,21 @@ function Onboarding() {
             {showcaseMusics.map((m, i) => {
               const isPlayingThis = currentTrack?.id === m.id && isPlaying;
               return (
-                <div key={m.id} className="audio-card">
-                  <div className="audio-info">
+                <div key={m.id} className="audio-card-vertical">
+                  <div className="audio-cover-wrapper">
+                    {m.cover_url ? (
+                      <img src={m.cover_url} alt={m.title} className="audio-cover-large" />
+                    ) : (
+                      <div className="audio-cover-large placeholder-cover"><Music size={32} opacity={0.5}/></div>
+                    )}
+                    <button className="audio-play-btn-overlay" onClick={() => handlePlay(m)}>
+                      {isPlayingThis ? <Pause fill="white" size={24}/> : <Play fill="white" size={24} style={{marginLeft: 3}}/>}
+                    </button>
+                  </div>
+                  <div className="audio-info-vertical">
                     <h4>{m.title || "Titre inconnu"}</h4>
                     <p>{m.style}</p>
                   </div>
-                  <button className="audio-play-btn" onClick={() => handlePlay(m)}>
-                    {isPlayingThis ? <Pause fill="white" size={20}/> : <Play fill="white" size={20} style={{marginLeft: 3}}/>}
-                  </button>
                 </div>
               );
             })}
