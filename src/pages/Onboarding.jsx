@@ -359,9 +359,9 @@ function Onboarding() {
           <div className="pricing-card">
             <h4>Packs populaires</h4>
             <p>À partir de</p>
-            <div className="pricing-price">1 250 <span style={{fontSize: 16}}>FCFA</span></div>
+            <div className="pricing-price">750 <span style={{fontSize: 16}}>FCFA</span></div>
             <p style={{marginBottom: 20}}>pour 1 génération</p>
-            <button onClick={() => navigate('/billing')}>Voir les packs &rarr;</button>
+            <button onClick={() => navigate(user ? '/credits' : '/login')}>Voir les packs &rarr;</button>
           </div>
         </div>
       </div>
