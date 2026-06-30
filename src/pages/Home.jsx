@@ -271,8 +271,8 @@ function Home() {
           return (
             <section className="section-block" key={style}>
               <div className="section-header">
-                <h3 style={{display:'flex',alignItems:'center',gap:6}}>{label.icon}{label.label}</h3>
-                <button className="link-secondary" onClick={() => navigate('/create', { state: { style } })} style={{background:'none',border:'none',cursor:'pointer',color:'var(--primary-color)',fontSize:13}}>Créer →</button>
+                <h3 style={{display:'flex',alignItems:'center',gap:6}}>{icon}{label}</h3>
+                <button onClick={() => navigate('/create', { state: { style } })} style={{background:'linear-gradient(135deg,#FF3366,#9933FF)', border:'none', cursor:'pointer', color:'#fff', fontSize:11, fontWeight:700, padding:'5px 12px', borderRadius:20, display:'flex', alignItems:'center', gap:4, letterSpacing:'0.3px'}}>Créer <span style={{fontSize:13}}>→</span></button>
               </div>
               <div className="horizontal-scroll">
                 {tracks.map((music) => (
