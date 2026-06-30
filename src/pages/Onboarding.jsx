@@ -144,7 +144,7 @@ function Onboarding() {
       </div>
 
       {/* CAS D'UTILISATION */}
-      <div id="features" className="section">
+      <div id="features" className="section section-panel">
         <h2 className="section-title">À quoi ça sert ?</h2>
         <div className="use-case-grid">
           <div className="use-case-card">
@@ -158,7 +158,7 @@ function Onboarding() {
             <div className="use-case-desc">Exprimez vos sentiments<br/>en musique</div>
           </div>
           <div className="use-case-card">
-            <div className="use-case-icon-wrapper"><Gem color="#C466FF" size={32}/></div>
+            <div className="use-case-icon-wrapper"><Gem color="#FF3366" size={32}/></div>
             <div className="use-case-title">Mariage</div>
             <div className="use-case-desc">Créez la chanson parfaite<br/>pour votre cérémonie</div>
           </div>
@@ -168,12 +168,12 @@ function Onboarding() {
             <div className="use-case-desc">Boostez votre marque<br/>avec un jingle pro</div>
           </div>
           <div className="use-case-card">
-            <div className="use-case-icon-wrapper"><Mic color="#6633FF" size={32}/></div>
+            <div className="use-case-icon-wrapper"><Mic color="#9933FF" size={32}/></div>
             <div className="use-case-title">Artistes & Maquettes</div>
             <div className="use-case-desc">Créez vos maquettes<br/>facilement</div>
           </div>
           <div className="use-case-card">
-            <div className="use-case-icon-wrapper"><PartyPopper color="#33CCFF" size={32}/></div>
+            <div className="use-case-icon-wrapper"><PartyPopper color="#FF3388" size={32}/></div>
             <div className="use-case-title">Toutes occasions</div>
             <div className="use-case-desc">Graduation, naissance,<br/>fête, hommage...</div>
           </div>
@@ -181,42 +181,48 @@ function Onboarding() {
       </div>
 
       {/* COMMENT CA MARCHE */}
-      <div id="how" className="section">
+      <div id="how" className="section section-panel">
         <h2 className="section-title">Comment ça marche ?</h2>
         <div className="how-it-works-timeline">
           <div className="timeline-step">
             <div className="timeline-icon-box">
-              <ClipboardList size={28} color="#C466FF" />
+              <ClipboardList size={28} color="#FF3388" />
               <div className="timeline-number">1</div>
             </div>
-            <h4>Répondez à quelques questions</h4>
-            <p>Parlez-nous de votre idée, de l'occasion et du style souhaité.</p>
+            <div className="timeline-text">
+              <h4>Répondez à quelques questions</h4>
+              <p>Parlez-nous de votre idée, de l'occasion et du style souhaité.</p>
+            </div>
           </div>
           <div className="timeline-connector"></div>
           
           <div className="timeline-step">
             <div className="timeline-icon-box">
-              <Music size={28} color="#C466FF" />
+              <Music size={28} color="#9933FF" />
               <div className="timeline-number">2</div>
             </div>
-            <h4>Notre IA crée votre chanson</h4>
-            <p>Paroles, musique, voix... tout est généré automatiquement.</p>
+            <div className="timeline-text">
+              <h4>Notre IA crée votre chanson</h4>
+              <p>Paroles, musique, voix... tout est généré automatiquement.</p>
+            </div>
           </div>
           <div className="timeline-connector"></div>
           
           <div className="timeline-step">
             <div className="timeline-icon-box">
-              <Download size={28} color="#C466FF" />
+              <Download size={28} color="#9933FF" />
               <div className="timeline-number">3</div>
             </div>
-            <h4>Écoutez, téléchargez, partagez</h4>
-            <p>Recevez votre chanson prête à être écoutée et partagée.</p>
+            <div className="timeline-text">
+              <h4>Écoutez, téléchargez, partagez</h4>
+              <p>Recevez votre chanson prête à être écoutée et partagée.</p>
+            </div>
           </div>
         </div>
       </div>
 
       {/* ECOUTEZ QUELQUES CREATIONS */}
-      <div id="examples" className="section">
+      <div id="examples" className="section section-panel">
         <h2 className="section-title">Écoutez quelques créations</h2>
         {showcaseMusics.length > 0 ? (
           <div className="creations-grid">
@@ -224,28 +230,28 @@ function Onboarding() {
               const isPlayingThis = currentTrack?.id === m.id && isPlaying;
               return (
                 <div key={m.id} className="creation-card">
-                  <div style={{position: 'relative'}}>
-                    {m.cover_url ? (
-                      <img src={m.cover_url} alt={m.title} className="creation-image" />
-                    ) : (
-                      <div className="creation-image" style={{background: '#1A1525', display:'flex', alignItems:'center', justifyContent:'center'}}>
-                         <Music opacity={0.5} size={40}/>
-                      </div>
-                    )}
-                  </div>
-                  <div className="creation-info">
+                  {m.cover_url ? (
+                    <img src={m.cover_url} alt={m.title} className="creation-image" />
+                  ) : (
+                    <div className="creation-image" style={{background: '#1A1525', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                       <Music opacity={0.5} size={40}/>
+                    </div>
+                  )}
+                  <div className="creation-overlay">
                     <button className="creation-play-btn" onClick={() => handlePlay(m)}>
-                      {isPlayingThis ? <Pause fill="white" size={16}/> : <Play fill="white" size={16} style={{marginLeft: 2}}/>}
+                      {isPlayingThis ? <Pause fill="white" size={14}/> : <Play fill="white" size={14} style={{marginLeft: 2}}/>}
                     </button>
-                    <h4>{m.title || "Titre inconnu"}</h4>
-                    <p>{m.style}</p>
-                    <div className="creation-waveform">
-                      <div style={{display:'flex', gap:'2px', height:'16px', alignItems:'center', flex: 1}}>
-                        {Array.from({length: 30}).map((_, idx) => (
-                           <div key={idx} style={{width:'2px', background:'rgba(255,255,255,0.4)', height: Math.random() * 100 + '%', borderRadius:'2px'}}></div>
-                        ))}
+                    <div className="creation-info">
+                      <h4>{m.title || "Titre inconnu"}</h4>
+                      <p>{m.style}</p>
+                      <div className="creation-waveform">
+                        <div style={{display:'flex', gap:'2px', height:'12px', alignItems:'center', flex: 1}}>
+                          {Array.from({length: 20}).map((_, idx) => (
+                             <div key={idx} style={{width:'2px', background:'rgba(255,255,255,0.4)', height: Math.random() * 100 + '%', borderRadius:'2px'}}></div>
+                          ))}
+                        </div>
+                        <span>02:45</span>
                       </div>
-                      <span>02:45</span>
                     </div>
                   </div>
                 </div>
@@ -261,7 +267,7 @@ function Onboarding() {
       </div>
 
       {/* 3 COLUMNS SECTION */}
-      <div className="section three-cols">
+      <div className="section section-panel three-cols">
         <div className="col-why">
           <h3>Pourquoi choisir<br/>Click & Vibe ?</h3>
           <ul className="why-list">
