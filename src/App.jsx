@@ -36,6 +36,8 @@ import AdminGenerations from './pages/admin/AdminGenerations';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminCredits from './pages/admin/AdminCredits';
 import AdminLibrary from './pages/admin/AdminLibrary';
+import AdminTransactions from './pages/admin/AdminTransactions';
+import AdminPaymentAttempts from './pages/admin/AdminPaymentAttempts';
 import AdminSettings from './pages/admin/AdminSettings';
 import AdminPromotions from './pages/admin/AdminPromotions';
 import AdminLogs from './pages/admin/AdminLogs';
@@ -174,6 +176,7 @@ function AppContent() {
             <Route path="/devvorx/admin-1/generations" element={<AdminGenerations />} />
             <Route path="/devvorx/admin-1/users" element={<AdminUsers />} />
             <Route path="/devvorx/admin-1/credits" element={<AdminCredits />} />
+            <Route path="/devvorx/admin-1/payment-attempts" element={<AdminPaymentAttempts />} />
             <Route path="/devvorx/admin-1/library" element={<AdminLibrary />} />
             <Route path="/devvorx/admin-1/settings" element={<AdminSettings />} />
             <Route path="/devvorx/admin-1/promotions" element={<AdminPromotions />} />

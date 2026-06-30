@@ -1302,6 +1302,19 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
             data = response.json()
             gateway_url = data.get("gatewayUrl")
             if gateway_url:
+                # Track payment_init
+                try:
+                    import json
+                    evt = models.AnalyticsEvent(
+                        event_type="payment_init", 
+                        source=current_user.country or "direct", 
+                        user_id=current_user.id,
+                        extra=json.dumps({"amount_fcfa": req.amount_fcfa, "credits": req.credits_to_add})
+                    )
+                    db.add(evt)
+                    db.commit()
+                except Exception as e:
+                    print("Analytics payment_init error:", e)
                 return {"checkout_url": gateway_url}
         
         print("KPay Init Error:", response.text)
@@ -1687,3 +1700,33 @@ def admin_delete_plan(plan_id: int, db: Session = Depends(get_db), current_user:
         db.delete(plan)
         db.commit()
     return {"status": "success"}
+
+
+@app.get("/api/admin/payment-attempts")
+def get_admin_payment_attempts(skip: int = 0, limit: int = 500, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+    attempts = db.query(models.AnalyticsEvent, models.User).join(
+        models.User, models.AnalyticsEvent.user_id == models.User.id
+    ).filter(models.AnalyticsEvent.event_type == "payment_init")\
+    .order_by(models.AnalyticsEvent.created_at.desc())\
+    .offset(skip).limit(limit).all()
+    
+    result = []
+    import json
+    for evt, user in attempts:
+        extra_data = {}
+        if evt.extra:
+            try:
+                extra_data = json.loads(evt.extra)
+            except:
+                pass
+                
+        result.append({
+            "id": evt.id,
+            "created_at": evt.created_at.isoformat(),
+            "user_name": user.name,
+            "user_email": user.email,
+            "user_country": user.country or "Inconnu",
+            "amount_fcfa": extra_data.get("amount_fcfa", 0),
+            "credits_to_add": extra_data.get("credits", 0)
+        })
+    return result
