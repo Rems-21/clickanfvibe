@@ -26,6 +26,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, validator
+from typing import Optional
 import hmac
 import hashlib
 import json
@@ -1425,27 +1426,27 @@ class PricingPlanCreate(BaseModel):
     category: str
     credits: int
     price_fcfa: int
-    original_price_fcfa: int = None
+    original_price_fcfa: Optional[int] = None
     title: str
-    badge: str = None
-    badge_color: str = None
+    badge: Optional[str] = None
+    badge_color: Optional[str] = None
     icon_color: str = "pink"
-    description: str = None
+    description: Optional[str] = None
     display_order: int = 0
     is_active: bool = True
 
 class PricingPlanUpdate(BaseModel):
-    category: str = None
-    credits: int = None
-    price_fcfa: int = None
-    original_price_fcfa: int = None
-    title: str = None
-    badge: str = None
-    badge_color: str = None
-    icon_color: str = None
-    description: str = None
-    display_order: int = None
-    is_active: bool = None
+    category: Optional[str] = None
+    credits: Optional[int] = None
+    price_fcfa: Optional[int] = None
+    original_price_fcfa: Optional[int] = None
+    title: Optional[str] = None
+    badge: Optional[str] = None
+    badge_color: Optional[str] = None
+    icon_color: Optional[str] = None
+    description: Optional[str] = None
+    display_order: Optional[int] = None
+    is_active: Optional[bool] = None
 
 
 @app.get("/api/notifications")

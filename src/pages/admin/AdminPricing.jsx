@@ -54,7 +54,11 @@ function AdminPricing() {
         fetchPlans();
       } else {
         const err = await res.json();
-        addToast("Erreur", err.detail || "Erreur de sauvegarde", "error");
+        let errorMsg = "Erreur de sauvegarde";
+        if (err.detail) {
+          errorMsg = typeof err.detail === 'string' ? err.detail : JSON.stringify(err.detail);
+        }
+        addToast("Erreur", errorMsg, "error");
       }
     } catch (e) {
       addToast("Erreur", "Problème réseau", "error");
