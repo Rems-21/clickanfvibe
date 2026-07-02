@@ -77,20 +77,21 @@ function Credits() {
   }, [paymentStatus, refreshCredits, credits]);
   
   // Watch user.credits to detect success
+  const [initialCredits, setInitialCredits] = useState(0);
   useEffect(() => {
-    if (paymentStatus === 'PENDING' && selectedPlan) {
-      // If credits increased
-      setPaymentStatus('SUCCESS');
-      setTimeout(() => {
-        setShowPaymentModal(false);
-        setPaymentStatus('IDLE');
-        setSelectedPlan(null);
-        setPhoneNumber('');
-      }, 3000);
+    if (paymentStatus === 'PENDING') {
+       if (credits > initialCredits) {
+         setPaymentStatus('SUCCESS');
+         setTimeout(() => {
+           setShowPaymentModal(false);
+           setPaymentStatus('IDLE');
+           setSelectedPlan(null);
+           setPhoneNumber('');
+           setTransactions([]); // reset to force refetch
+         }, 3000);
+       }
     }
-    // We only want this to run when 'credits' changes, but we need a way to know it increased.
-    // Actually, a simpler way is a ref or just comparing if it's strictly greater.
-  }, [credits]); // Will refine below
+  }, [credits, paymentStatus, initialCredits]);
 
 
   useEffect(() => {
