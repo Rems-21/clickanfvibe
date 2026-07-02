@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Music, Sparkles, Zap, Settings, Lock, Heart, MessageSquare, Share2, Star, Trophy, ShieldCheck, ChevronDown, Globe, Smartphone, Users, Mic2, Headphones, ArrowRight, MapPin } from 'lucide-react';
+import { Music, Sparkles, Zap, Settings, Lock, Heart, MessageSquare, Share2, Star, Trophy, ShieldCheck, ChevronDown, Globe, Smartphone, Users, Mic2, Headphones, ArrowRight, MapPin, Play, Download, Camera } from 'lucide-react';
 import './Onboarding.css';
 
 function Onboarding() {
@@ -50,7 +50,42 @@ function Onboarding() {
         
         <div className="landing-image-wrapper">
            <div className="landing-glow-circle"></div>
-           <img src="/hero_headphones.png" alt="Hero" className="landing-hero-img" />
+           <img src="/images/hero_headphones_neon_1782389391857.png" alt="Hero" className="landing-hero-img" />
+           
+           <div className="hero-music-player">
+              <div className="player-top">
+                 <div className="player-play-btn">
+                    <Play size={20} color="#FFF" fill="#FFF" />
+                 </div>
+                 <div className="player-waveform">
+                    <div className="waveform-bars">
+                      {[...Array(35)].map((_, i) => (
+                        <div key={i} className="w-bar" style={{ height: `${Math.floor(Math.random() * (100 - 20 + 1) + 20)}%` }}></div>
+                      ))}
+                    </div>
+                 </div>
+                 <div className="player-time">03:24</div>
+              </div>
+              <div className="player-info">
+                 <h4>Chanson d'amour personnalisée</h4>
+                 <p>Pour celle qui fait battre mon cœur.</p>
+              </div>
+              <div className="player-divider"></div>
+              <div className="player-bottom-features">
+                 <div className="p-feat">
+                    <Camera size={14} color="#C466FF"/>
+                    <span>Personnalisé<br/>pour vous</span>
+                 </div>
+                 <div className="p-feat">
+                    <div className="ai-icon-wrapper"><Sparkles size={14} color="#9933FF"/></div>
+                    <span>Généré<br/>par IA</span>
+                 </div>
+                 <div className="p-feat">
+                    <Download size={14} color="#33CCFF"/>
+                    <span>Téléchargement<br/>instantané</span>
+                 </div>
+              </div>
+           </div>
         </div>
       </div>
 
