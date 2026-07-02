@@ -31,6 +31,23 @@ function Credits() {
   const [provider, setProvider] = useState('MTN_MOMO_CMR');
   const [paymentStatus, setPaymentStatus] = useState('IDLE'); // IDLE, PENDING, SUCCESS, ERROR
   const [paymentError, setPaymentError] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [fullName, setFullName] = useState('');
+
+  const countryNames = {
+    'BEN': 'Bénin',
+    'CMR': 'Cameroun',
+    'CIV': "Côte d'Ivoire",
+    'COD': 'RD Congo',
+    'GAB': 'Gabon',
+    'KEN': 'Kenya',
+    'COG': 'Congo',
+    'RWA': 'Rwanda',
+    'SEN': 'Sénégal',
+    'SLE': 'Sierra Leone',
+    'UGA': 'Ouganda',
+    'ZMB': 'Zambie'
+  };
 
   const mobileMoneyProviders = [
     { code: 'MTN_MOMO_BEN', name: 'MTN Bénin', country: 'BEN' },
@@ -180,7 +197,8 @@ function Credits() {
               credits_to_add: selectedPlan.credits,
               origin: window.location.origin,
               phoneNumber: phoneNumber,
-              provider: provider
+              provider: provider,
+              fullName: fullName
           })
       });
       const data = await res.json();
@@ -430,15 +448,22 @@ function Credits() {
 
       {/* Custom Payment Modal */}
       {showPaymentModal && selectedPlan && (
-        <div className="modal-overlay">
-          <div className="modal-content kpay-modal" style={{maxWidth: '400px'}}>
-            <button className="modal-close" onClick={() => paymentStatus !== 'PENDING' && setShowPaymentModal(false)} disabled={paymentStatus === 'PENDING'}>×</button>
-            <h2 style={{fontSize: '1.4rem', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '8px'}}>
-              <Zap color="var(--primary-color)" /> Acheter {selectedPlan.title}
-            </h2>
-            <p style={{color: 'var(--text-muted)', marginBottom: '1.5rem'}}>
-              Montant à payer : <strong style={{color: 'white'}}>{selectedPlan.price_fcfa} FCFA</strong>
-            </p>
+        <div className="modal-overlay" style={{background: 'rgba(0,0,0,0.85)'}}>
+          <div className="modal-content kpay-modal" style={{maxWidth: '420px', background: '#18181b', border: '1px solid #3f3f46', padding: '0', borderRadius: '16px', overflow: 'hidden'}}>
+            
+            <div style={{padding: '20px 24px', borderBottom: '1px solid #27272a', display: 'flex', justifyContent: 'center', position: 'relative'}}>
+              <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', color: 'white', margin: 0}}>clickandvibe</h3>
+              <button className="modal-close" onClick={() => paymentStatus !== 'PENDING' && setShowPaymentModal(false)} disabled={paymentStatus === 'PENDING'} style={{position: 'absolute', top: '50%', right: '20px', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: '#a1a1aa', fontSize: '1.5rem', cursor: 'pointer'}}>×</button>
+            </div>
+            
+            <div style={{padding: '24px'}}>
+              <div style={{background: '#27272a', borderRadius: '12px', padding: '20px', marginBottom: '24px'}}>
+                <div style={{fontSize: '0.75rem', color: '#a1a1aa', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px'}}>AMOUNT TO PAY</div>
+                <div style={{fontSize: '2.5rem', fontWeight: 'bold', color: 'white', marginBottom: '4px', lineHeight: 1}}>{selectedPlan.price_fcfa} <span style={{fontSize: '2rem'}}>XAF</span></div>
+                <div style={{fontSize: '0.85rem', color: '#a1a1aa', marginTop: '8px'}}>KPAY</div>
+              </div>
+
+              <h4 style={{fontSize: '1.1rem', color: 'white', marginBottom: '16px', fontWeight: 'bold'}}>Payment method</h4>
 
             {paymentStatus === 'IDLE' || paymentStatus === 'ERROR' ? (
               <div className="kpay-form">
@@ -447,48 +472,79 @@ function Credits() {
                     {paymentError}
                   </div>
                 )}
-                <div className="form-group">
-                  <label><Building2 size={16}/> Opérateur Mobile</label>
+                
+                <div className="form-group" style={{marginBottom: '16px'}}>
+                  <label style={{display: 'block', fontSize: '0.9rem', color: 'white', marginBottom: '8px', fontWeight: 'bold'}}>Country</label>
                   <select 
-                    value={provider} 
-                    onChange={(e) => setProvider(e.target.value)}
-                    style={{width: '100%', padding: '12px', borderRadius: '8px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', marginTop: '8px'}}
+                    value={selectedCountry} 
+                    onChange={(e) => {
+                      setSelectedCountry(e.target.value);
+                      const firstProvider = mobileMoneyProviders.find(p => p.country === e.target.value);
+                      setProvider(firstProvider ? firstProvider.code : '');
+                    }}
+                    style={{width: '100%', padding: '14px', borderRadius: '8px', background: '#27272a', border: '1px solid #3f3f46', color: 'white', fontSize: '0.95rem', appearance: 'none', outline: 'none'}}
                   >
-                    {mobileMoneyProviders.map(p => (
-                      <option key={p.code} value={p.code} style={{background: '#1A1A1A', color: 'white'}}>
-                        {p.name}
-                      </option>
+                    <option value="" disabled>Choose a country...</option>
+                    {Object.entries(countryNames).map(([code, name]) => (
+                      <option key={code} value={code}>{name}</option>
                     ))}
                   </select>
                 </div>
-                <div className="form-group" style={{marginTop: '1rem'}}>
-                  <label><Smartphone size={16}/> Numéro Mobile Money</label>
+
+                {selectedCountry && (
+                  <div className="form-group" style={{marginBottom: '16px'}}>
+                    <label style={{display: 'block', fontSize: '0.9rem', color: 'white', marginBottom: '8px', fontWeight: 'bold'}}>Opérateur</label>
+                    <select 
+                      value={provider} 
+                      onChange={(e) => setProvider(e.target.value)}
+                      style={{width: '100%', padding: '14px', borderRadius: '8px', background: '#27272a', border: '1px solid #3f3f46', color: 'white', fontSize: '0.95rem', appearance: 'none', outline: 'none'}}
+                    >
+                      {mobileMoneyProviders.filter(p => p.country === selectedCountry).map(p => (
+                        <option key={p.code} value={p.code}>{p.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
+                <div className="form-group" style={{marginBottom: '16px'}}>
+                  <label style={{display: 'block', fontSize: '0.9rem', color: 'white', marginBottom: '8px', fontWeight: 'bold'}}>Nom complet</label>
                   <input 
                     type="text" 
-                    placeholder="Ex: 237650000000" 
+                    placeholder="Ex. Alice Dupont" 
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    style={{width: '100%', padding: '14px', borderRadius: '8px', background: '#27272a', border: '1px solid #3f3f46', color: 'white', fontSize: '0.95rem', outline: 'none'}}
+                  />
+                </div>
+
+                <div className="form-group" style={{marginBottom: '24px'}}>
+                  <label style={{display: 'block', fontSize: '0.9rem', color: 'white', marginBottom: '8px', fontWeight: 'bold'}}>Numéro de téléphone</label>
+                  <input 
+                    type="text" 
+                    placeholder="Ex. 6XXXXXXXX" 
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    style={{width: '100%', padding: '12px', borderRadius: '8px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', marginTop: '8px'}}
+                    style={{width: '100%', padding: '14px', borderRadius: '8px', background: '#27272a', border: '1px solid #3f3f46', color: 'white', fontSize: '0.95rem', outline: 'none'}}
                   />
-                  <small style={{color: 'var(--text-muted)', display: 'block', marginTop: '6px'}}>N'oubliez pas l'indicatif du pays sans le + (ex: 237 pour le Cameroun)</small>
                 </div>
 
                 <button 
-                  className="btn-primary" 
-                  style={{width: '100%', padding: '14px', borderRadius: '8px', marginTop: '1.5rem', fontWeight: 'bold'}}
+                  style={{width: '100%', padding: '16px', borderRadius: '8px', background: '#e4e4e7', color: '#09090b', fontWeight: 'bold', fontSize: '1.05rem', border: 'none', cursor: 'pointer', transition: 'background 0.2s'}}
+                  onMouseOver={(e) => e.target.style.background = '#d4d4d8'}
+                  onMouseOut={(e) => e.target.style.background = '#e4e4e7'}
                   onClick={initiateDirectPayment}
                 >
-                  Confirmer le paiement
+                  Pay {selectedPlan.price_fcfa} XAF
                 </button>
               </div>
             ) : paymentStatus === 'PENDING' ? (
               <div style={{textAlign: 'center', padding: '2rem 1rem'}}>
-                <Loader2 size={48} className="spinner" style={{color: 'var(--primary-color)', margin: '0 auto 1rem'}} />
-                <h3 style={{fontSize: '1.2rem', marginBottom: '0.5rem'}}>En attente de validation</h3>
-                <p style={{color: 'var(--text-muted)'}}>
+                <Loader2 size={48} className="spinner" style={{color: 'white', margin: '0 auto 1rem'}} />
+                <h3 style={{fontSize: '1.2rem', color: 'white', marginBottom: '0.5rem'}}>En attente de validation</h3>
+                <p style={{color: '#a1a1aa'}}>
                   Veuillez consulter votre téléphone et valider la transaction Mobile Money.
                 </p>
-                <div style={{marginTop: '1.5rem', fontSize: '0.85rem', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.05)', padding: '10px', borderRadius: '8px'}}>
+                <div style={{marginTop: '1.5rem', fontSize: '0.85rem', color: '#a1a1aa', background: '#27272a', padding: '10px', borderRadius: '8px'}}>
                   Ne fermez pas cette fenêtre. La mise à jour sera automatique.
                 </div>
               </div>
@@ -496,11 +552,12 @@ function Credits() {
               <div style={{textAlign: 'center', padding: '2rem 1rem'}}>
                 <CheckCircle2 size={56} style={{color: '#00FF00', margin: '0 auto 1rem'}} />
                 <h3 style={{fontSize: '1.4rem', color: '#00FF00', marginBottom: '0.5rem'}}>Paiement réussi !</h3>
-                <p style={{color: 'var(--text-muted)'}}>
+                <p style={{color: '#a1a1aa'}}>
                   Tes crédits ont été ajoutés avec succès.
                 </p>
               </div>
             )}
+            </div>
           </div>
         </div>
       )}
