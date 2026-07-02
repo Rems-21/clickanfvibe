@@ -479,6 +479,9 @@
   font-size: 16px;
   margin-bottom: 20px;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .footer-col ul {
@@ -495,30 +498,127 @@
   text-decoration: none;
   font-size: 14px;
   transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .footer-col a:hover {
   color: #C466FF;
 }
 
+.contact-col .contact-help {
+  font-size: 13px;
+  color: #A0A0B0;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.btn-contact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  margin-bottom: 20px;
+  background: transparent;
+  border: 1px solid rgba(196, 102, 255, 0.5);
+  color: #C466FF;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-contact:hover {
+  background: rgba(196, 102, 255, 0.1);
+  box-shadow: 0 0 15px rgba(196, 102, 255, 0.3);
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-info span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #A0A0B0;
+}
+
+.footer-trust-banner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  margin-bottom: 40px;
+}
+
+.trust-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.trust-item h5 {
+  color: white;
+  font-size: 14px;
+  margin: 0 0 5px 0;
+}
+
+.trust-item p {
+  color: #71717A;
+  font-size: 12px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.footer-payments-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.footer-payments-section p {
+  color: #71717A;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+.payment-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.payment-logo {
+  font-weight: bold;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+.payment-logo.mtn { color: #FFCC00; }
+.payment-logo.orange { color: #FF6600; }
+.payment-logo.visa { color: #1A1F71; background: white; }
+.payment-logo.mastercard { color: #EB001B; background: white; }
+.payment-logo.moov { color: #005B9F; }
+
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   padding-top: 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
   color: #71717A;
   font-size: 13px;
-}
-
-.footer-payments span {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.03);
-  padding: 6px 12px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .avatars {
@@ -620,6 +720,9 @@
   .footer-links-group {
     gap: 40px;
   }
+  .footer-trust-banner {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .footer-bottom {
     flex-direction: column;
     text-align: center;
@@ -641,6 +744,9 @@
     width: 100%;
     flex-direction: column;
     gap: 12px;
+  }
+  .footer-trust-banner {
+    grid-template-columns: 1fr;
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Music, Sparkles, Zap, Settings, Lock, Heart, MessageSquare, Share2, Star, Trophy, ShieldCheck, ChevronDown, Globe, Smartphone, Users, Mic2, Headphones, ArrowRight, MapPin } from 'lucide-react';
+import { Music, Sparkles, Zap, Settings, Lock, Heart, MessageSquare, Share2, Star, Trophy, ShieldCheck, ChevronDown, Globe, Smartphone, Users, Mic2, Headphones, ArrowRight, MapPin, Facebook, Twitter, Instagram, Send, Mail, ChevronRight, Phone } from 'lucide-react';
 import './Onboarding.css';
 
 function Onboarding() {
@@ -394,7 +394,7 @@ function Onboarding() {
           <img className="avatar" src="https://ui-avatars.com/api/?name=S&background=0ea5e9&color=fff" alt="User" />
           <img className="avatar" src="https://ui-avatars.com/api/?name=A&background=FF3366&color=fff" alt="User" />
         </div>
-        <div className="footer-text"><Heart size={16} color="#FF3366" fill="#FF3366"/> Plus de 1 000 cadeaux musicaux offerts à travers l'Afrique</div>
+        <div className="footer-text"><Heart size={16} color="#FF3366" fill="#FF3366"/> Plus de 5 000 cadeaux musicaux offerts à travers l'Afrique</div>
       </div>
 
       <footer className="landing-footer-main">
@@ -413,34 +413,80 @@ function Onboarding() {
               La première plateforme africaine pour offrir des cadeaux musicaux uniques et personnalisés, propulsée par l'intelligence artificielle.
             </p>
             <div className="footer-socials">
-              <a href="#" className="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-              <a href="#" className="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
-              <a href="#" className="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+              <a href="#" className="social-icon"><Facebook size={18} /></a>
+              <a href="#" className="social-icon"><Twitter size={18} /></a>
+              <a href="#" className="social-icon"><Instagram size={18} /></a>
+              <a href="#" className="social-icon"><Music size={18} /></a>
             </div>
           </div>
           
           <div className="footer-links-group">
             <div className="footer-col">
-              <h4>Navigation</h4>
+              <h4><Send size={18} color="#C466FF"/> Navigation</h4>
               <ul>
-                <li><a onClick={() => navigate('/home')} style={{cursor: 'pointer'}}>Créer un cadeau musical</a></li>
-                <li><a onClick={() => navigate(user ? '/home' : '/login')} style={{cursor: 'pointer'}}>{user ? 'Accéder au Dashboard' : 'Se connecter'}</a></li>
+                <li><a onClick={() => navigate('/home')} style={{cursor: 'pointer'}}><ChevronRight size={14} color="#C466FF"/> Créer un cadeau musical</a></li>
+                <li><a onClick={() => navigate(user ? '/home' : '/login')} style={{cursor: 'pointer'}}><ChevronRight size={14} color="#C466FF"/> {user ? 'Accéder au Dashboard' : 'Se connecter'}</a></li>
               </ul>
             </div>
-            <div className="footer-col">
-              <h4>Contact</h4>
-              <ul>
-                <li><a href="mailto:support@clickandvibe.com">Nous contacter</a></li>
-              </ul>
+            
+            <div className="footer-col contact-col">
+              <h4><Mail size={18} color="#C466FF"/> Contact</h4>
+              <p className="contact-help">Besoin d'aide ?<br/>Notre équipe est là pour vous accompagner.</p>
+              <button className="btn-outline-glow btn-contact" onClick={() => window.location.href='mailto:support@clickandvibe.com'}>
+                 <MessageSquare size={16}/> Nous contacter &rarr;
+              </button>
+              <div className="contact-info">
+                 <span><Phone size={14} color="#C466FF"/> WhatsApp</span>
+                 <span><Mail size={14} color="#C466FF"/> support@clickandvibe.com</span>
+              </div>
             </div>
+          </div>
+        </div>
+
+        <div className="footer-trust-banner">
+          <div className="trust-item">
+            <ShieldCheck size={28} color="#C466FF"/>
+            <div>
+              <h5>Paiements 100% sécurisés</h5>
+              <p>Vos transactions sont protégées et chiffrées.</p>
+            </div>
+          </div>
+          <div className="trust-item">
+            <Zap size={28} color="#C466FF"/>
+            <div>
+              <h5>Livraison instantanée</h5>
+              <p>Le cadeau est envoyé en quelques secondes.</p>
+            </div>
+          </div>
+          <div className="trust-item">
+            <Headphones size={28} color="#C466FF"/>
+            <div>
+              <h5>Support réactif</h5>
+              <p>Nous répondons à toutes vos questions 7j/7.</p>
+            </div>
+          </div>
+          <div className="trust-item">
+            <Lock size={28} color="#C466FF"/>
+            <div>
+              <h5>Confidentialité garantie</h5>
+              <p>Vos données protégées et jamais partagées.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="footer-payments-section">
+          <p>Paiements disponibles</p>
+          <div className="payment-logos">
+            <span className="payment-logo mtn">MTN</span>
+            <span className="payment-logo orange">Orange Money</span>
+            <span className="payment-logo visa">VISA</span>
+            <span className="payment-logo mastercard">Mastercard</span>
+            <span className="payment-logo moov">Moov Money</span>
           </div>
         </div>
         
         <div className="footer-bottom">
           <p>&copy; 2026 Click & Vibe. Tous droits réservés.</p>
-          <div className="footer-payments">
-             <span>Paiements 100% sécurisés par Mobile Money et CB</span>
-          </div>
         </div>
       </footer>
     </div>
