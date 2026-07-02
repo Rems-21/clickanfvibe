@@ -10,7 +10,7 @@ function Sidebar() {
 
   return (
     <aside className="app-sidebar">
-      <div className="sidebar-logo" onClick={() => navigate('/home')}>
+      <div className="sidebar-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
         <img src="/log.png" alt="Click & Vibe Logo" style={{height: 28, width: 'auto'}} />
         <div className="logo-text">
           <span>Click & Vibe</span>

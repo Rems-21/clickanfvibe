@@ -33,7 +33,7 @@ function AdminSidebar({ isOpen, closeSidebar }) {
   return (
     <aside className={`admin-sidebar ${isOpen ? 'open' : ''}`}>
       <div className="admin-sidebar-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }} onClick={() => navigate('/')}>
           <img src="/log.png" alt="Click & Vibe Logo" style={{height: 28, width: 'auto'}} />
           <h2>Click & Vibe <span>ADMIN</span></h2>
         </div>

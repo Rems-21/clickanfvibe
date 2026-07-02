@@ -126,7 +126,7 @@ function Home() {
       <header className="home-header mobile-only">
         <div className="header-top">
           <div className="title-section">
-            <div className="flex-title">
+            <div className="flex-title" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
               <img src="/log.png" alt="Click & Vibe Logo" style={{height: 24, width: 'auto'}} />
               <h2>Click & Vibe</h2>
             </div>

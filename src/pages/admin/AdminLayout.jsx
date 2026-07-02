@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import AdminSidebar from '../../components/AdminSidebar';
 import './AdminDashboard.css';
 
 function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="admin-layout">
       {/* Mobile Topbar */}
       <div className="admin-mobile-header">
-        <div className="admin-mobile-brand">Click & Vibe <span>ADMIN</span></div>
+        <div className="admin-mobile-brand" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>Click & Vibe <span>ADMIN</span></div>
         <button className="mobile-menu-btn" onClick={() => setSidebarOpen(!sidebarOpen)}>
           <Menu size={24} />
         </button>
