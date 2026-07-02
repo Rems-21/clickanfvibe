@@ -78,7 +78,7 @@ function Onboarding() {
         <h3 className="premium-section-title text-center">Votre cadeau prêt <span className="text-gradient">en 3 étapes</span></h3>
         <div className="how-steps">
           <div className="how-step">
-            <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=700')"}}></div>
+            <div className="how-step-img" style={{backgroundImage:"url('/images/step1_describe_african_1782996782889.png')"}}></div>
             <div className="how-step-content">
               <div className="step-num">01</div>
               <h4>Décrivez l'occasion</h4>
@@ -87,7 +87,7 @@ function Onboarding() {
             </div>
           </div>
           <div className="how-step reverse">
-            <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=700')"}}></div>
+            <div className="how-step-img" style={{backgroundImage:"url('/images/step2_ai_music_1782996723788.png')"}}></div>
             <div className="how-step-content">
               <div className="step-num">02</div>
               <h4>L'IA compose votre chanson</h4>
@@ -96,7 +96,7 @@ function Onboarding() {
             </div>
           </div>
           <div className="how-step">
-            <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=700')"}}></div>
+            <div className="how-step-img" style={{backgroundImage:"url('/images/step3_share_african_1782996792341.png')"}}></div>
             <div className="how-step-content">
               <div className="step-num">03</div>
               <h4>Télécharger et partager</h4>
