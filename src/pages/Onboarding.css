@@ -156,7 +156,7 @@
 
 .hero-slider-container {
   position: relative;
-  width: 400px;
+  width: 480px;
   max-width: 100%;
   aspect-ratio: 1 / 1;
   display: flex;
@@ -168,7 +168,8 @@
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   border-radius: 50%;
-  border: 2px dashed rgba(255, 184, 0, 0.6);
+  border: 3px dashed rgba(255, 184, 0, 0.8);
+  box-shadow: 0 0 20px rgba(255, 184, 0, 0.3), inset 0 0 20px rgba(255, 184, 0, 0.3);
   animation: spin-border 25s linear infinite;
   z-index: 1;
 }
@@ -180,7 +181,7 @@
 
 .hero-slider-inner {
   position: absolute;
-  top: 25px; left: 25px; right: 25px; bottom: 25px;
+  top: 15px; left: 15px; right: 15px; bottom: 15px;
   border-radius: 50%;
   overflow: hidden;
   z-index: 2;
