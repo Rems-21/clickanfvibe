@@ -385,7 +385,7 @@ function Onboarding() {
         </div>
       </section>
 
-      <div className="landing-footer">
+      <div className="landing-social-proof">
         <div className="avatars">
           <img className="avatar" src="https://ui-avatars.com/api/?name=J&background=FF3366&color=fff" alt="User" />
           <img className="avatar" src="https://ui-avatars.com/api/?name=M&background=9933FF&color=fff" alt="User" />
@@ -394,6 +394,58 @@ function Onboarding() {
         </div>
         <div className="footer-text"><Heart size={16} color="#FF3366" fill="#FF3366"/> Plus de 1 000 cadeaux musicaux offerts à travers l'Afrique</div>
       </div>
+
+      <footer className="landing-footer-main">
+        <div className="footer-content">
+          <div className="footer-brand">
+            <div className="landing-logo">
+              <div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
+                <span style={{width: '3px', height: '12px', background: 'var(--gradient-primary)', borderRadius: '3px'}}></span>
+                <span style={{width: '3px', height: '20px', background: 'var(--gradient-primary)', borderRadius: '3px'}}></span>
+                <span style={{width: '3px', height: '14px', background: 'var(--gradient-primary)', borderRadius: '3px'}}></span>
+                <Music size={24} color="#FF3366" style={{marginLeft: '2px'}} />
+              </div>
+              <span>Click <span className="amp">&</span> Vibe</span>
+            </div>
+            <p className="footer-description">
+              La première plateforme africaine pour offrir des cadeaux musicaux uniques et personnalisés, propulsée par l'intelligence artificielle.
+            </p>
+            <div className="footer-socials">
+              <a href="#" className="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+              <a href="#" className="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+              <a href="#" className="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+            </div>
+          </div>
+          
+          <div className="footer-links-group">
+            <div className="footer-col">
+              <h4>Produit</h4>
+              <ul>
+                <li><a href="#">Créer un cadeau</a></li>
+                <li><a href="#">Écouter des exemples</a></li>
+                <li><a href="#">Tarifs</a></li>
+                <li><a href="#">FAQ</a></li>
+              </ul>
+            </div>
+            <div className="footer-col">
+              <h4>Légal</h4>
+              <ul>
+                <li><a href="#">Conditions d'utilisation</a></li>
+                <li><a href="#">Confidentialité</a></li>
+                <li><a href="#">Mentions légales</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div className="footer-bottom">
+          <p>&copy; 2026 Click & Vibe. Tous droits réservés.</p>
+          <div className="footer-payments">
+             <span>Paiements 100% sécurisés par Mobile Money et CB</span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
