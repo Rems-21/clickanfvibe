@@ -872,12 +872,19 @@
   }
   
   .landing-topbar {
-    padding: 20px 5%;
-    justify-content: center; /* Center logo on mobile */
+    padding: 15px 5%;
+    justify-content: space-between;
   }
   
   .landing-badge {
-    display: none; /* Hide badge on mobile to save space */
+    display: flex; /* Show badge on mobile */
+    font-size: 12px;
+    padding: 6px 12px;
+    gap: 5px;
+  }
+  
+  .landing-logo span:last-child {
+    font-size: 18px; /* Make logo text slightly smaller on mobile to fit button */
   }
   
   .landing-social-proof {
