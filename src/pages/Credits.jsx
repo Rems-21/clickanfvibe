@@ -176,6 +176,37 @@ function Credits() {
     setPaymentStatus('IDLE');
   };
 
+  const pollPaymentStatus = async (kpay_id, attempts = 0) => {
+    if (attempts > 100) { // 5 minutes timeout
+        setPaymentStatus('ERROR');
+        setPaymentError("Délai d'attente dépassé. Veuillez réessayer.");
+        return;
+    }
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(`/api/payment/status/${kpay_id}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+            const data = await res.json();
+            if (data.status === 'COMPLETED') {
+                setPaymentStatus('SUCCESS');
+                if (refreshCredits) refreshCredits();
+                return;
+            } else if (data.status === 'FAILED' || data.status === 'CANCELLED') {
+                setPaymentStatus('ERROR');
+                const reason = data.status === 'FAILED' ? 'refusé ou a échoué' : 'annulé';
+                setPaymentError(`Le paiement a été ${reason} sur votre téléphone.`);
+                return;
+            }
+        }
+    } catch (e) {
+        console.error("Polling error", e);
+    }
+    // Continue polling
+    setTimeout(() => pollPaymentStatus(kpay_id, attempts + 1), 3000);
+  };
+
   const initiateDirectPayment = async () => {
     if (!phoneNumber || !provider) {
       setPaymentError("Veuillez remplir tous les champs");
@@ -188,8 +219,27 @@ function Credits() {
       'GAB': '241', 'KEN': '254', 'COG': '242', 'RWA': '250',
       'SEN': '221', 'SLE': '232', 'UGA': '256', 'ZMB': '260'
     };
+    
+    let cleanPhone = phoneNumber.trim().replace(/^0+/, '');
+    
+    // Country validation
+    if (providerObj) {
+        if (providerObj.country === 'CMR' && !/^[6|2]\d{8}$/.test(cleanPhone)) {
+            setPaymentError("Le numéro pour le Cameroun doit comporter 9 chiffres.");
+            return;
+        }
+        if (providerObj.country === 'CIV' && !/^\d{10}$/.test(cleanPhone)) {
+            setPaymentError("Le numéro pour la Côte d'Ivoire doit comporter 10 chiffres.");
+            return;
+        }
+        if (providerObj.country === 'SEN' && !/^[7]\d{8}$/.test(cleanPhone)) {
+            setPaymentError("Le numéro pour le Sénégal doit comporter 9 chiffres.");
+            return;
+        }
+    }
+
     const prefix = providerObj ? countryCodes[providerObj.country] : '';
-    let formattedPhone = phoneNumber.trim().replace(/^0+/, '');
+    let formattedPhone = cleanPhone;
     if (prefix && !formattedPhone.startsWith(prefix)) {
       formattedPhone = prefix + formattedPhone;
     }
@@ -218,6 +268,16 @@ function Credits() {
       if (!res.ok) {
           setPaymentStatus('ERROR');
           setPaymentError(data.detail || "Erreur d'initialisation du paiement");
+          return;
+      }
+      
+      if (data.status === 'PENDING' && data.kpay_id) {
+          pollPaymentStatus(data.kpay_id);
+      } else if (data.checkout_url) {
+          window.location.href = data.checkout_url;
+      } else {
+          setPaymentStatus('ERROR');
+          setPaymentError("Réponse inattendue du serveur");
       }
     } catch (e) {
         setPaymentStatus('ERROR');

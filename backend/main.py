@@ -1331,7 +1331,7 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
             
             # If USSD mode, return status PENDING
             if data.get("status") == "PENDING":
-                return {"status": "PENDING", "externalId": external_id}
+                return {"status": "PENDING", "externalId": external_id, "kpay_id": data.get("id")}
             
             return data
         
@@ -1343,6 +1343,23 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Erreur backend: {str(e)} | Payload: {json.dumps(payload)}")
+
+@app.get("/api/payment/status/{kpay_id}")
+async def get_payment_status(kpay_id: str, db: Session = Depends(get_db)):
+    """Check payment status from KPay API."""
+    url = f"https://admin.kpay.site/api/v1/payments/{kpay_id}"
+    headers = {
+        "X-API-Key": os.getenv("KPAY_API_KEY"),
+        "X-Secret-Key": os.getenv("KPAY_SECRET_KEY")
+    }
+    try:
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        raise HTTPException(status_code=400, detail="Failed to fetch payment status")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.post("/api/webhooks/kpay")
 async def kpay_webhook(request: Request, db: Session = Depends(get_db)):
