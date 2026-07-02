@@ -1777,6 +1777,9 @@ def send_campaign(campaign_id: int, background_tasks: BackgroundTasks, db: Sessi
         query = query.filter(models.User.transactions.any())
     elif campaign.target_audience == "NON_PAYING":
         query = query.filter(~models.User.transactions.any())
+    elif campaign.target_audience == "PAYMENT_INITIATED":
+        # Get users who have an analytics event of type 'payment_init'
+        query = query.join(models.AnalyticsEvent).filter(models.AnalyticsEvent.event_type == 'payment_init').distinct()
         
     users = query.all()
     campaign.total_target = len(users)
@@ -1814,3 +1817,18 @@ def send_campaign(campaign_id: int, background_tasks: BackgroundTasks, db: Sessi
     background_tasks.add_task(process_campaign, campaign.id, user_ids)
     
     return {"message": "Envoi de la campagne démarré en arrière-plan", "target_count": len(user_ids)}
+
+class SingleEmailRequest(BaseModel):
+    email: str
+    name: str
+    subject: str
+    html_content: str
+
+@app.post("/api/admin/email/send-single")
+def send_single_email(req: SingleEmailRequest, background_tasks: BackgroundTasks, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+    def send_it(to_email, to_name, sub, html):
+        from email_service import send_brevo_email
+        send_brevo_email(to_email, to_name, sub, html)
+        
+    background_tasks.add_task(send_it, req.email, req.name, req.subject, req.html_content)
+    return {"message": "Email en cours d'envoi"}
