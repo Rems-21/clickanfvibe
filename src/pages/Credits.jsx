@@ -448,8 +448,8 @@ function Credits() {
 
       {/* Custom Payment Modal */}
       {showPaymentModal && selectedPlan && (
-        <div className="modal-overlay" style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, background: 'rgba(0,0,0,0.85)'}}>
-          <div className="modal-content kpay-modal" style={{width: '100%', maxWidth: '420px', background: 'var(--bg-card, #1c1c1c)', border: '1px solid var(--border-color, #333)', padding: '0', borderRadius: '16px', overflow: 'hidden', maxHeight: '90vh', overflowY: 'auto'}}>
+        <div className="modal-overlay" style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', zIndex: 1000, background: 'rgba(0,0,0,0.85)', overflowY: 'auto', padding: '40px 20px'}}>
+          <div className="modal-content kpay-modal" style={{width: '100%', maxWidth: '420px', background: 'var(--bg-card, #1c1c1c)', border: '1px solid var(--border-color, #333)', padding: '0', borderRadius: '16px', overflow: 'hidden', margin: 'auto'}}>
             
             <div style={{padding: '20px 24px', borderBottom: '1px solid var(--border-color, #333)', display: 'flex', justifyContent: 'center', position: 'relative'}}>
               <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', color: 'white', margin: 0}}>clickandvibe</h3>
