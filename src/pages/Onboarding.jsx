@@ -428,6 +428,14 @@ function Onboarding() {
                 <li><a onClick={() => navigate(user ? '/home' : '/login')} style={{cursor: 'pointer'}}><ChevronRight size={14} color="#C466FF"/> {user ? 'Accéder au Dashboard' : 'Se connecter'}</a></li>
               </ul>
             </div>
+            <div className="footer-col">
+              <h4><ShieldCheck size={18} color="#C466FF"/> Légal</h4>
+              <ul>
+                <li><a onClick={() => navigate('/terms')} className="legal-link" style={{cursor: 'pointer'}}><ChevronRight size={14} color="#C466FF"/> Conditions d'utilisation</a></li>
+                <li><a onClick={() => navigate('/privacy')} className="legal-link" style={{cursor: 'pointer'}}><ChevronRight size={14} color="#C466FF"/> Politique de confidentialité</a></li>
+                <li><a onClick={() => navigate('/refund-policy')} className="legal-link" style={{cursor: 'pointer'}}><ChevronRight size={14} color="#C466FF"/> Politique de remboursement</a></li>
+              </ul>
+            </div>
             
             <div className="footer-col contact-col">
               <h4><Mail size={18} color="#C466FF"/> Contact</h4>
@@ -446,11 +454,6 @@ function Onboarding() {
 
         <div className="footer-bottom">
           <p>&copy; 2026 Click & Vibe. Tous droits réservés.</p>
-          <div className="footer-legal-links" style={{display: 'flex', gap: '15px'}}>
-            <a onClick={() => navigate('/terms')} className="legal-link">Conditions d'utilisation</a>
-            <a onClick={() => navigate('/privacy')} className="legal-link">Politique de confidentialité</a>
-            <a onClick={() => navigate('/refund-policy')} className="legal-link">Politique de remboursement</a>
-          </div>
         </div>
       </footer>
     </div>
