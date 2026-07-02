@@ -101,7 +101,7 @@ function Onboarding() {
           
           <div className="landing-buttons">
             <button className="btn-primary-glow" onClick={() => navigate('/home')}><Sparkles size={18}/> Créer un cadeau musical →</button>
-            <button className="btn-outline-glow" onClick={() => navigate('/login')}>Se connecter &rarr;</button>
+            <button className="btn-outline-glow" onClick={() => navigate(user ? '/home' : '/login')}>{user ? 'Dashboard' : 'Se connecter'} &rarr;</button>
           </div>
         </div>
         
@@ -424,7 +424,7 @@ function Onboarding() {
               <h4>Navigation</h4>
               <ul>
                 <li><a onClick={() => navigate('/home')} style={{cursor: 'pointer'}}>Créer un cadeau musical</a></li>
-                <li><a onClick={() => navigate('/login')} style={{cursor: 'pointer'}}>Se connecter</a></li>
+                <li><a onClick={() => navigate(user ? '/home' : '/login')} style={{cursor: 'pointer'}}>{user ? 'Accéder au Dashboard' : 'Se connecter'}</a></li>
               </ul>
             </div>
             <div className="footer-col">
