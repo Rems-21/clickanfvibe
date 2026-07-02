@@ -1332,12 +1332,17 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
             # If USSD mode, return status PENDING
             if data.get("status") == "PENDING":
                 return {"status": "PENDING", "externalId": external_id}
+            
+            return data
         
         print("KPay Init Error:", response.text)
-        raise HTTPException(status_code=400, detail="Impossible d'initier le paiement avec KPay.")
+        raise HTTPException(status_code=400, detail=f"Erreur KPay: {response.text}")
+    except HTTPException:
+        raise
     except Exception as e:
-        print("KPay Init Exception:", str(e))
-        raise HTTPException(status_code=500, detail="Erreur interne lors de l'initialisation du paiement.")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Erreur backend: {str(e)}")
 
 @app.post("/api/webhooks/kpay")
 async def kpay_webhook(request: Request, db: Session = Depends(get_db)):
