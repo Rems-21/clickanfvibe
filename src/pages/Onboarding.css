@@ -500,9 +500,7 @@
   letter-spacing: -1px;
 }
 
-.text-accent-orange {
-  color: #f97316; /* Tailwind orange-500 */
-}
+
 
 .text-accent-pink {
   color: #FF3366;
@@ -542,9 +540,9 @@
   background: rgba(255,255,255,0.05);
 }
 
-.stat-icon-wrapper.orange {
-  background: rgba(249, 115, 22, 0.15);
-  color: #f97316;
+.stat-icon-wrapper.pink {
+  background: rgba(255, 51, 102, 0.15);
+  color: #FF3366;
 }
 
 .stat-text {
@@ -577,7 +575,7 @@
   transform: translateX(-50%);
   width: 60%;
   height: 300px;
-  background: radial-gradient(ellipse at top, rgba(249, 115, 22, 0.15) 0%, transparent 70%);
+  background: radial-gradient(ellipse at top, rgba(255, 51, 102, 0.15) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -613,7 +611,7 @@
 }
 
 .region-radio.active .radio-dot {
-  border-color: #f97316;
+  border-color: #FF3366;
 }
 
 .region-radio.active .radio-dot::after {
@@ -622,7 +620,7 @@
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   width: 8px; height: 8px;
-  background-color: #f97316;
+  background-color: #FF3366;
   border-radius: 50%;
 }
 
@@ -656,7 +654,7 @@
 }
 
 .title-count {
-  background: #f97316;
+  background: #FF3366;
   color: white;
   font-size: 0.75rem;
   font-weight: 700;
@@ -695,8 +693,8 @@
 }
 
 .pill-count {
-  background: rgba(249, 115, 22, 0.2);
-  color: #f97316;
+  background: rgba(255, 51, 102, 0.2);
+  color: #FF3366;
   width: 20px; height: 20px;
   display: flex; align-items: center; justify-content: center;
   border-radius: 50%;
@@ -983,4 +981,22 @@
 .premium-cta-card.with-bg {
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.testimonials-slider {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 0 5% 40px;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.testimonials-slider::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+.testimonials-slider > * {
+  flex: 0 0 80%;
+  max-width: 400px;
+  scroll-snap-align: center;
 }
