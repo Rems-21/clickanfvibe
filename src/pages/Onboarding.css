@@ -1,10 +1,11 @@
 .landing-container {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Force 100vh to fit without scrolling on desktop */
+  min-height: 100vh;
   background-color: #05050A; /* Deep dark background */
   color: white;
-  overflow: hidden; /* Hide overflow so it doesn't scroll */
+  overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
   font-family: 'Inter', sans-serif;
   background-image: radial-gradient(circle at right center, rgba(153,51,255,0.1) 0%, transparent 50%),
