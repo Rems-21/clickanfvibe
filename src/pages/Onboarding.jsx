@@ -54,7 +54,7 @@ function Onboarding() {
 
 
       <div className="landing-topbar">
-        <div className="landing-logo">
+        <div className="landing-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
           <div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
             <span style={{width: '3px', height: '12px', background: 'var(--gradient-primary)', borderRadius: '3px'}}></span>
             <span style={{width: '3px', height: '20px', background: 'var(--gradient-primary)', borderRadius: '3px'}}></span>
@@ -450,7 +450,7 @@ function Onboarding() {
       <footer className="landing-footer-main">
         <div className="footer-content">
           <div className="footer-brand">
-            <div className="landing-logo">
+            <div className="landing-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
               <div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
                 <span style={{width: '3px', height: '12px', background: 'var(--gradient-primary)', borderRadius: '3px'}}></span>
                 <span style={{width: '3px', height: '20px', background: 'var(--gradient-primary)', borderRadius: '3px'}}></span>
