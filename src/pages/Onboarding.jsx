@@ -39,18 +39,44 @@ function Onboarding() {
 
       <div className="landing-hero">
         <div className="landing-content">
-          <h1 className="landing-title">Offrez une chanson<br/><span className="text-gradient">unique</span><br/>pour chaque instant.</h1>
-          <p className="landing-subtitle">Anniversaire, mariage, déclaration d'amour, félicitations... Créez un cadeau musical inoubliable personnalisé en quelques secondes, payable par Mobile Money.</p>
+          <div className="hero-badge" style={{display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', background: 'rgba(255,51,102,0.1)', border: '1px solid rgba(255,51,102,0.3)', borderRadius: '30px', color: '#FF3366', fontSize: '13px', fontWeight: '600', marginBottom: '20px'}}>
+            <span className="live-dot" style={{width: '8px', height: '8px', background: '#FF3366', borderRadius: '50%', boxShadow: '0 0 10px #FF3366'}}></span>
+            Le cadeau musical n°1 en Afrique
+          </div>
+          <h1 className="landing-title" style={{fontSize: '3.6rem', marginBottom: '20px'}}>
+            Offrez une <span className="text-gradient">chanson sur mesure</span><br/>
+            à ceux que vous aimez.
+          </h1>
+          <p className="landing-subtitle" style={{fontSize: '1.15rem', color: '#CBD5E1', marginBottom: '32px', maxWidth: '480px'}}>
+            Anniversaires, mariages, déclarations... Notre IA compose une chanson unique (paroles, mélodie et voix HD) à partir de votre histoire.
+          </p>
           
-          <div className="landing-buttons">
-            <button className="btn-primary-glow" onClick={() => navigate('/home')}><Sparkles size={18}/> Créer un cadeau musical →</button>
-            <button className="btn-outline-glow" onClick={() => navigate('/login')}>Se connecter &rarr;</button>
+          <div className="landing-buttons" style={{marginBottom: '30px'}}>
+            <button className="btn-primary-glow" style={{padding: '16px 32px', fontSize: '1.1rem'}} onClick={() => navigate('/home')}><Sparkles size={18}/> Créer un cadeau musical</button>
+          </div>
+
+          <div className="hero-trust" style={{display: 'flex', flexWrap: 'wrap', gap: '16px', fontSize: '13px', color: '#94A3B8'}}>
+            <div style={{display: 'flex', alignItems: 'center', gap: '6px'}}><Check size={16} color="#FF3366"/> Sans carte bancaire</div>
+            <div style={{display: 'flex', alignItems: 'center', gap: '6px'}}><Check size={16} color="#FF3366"/> Mobile Money accepté</div>
+            <div style={{display: 'flex', alignItems: 'center', gap: '6px'}}><Check size={16} color="#FF3366"/> Prêt en 60s</div>
           </div>
         </div>
         
         <div className="landing-image-wrapper">
            <div className="landing-glow-circle"></div>
-           <img src="/hero_headphones.png" alt="Hero" className="landing-hero-img" />
+           <div className="hero-img-container" style={{position: 'relative', width: '90%', maxWidth: '550px', zIndex: 2, margin: '0 auto'}}>
+             <img src="/images/hero_headphones_neon_1782389391857.png" alt="Click & Vibe AI Music" className="landing-hero-img" style={{borderRadius: '24px', boxShadow: '0 20px 50px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)', maskImage: 'none', WebkitMaskImage: 'none', display: 'block'}} />
+             
+             <div className="floating-badge badge-1" style={{position: 'absolute', top: '10%', left: '-10%', background: 'rgba(15,23,42,0.85)', backdropFilter: 'blur(10px)', padding: '12px 20px', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '12px', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.6)', animation: 'float 3s ease-in-out infinite'}}>
+               <div style={{width: '36px', height: '36px', borderRadius: '50%', background: 'rgba(255,51,102,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><Music size={18} color="#FF3366"/></div>
+               <div style={{textAlign: 'left'}}><div style={{fontSize: '11px', color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Qualité Studio</div><div style={{fontSize: '14px', fontWeight: 'bold', color: 'white'}}>Audio HD</div></div>
+             </div>
+
+             <div className="floating-badge badge-2" style={{position: 'absolute', bottom: '15%', right: '-5%', background: 'rgba(15,23,42,0.85)', backdropFilter: 'blur(10px)', padding: '12px 20px', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '12px', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.6)', animation: 'float 4s ease-in-out infinite reverse'}}>
+               <div style={{width: '36px', height: '36px', borderRadius: '50%', background: 'rgba(153,51,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><Heart size={18} color="#9933FF" fill="#9933FF"/></div>
+               <div style={{textAlign: 'left'}}><div style={{fontSize: '11px', color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Émotion</div><div style={{fontSize: '14px', fontWeight: 'bold', color: 'white'}}>100% Garantie</div></div>
+             </div>
+           </div>
         </div>
       </div>
 
