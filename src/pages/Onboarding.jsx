@@ -440,11 +440,11 @@ function Onboarding() {
             <div className="footer-col contact-col">
               <h4><Mail size={18} color="#C466FF"/> Contact</h4>
               <p className="contact-help">Besoin d'aide ?<br/>Notre équipe est là pour vous accompagner.</p>
-              <button className="btn-outline-glow btn-contact" onClick={() => window.location.href='mailto:support@clickandvibe.com'}>
-                 <MessageSquare size={16}/> Nous contacter &rarr;
+              <button className="btn-outline-glow btn-contact" onClick={() => window.open('https://wa.me/237657381167', '_blank')}>
+                 <Phone size={16} color="#C466FF"/> WhatsApp
               </button>
               <div className="contact-info">
-                 <span><Phone size={14} color="#C466FF"/> WhatsApp</span>
+                 <span><Phone size={14} color="#C466FF"/> +237 6 57 38 11 67</span>
                  <span><Mail size={14} color="#C466FF"/> support@clickandvibe.com</span>
               </div>
             </div>
