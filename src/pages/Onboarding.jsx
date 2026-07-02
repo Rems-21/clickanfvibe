@@ -67,8 +67,8 @@ function Onboarding() {
             {/* PREMIUM PAYMENT SECTION */}
       <section className="premium-payment-section landing-section">
         <div className="premium-header text-center">
-          <h2 className="premium-section-title">Cr�ez et payez <span className="text-gradient">sans carte bancaire</span></h2>
-          <p className="landing-section-subtitle text-center">Click & Vibe int�gre les paiements Mobile Money. Une seule plateforme pour cr�er vos hits et payer facilement dans 15 pays africains.</p>
+          <h2 className="premium-section-title">Créez et payez <span className="text-gradient">sans carte bancaire</span></h2>
+          <p className="landing-section-subtitle text-center">Click & Vibe intègre les paiements Mobile Money. Une seule plateforme pour créer vos hits et payer facilement dans 15 pays africains.</p>
           
           <div className="premium-stats-badges">
             <div className="stat-badge">
@@ -77,7 +77,7 @@ function Onboarding() {
             </div>
             <div className="stat-badge">
               <div className="stat-icon-wrapper pink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
-              <div className="stat-text"><strong>14+</strong> Op�rateurs</div>
+              <div className="stat-text"><strong>14+</strong> Opérateurs</div>
             </div>
           </div>
         </div>
@@ -98,13 +98,13 @@ function Onboarding() {
                 <span className="title-count pink">10</span>
               </div>
               <div className="pills-grid">
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> B�nin <span className="pill-count">4</span></div>
+                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Bénin <span className="pill-count">4</span></div>
                 <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Burkina Faso <span className="pill-count">3</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> C�te d'Ivoire <span className="pill-count">4</span></div>
+                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Côte d'Ivoire <span className="pill-count">4</span></div>
                 <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Gambie <span className="pill-count">1</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Guin�e <span className="pill-count">2</span></div>
+                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Guinée <span className="pill-count">2</span></div>
                 <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Mali <span className="pill-count">2</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> S�n�gal <span className="pill-count">4</span></div>
+                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Sénégal <span className="pill-count">4</span></div>
                 <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Togo <span className="pill-count">2</span></div>
               </div>
             </div>
@@ -123,7 +123,7 @@ function Onboarding() {
                 <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Tchad <span className="pill-count dark">2</span></div>
               </div>
               <div className="region-footer">
-                <span className="footer-label">Total op�rateurs</span>
+                <span className="footer-label">Total opérateurs</span>
                 <span className="footer-value">13+</span>
               </div>
             </div>
@@ -133,15 +133,15 @@ function Onboarding() {
 
       {/* HOW IT WORKS - REDESIGNED WITH IMAGES */}
       <section className="premium-features-section landing-section">
-        <h3 className="premium-section-title text-center">La cr�ation musicale <span className="text-accent-pink">r�invent�e</span></h3>
-        <p className="landing-section-subtitle text-center" style={{marginBottom: "50px"}}>3 �tapes simples pour donner vie � tes id�es.</p>
+        <h3 className="premium-section-title text-center">La création musicale <span className="text-accent-pink">réinventée</span></h3>
+        <p className="landing-section-subtitle text-center" style={{marginBottom: "50px"}}>3 étapes simples pour donner vie à tes idées.</p>
         <div className="premium-cards-grid">
           <div className="premium-card with-image">
             <div className="p-card-image" style={{backgroundImage: "url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=600')", backgroundSize: "cover", backgroundPosition: "center"}}></div>
             <div className="p-card-content">
               <div className="p-card-icon"><MessageSquare size={24} /></div>
-              <h4>1. Votre id�e</h4>
-              <p>Un simple texte suffit pour donner la direction. Vous ma�trisez le style, l'ambiance et le th�me de A � Z.</p>
+              <h4>1. Votre idée</h4>
+              <p>Un simple texte suffit pour donner la direction. Vous maîtrisez le style, l'ambiance et le thème de A à Z.</p>
             </div>
           </div>
           <div className="premium-card with-image">
