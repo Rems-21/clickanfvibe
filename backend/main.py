@@ -46,6 +46,7 @@ class PaymentInitiateRequest(BaseModel):
     origin: str = None
     phoneNumber: str = None
     provider: str = None
+    fullName: str = None
 
 from sqlalchemy.orm import Session
 from sqlalchemy import text
@@ -1298,6 +1299,8 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
     if req.phoneNumber and req.provider:
         payload["phoneNumber"] = req.phoneNumber
         payload["provider"] = req.provider
+        if getattr(req, 'fullName', None):
+            payload["customerName"] = req.fullName
     else:
         payload["returnUrl"] = f"{origin_url}/payment-success"
         payload["cancelUrl"] = f"{origin_url}/payment-failed"

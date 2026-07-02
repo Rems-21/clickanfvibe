@@ -181,6 +181,19 @@ function Credits() {
       setPaymentError("Veuillez remplir tous les champs");
       return;
     }
+
+    const providerObj = mobileMoneyProviders.find(p => p.code === provider);
+    const countryCodes = {
+      'BEN': '229', 'CMR': '237', 'CIV': '225', 'COD': '243',
+      'GAB': '241', 'KEN': '254', 'COG': '242', 'RWA': '250',
+      'SEN': '221', 'SLE': '232', 'UGA': '256', 'ZMB': '260'
+    };
+    const prefix = providerObj ? countryCodes[providerObj.country] : '';
+    let formattedPhone = phoneNumber.trim().replace(/^0+/, '');
+    if (prefix && !formattedPhone.startsWith(prefix)) {
+      formattedPhone = prefix + formattedPhone;
+    }
+
     setPaymentError("");
     setPaymentStatus('PENDING');
     
@@ -196,7 +209,7 @@ function Credits() {
               amount_fcfa: selectedPlan.price_fcfa,
               credits_to_add: selectedPlan.credits,
               origin: window.location.origin,
-              phoneNumber: phoneNumber,
+              phoneNumber: formattedPhone,
               provider: provider,
               fullName: fullName
           })
