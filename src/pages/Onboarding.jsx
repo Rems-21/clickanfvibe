@@ -444,7 +444,6 @@ function Onboarding() {
                  <Phone size={16} color="#C466FF"/> WhatsApp
               </button>
               <div className="contact-info">
-                 <span><Phone size={14} color="#C466FF"/> +237 6 57 38 11 67</span>
                  <span><Mail size={14} color="#C466FF"/> support@clickandvibe.com</span>
               </div>
             </div>
