@@ -1,13 +1,11 @@
 .landing-container {
-  display: flex;
-  flex-direction: column;
+  background-color: var(--dark-bg);
   min-height: 100vh;
-  background-color: #05050A; /* Deep dark background */
   color: white;
+  font-family: 'Inter', sans-serif;
+  position: relative;
   overflow-y: auto;
   overflow-x: hidden;
-  position: relative;
-  font-family: 'Inter', sans-serif;
   background-image: radial-gradient(circle at right center, rgba(153,51,255,0.1) 0%, transparent 50%),
                     radial-gradient(circle at left bottom, rgba(255,51,102,0.1) 0%, transparent 50%);
 }
@@ -80,11 +78,10 @@
 .eq-bar {
   flex: 1;
   background: linear-gradient(to top, rgba(255,51,102,0), rgba(255,51,102,0.8), #9933FF, rgba(153,51,255,0));
-  border-radius: 10px;
   animation: eq-bounce 1s ease-in-out infinite alternate;
   animation-delay: var(--delay);
   height: var(--height);
-  filter: drop-shadow(0 0 10px rgba(255,51,102,0.8));
+  filter: drop-shadow(0 0 4px rgba(255,51,102,0.5));
 }
 
 @keyframes eq-bounce {
@@ -103,11 +100,12 @@
 .sine-wave-path {
   stroke: #FF3366;
   stroke-width: 3px;
-  filter: drop-shadow(0 0 15px #FF3366) drop-shadow(0 0 30px #9933FF);
+  filter: drop-shadow(0 0 5px #FF3366);
 }
 .sine-wave-path.delay-1 {
   stroke: #9933FF;
   animation: sine-move 8s linear infinite reverse;
+  filter: drop-shadow(0 0 5px #9933FF);
 }
 
 @keyframes sine-move {
@@ -115,9 +113,11 @@
   100% { transform: translateX(-50%); }
 }
 
-.floating-notes-container {
-  position: absolute;
+.global-floating-notes {
+  position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .floating-note {
@@ -125,7 +125,7 @@
   bottom: -50px;
   color: #C466FF;
   opacity: 0;
-  filter: drop-shadow(0 0 10px #C466FF);
+  filter: drop-shadow(0 0 6px #C466FF);
   animation: float-up linear infinite;
 }
 
@@ -282,21 +282,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.hero-slider-border {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  border-radius: 50%;
-  border: 3px dashed #9933FF;
-  box-shadow: 0 0 20px rgba(153, 51, 255, 0.5), inset 0 0 20px rgba(153, 51, 255, 0.5);
-  animation: spin-border 25s linear infinite;
-  z-index: 1;
-}
-
-@keyframes spin-border {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
 
 .hero-slider-inner {
