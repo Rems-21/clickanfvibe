@@ -165,3 +165,17 @@ class PricingPlan(Base):
     is_active = Column(Boolean, default=True)
     display_order = Column(Integer, default=0)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class EmailCampaign(Base):
+    __tablename__ = "email_campaigns"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(255))
+    subject = Column(String(255))
+    html_content = Column(Text)
+    target_audience = Column(String(255), default="ALL") # ALL, NO_CREDIT, PAYING, NON_PAYING
+    status = Column(String(50), default="DRAFT") # DRAFT, SENDING, COMPLETED, FAILED
+    sent_count = Column(Integer, default=0)
+    total_target = Column(Integer, default=0)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    sent_at = Column(DateTime, nullable=True)

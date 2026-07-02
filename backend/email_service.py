@@ -114,3 +114,38 @@ def send_password_reset_email(to_email: str, code: str):
     """
     html_content = get_base_html("Réinitialisation de mot de passe", content)
     return send_email(to_email, subject, html_content)
+
+import requests
+import json
+
+BREVO_API_KEY = os.getenv("BREVO_API_KEY", "")
+
+def send_brevo_email(to_email: str, to_name: str, subject: str, html_content: str):
+    if not BREVO_API_KEY:
+        print("ATTENTION: BREVO_API_KEY non configuré. L'email n'a pas été envoyé à", to_email)
+        return False
+        
+    url = "https://api.brevo.com/v3/smtp/email"
+    headers = {
+        "accept": "application/json",
+        "api-key": BREVO_API_KEY,
+        "content-type": "application/json"
+    }
+    
+    payload = {
+        "sender": {"name": "Click & Vibe", "email": "contact@clickandvibe.com"},
+        "to": [{"email": to_email, "name": to_name}],
+        "subject": subject,
+        "htmlContent": html_content
+    }
+    
+    try:
+        response = requests.post(url, headers=headers, json=payload)
+        if response.status_code == 201:
+            return True
+        else:
+            print(f"Brevo API error: {response.text}")
+            return False
+    except Exception as e:
+        print(f"Erreur d'envoi via Brevo à {to_email}: {e}")
+        return False

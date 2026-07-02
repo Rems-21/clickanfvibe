@@ -1730,3 +1730,87 @@ def get_admin_payment_attempts(skip: int = 0, limit: int = 500, db: Session = De
             "credits_to_add": extra_data.get("credits", 0)
         })
     return result
+
+from pydantic import BaseModel
+
+class CampaignCreate(BaseModel):
+    title: str
+    subject: str
+    html_content: str
+    target_audience: str
+
+@app.get("/api/admin/campaigns")
+def get_campaigns(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+    campaigns = db.query(models.EmailCampaign).order_by(models.EmailCampaign.created_at.desc()).offset(skip).limit(limit).all()
+    return campaigns
+
+@app.post("/api/admin/campaigns")
+def create_campaign(req: CampaignCreate, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+    campaign = models.EmailCampaign(
+        title=req.title,
+        subject=req.subject,
+        html_content=req.html_content,
+        target_audience=req.target_audience
+    )
+    db.add(campaign)
+    db.commit()
+    db.refresh(campaign)
+    return campaign
+
+@app.post("/api/admin/campaigns/{campaign_id}/send")
+def send_campaign(campaign_id: int, background_tasks: BackgroundTasks, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
+    campaign = db.query(models.EmailCampaign).filter(models.EmailCampaign.id == campaign_id).first()
+    if not campaign:
+        raise HTTPException(status_code=404, detail="Campagne introuvable")
+    if campaign.status == "SENDING" or campaign.status == "COMPLETED":
+        raise HTTPException(status_code=400, detail="Cette campagne a déjà été envoyée ou est en cours.")
+        
+    campaign.status = "SENDING"
+    campaign.sent_at = datetime.datetime.utcnow()
+    db.commit()
+    
+    # Process target audience to determine users
+    query = db.query(models.User)
+    if campaign.target_audience == "NO_CREDIT":
+        query = query.filter(models.User.credits <= 0)
+    elif campaign.target_audience == "PAYING":
+        query = query.filter(models.User.transactions.any())
+    elif campaign.target_audience == "NON_PAYING":
+        query = query.filter(~models.User.transactions.any())
+        
+    users = query.all()
+    campaign.total_target = len(users)
+    db.commit()
+    
+    # Create the background task
+    def process_campaign(c_id, user_ids):
+        import time
+        from database import SessionLocal
+        from email_service import send_brevo_email
+        db_bg = SessionLocal()
+        c = db_bg.query(models.EmailCampaign).filter(models.EmailCampaign.id == c_id).first()
+        if not c:
+            db_bg.close()
+            return
+            
+        success_count = 0
+        for uid in user_ids:
+            u = db_bg.query(models.User).filter(models.User.id == uid).first()
+            if u and u.email:
+                # Personalize email
+                html = c.html_content.replace("{nom}", u.name)
+                # Send email
+                if send_brevo_email(u.email, u.name, c.subject, html):
+                    success_count += 1
+                # Rate limit to avoid triggering spam filters/API limits aggressively (e.g. 2 per second)
+                time.sleep(0.5)
+                
+        c.status = "COMPLETED"
+        c.sent_count = success_count
+        db_bg.commit()
+        db_bg.close()
+        
+    user_ids = [u.id for u in users]
+    background_tasks.add_task(process_campaign, campaign.id, user_ids)
+    
+    return {"message": "Envoi de la campagne démarré en arrière-plan", "target_count": len(user_ids)}
