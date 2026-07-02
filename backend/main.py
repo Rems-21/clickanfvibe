@@ -1316,9 +1316,9 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
                 import json
                 evt = models.AnalyticsEvent(
                     event_type="payment_init", 
-                    source=current_user.country or "direct", 
+                    source=req.provider or current_user.country or "direct", 
                     user_id=current_user.id,
-                    extra=json.dumps({"amount_fcfa": req.amount_fcfa, "credits": req.credits_to_add})
+                    extra=json.dumps({"amount_fcfa": req.amount_fcfa, "credits": req.credits_to_add, "provider": req.provider})
                 )
                 db.add(evt)
                 db.commit()
@@ -1758,12 +1758,28 @@ def get_admin_payment_attempts(skip: int = 0, limit: int = 500, db: Session = De
             except:
                 pass
                 
+        provider = extra_data.get("provider") or evt.source or ""
+        country_str = user.country or "Inconnu"
+        
+        if "CMR" in provider: country_str = "Cameroun"
+        elif "CIV" in provider: country_str = "Côte d'Ivoire"
+        elif "SEN" in provider: country_str = "Sénégal"
+        elif "BEN" in provider: country_str = "Bénin"
+        elif "GAB" in provider: country_str = "Gabon"
+        elif "COD" in provider: country_str = "RDC"
+        elif "COG" in provider: country_str = "Congo"
+        elif "RWA" in provider: country_str = "Rwanda"
+        elif "UGA" in provider: country_str = "Ouganda"
+        elif "ZMB" in provider: country_str = "Zambie"
+        elif "KEN" in provider: country_str = "Kenya"
+        elif "SLE" in provider: country_str = "Sierra Leone"
+                
         result.append({
             "id": evt.id,
             "created_at": evt.created_at.isoformat(),
             "user_name": user.name,
             "user_email": user.email,
-            "user_country": user.country or "Inconnu",
+            "user_country": country_str,
             "amount_fcfa": extra_data.get("amount_fcfa", 0),
             "credits_to_add": extra_data.get("credits", 0)
         })
