@@ -1827,8 +1827,9 @@ class SingleEmailRequest(BaseModel):
 @app.post("/api/admin/email/send-single")
 def send_single_email(req: SingleEmailRequest, background_tasks: BackgroundTasks, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_admin_user)):
     def send_it(to_email, to_name, sub, html):
-        from email_service import send_brevo_email
-        send_brevo_email(to_email, to_name, sub, html)
+        from email_service import send_email, get_base_html
+        formatted_html = get_base_html(sub, html)
+        send_email(to_email, sub, formatted_html)
         
     background_tasks.add_task(send_it, req.email, req.name, req.subject, req.html_content)
     return {"message": "Email en cours d'envoi"}
