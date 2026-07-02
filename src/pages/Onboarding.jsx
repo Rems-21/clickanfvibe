@@ -70,7 +70,69 @@ function Onboarding() {
             <div className="f-icon bg-blue"><Lock size={20} color="#33CCFF"/></div>
             <div className="f-text"><h4>Cadeau Digital</h4><p>Partagez par WhatsApp, SMS ou lien</p></div>
          </div>
-      </div>
+       </div>
+
+      {/* OCCASIONS SECTION */}
+      <section className="occasions-section landing-section">
+        <div className="section-label-pill"><Heart size={14}/> Pour chaque moment</div>
+        <h3 className="premium-section-title text-center">Une chanson pour <span className="text-gradient">chaque occasion</span></h3>
+        <p className="landing-section-subtitle text-center">Quel que soit l'événement, Click &amp; Vibe crée un cadeau sonore qui touche les cœurs.</p>
+        <div className="occasions-grid">
+          <div className="occasion-card" style={{backgroundImage:"url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=600')",backgroundSize:'cover',backgroundPosition:'center'}}>
+            <div className="occasion-overlay"></div>
+            <div className="occasion-content">
+              <div className="occasion-icon"><Star size={28} color="#FFB800" fill="#FFB800"/></div>
+              <h4>Anniversaire</h4>
+              <p>Avec le prénom et l'âge pour marquer ce jour à jamais.</p>
+              <span className="occasion-tag">Fête inoubliable</span>
+            </div>
+          </div>
+          <div className="occasion-card" style={{backgroundImage:"url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600')",backgroundSize:'cover',backgroundPosition:'center'}}>
+            <div className="occasion-overlay"></div>
+            <div className="occasion-content">
+              <div className="occasion-icon"><Heart size={28} color="#FF3366" fill="#FF3366"/></div>
+              <h4>Mariage</h4>
+              <p>La chanson de votre histoire d'amour, composée sur mesure pour le jour J.</p>
+              <span className="occasion-tag">Premier danse</span>
+            </div>
+          </div>
+          <div className="occasion-card" style={{backgroundImage:"url('https://images.unsplash.com/photo-1474552226712-ac0f0961a954?q=80&w=600')",backgroundSize:'cover',backgroundPosition:'center'}}>
+            <div className="occasion-overlay"></div>
+            <div className="occasion-content">
+              <div className="occasion-icon"><Music size={28} color="#C466FF"/></div>
+              <h4>Déclaration d'amour</h4>
+              <p>Exprimez ce que les mots seuls ne peuvent pas dire. Une chanson qui dit tout.</p>
+              <span className="occasion-tag">Coup de cœur</span>
+            </div>
+          </div>
+          <div className="occasion-card" style={{backgroundImage:"url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=600')",backgroundSize:'cover',backgroundPosition:'center'}}>
+            <div className="occasion-overlay"></div>
+            <div className="occasion-content">
+              <div className="occasion-icon"><Trophy size={28} color="#FFB800"/></div>
+              <h4>Félicitations</h4>
+              <p>Diplôme, promotion, naissance, baptême... Célébrez les grandes réussites.</p>
+              <span className="occasion-tag">Succès &amp; Victoire</span>
+            </div>
+          </div>
+          <div className="occasion-card" style={{backgroundImage:"url('https://images.unsplash.com/photo-1513759565286-20e9c5fad06b?q=80&w=600')",backgroundSize:'cover',backgroundPosition:'center'}}>
+            <div className="occasion-overlay"></div>
+            <div className="occasion-content">
+              <div className="occasion-icon"><ShieldCheck size={28} color="#94a3b8"/></div>
+              <h4>Hommage &amp; Obsèques</h4>
+              <p>Un hommage digne et touchant pour honorer la mémoire d'un être cher.</p>
+              <span className="occasion-tag">Mémoire éternelle</span>
+            </div>
+          </div>
+          <div className="occasion-card occasion-card-cta" onClick={() => navigate('/home')} style={{cursor:'pointer'}}>
+            <div className="occasion-cta-content">
+              <Sparkles size={40} color="#FF3366"/>
+              <h4>Votre occasion ?</h4>
+              <p>Décrivez n'importe quel moment et notre IA compose la chanson parfaite.</p>
+              <span className="occasion-cta-btn">Commencer →</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="premium-payment-section landing-section">
         <div className="premium-header text-center">
