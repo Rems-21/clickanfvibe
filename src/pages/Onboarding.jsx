@@ -142,11 +142,11 @@ function Onboarding() {
           <div className="premium-stats-badges">
             <div className="stat-badge">
               <div className="stat-icon-wrapper pink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
-              <div className="stat-text"><strong>15</strong> Pays couverts</div>
+              <div className="stat-text"><strong>12</strong> Pays couverts</div>
             </div>
             <div className="stat-badge">
               <div className="stat-icon-wrapper pink"><Smartphone size={16} color="currentColor"/></div>
-              <div className="stat-text"><strong>5</strong> Opérateurs Mobile</div>
+              <div className="stat-text"><strong>23</strong> Opérateurs Mobile</div>
             </div>
           </div>
         </div>
@@ -233,9 +233,9 @@ function Onboarding() {
       <div className="stats-strip">
         <div className="stat-item"><span className="stat-num">1 000+</span><span className="stat-desc">Cadeaux créés</span></div>
         <div className="stat-divider"></div>
-        <div className="stat-item"><span className="stat-num">14</span><span className="stat-desc">Pays couverts</span></div>
+        <div className="stat-item"><span className="stat-num">12</span><span className="stat-desc">Pays couverts</span></div>
         <div className="stat-divider"></div>
-        <div className="stat-item"><span className="stat-num">5</span><span className="stat-desc">Opérateurs Mobile Money</span></div>
+        <div className="stat-item"><span className="stat-num">23</span><span className="stat-desc">Opérateurs Mobile Money</span></div>
         <div className="stat-divider"></div>
         <div className="stat-item"><span className="stat-num">4.9 / 5</span><span className="stat-desc">Note moyenne</span></div>
       </div>
@@ -244,8 +244,8 @@ function Onboarding() {
         <div className="section-label-pill"><Star size={14}/> Témoignages</div>
         <h3 className="premium-section-title text-center">Ils ont offert un cadeau <span className="text-gradient">inoubliable</span></h3>
         <div className="testimonials-carousel">
-          <div className="testimonials-track" id="testi-track">
-            {testimonials.map((t, i) => (
+          <div className="testimonials-track marquee-track">
+            {[...testimonials, ...testimonials].map((t, i) => (
               <div key={i} className="testimonial-slide">
                 <div className="p-testimonial-card featured">
                   <div className="stars">{[...Array(5)].map((_, s) => <Star key={s} size={18} fill="#FFB800" color="#FFB800"/>)}</div>
@@ -257,10 +257,6 @@ function Onboarding() {
                 </div>
               </div>
             ))}
-          </div>
-          <div className="carousel-arrows">
-            <button className="carousel-arrow" onClick={() => document.getElementById('testi-track').scrollBy({left: -350, behavior: 'smooth'})} aria-label="Précédent"><ChevronDown size={20} style={{transform:'rotate(90deg)'}}/></button>
-            <button className="carousel-arrow" onClick={() => document.getElementById('testi-track').scrollBy({left: 350, behavior: 'smooth'})} aria-label="Suivant"><ChevronDown size={20} style={{transform:'rotate(-90deg)'}}/></button>
           </div>
         </div>
       </section>
