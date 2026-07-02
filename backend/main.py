@@ -1297,6 +1297,7 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
     }
     
     if req.phoneNumber and req.provider:
+        payload["mode"] = "USSD"
         payload["phoneNumber"] = req.phoneNumber
         payload["provider"] = req.provider
         if getattr(req, 'fullName', None):
