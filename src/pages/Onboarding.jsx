@@ -276,7 +276,7 @@ function Onboarding() {
       </section>
 
       <div className="stats-strip">
-        <div className="stat-item"><span className="stat-num">1 000+</span><span className="stat-desc">Cadeaux créés</span></div>
+        <div className="stat-item"><span className="stat-num">5 000+</span><span className="stat-desc">Cadeaux créés</span></div>
         <div className="stat-divider"></div>
         <div className="stat-item"><span className="stat-num">12</span><span className="stat-desc">Pays couverts</span></div>
         <div className="stat-divider"></div>
@@ -446,6 +446,11 @@ function Onboarding() {
 
         <div className="footer-bottom">
           <p>&copy; 2026 Click & Vibe. Tous droits réservés.</p>
+          <div className="footer-legal-links" style={{display: 'flex', gap: '15px'}}>
+            <a onClick={() => navigate('/terms')} style={{cursor: 'pointer', color: '#71717A', textDecoration: 'none'}}>Conditions d'utilisation</a>
+            <a onClick={() => navigate('/privacy')} style={{cursor: 'pointer', color: '#71717A', textDecoration: 'none'}}>Politique de confidentialité</a>
+            <a onClick={() => navigate('/refund-policy')} style={{cursor: 'pointer', color: '#71717A', textDecoration: 'none'}}>Politique de remboursement</a>
+          </div>
         </div>
       </footer>
     </div>

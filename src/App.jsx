@@ -26,6 +26,7 @@ import Error404 from './pages/Error404';
 import Error500 from './pages/Error500';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import RefundPolicy from './pages/RefundPolicy';
 
 // Admin imports
 import AdminRoute from './components/AdminRoute';
@@ -190,6 +191,10 @@ function AppContent() {
 
         {/* Error Routes */}
         <Route path="/500" element={<Error500 />} />
+        <Route path="/maintenance" element={<Maintenance />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/refund-policy" element={<RefundPolicy />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
       {!isAdminRoute && <GlobalAudioPlayer />}
