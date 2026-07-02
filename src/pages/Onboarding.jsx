@@ -99,7 +99,7 @@ function Onboarding() {
             <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=700')"}}></div>
             <div className="how-step-content">
               <div className="step-num">03</div>
-              <h4>Offrez et épatez</h4>
+              <h4>Télécharger et partager</h4>
               <p>Partagez immédiatement par WhatsApp, SMS ou lien. Votre proche reçoit un cadeau sonore qu'il n'oubliera jamais.</p>
               <div className="step-tags"><span>WhatsApp</span><span>SMS</span><span>Lien partageable</span></div>
             </div>
