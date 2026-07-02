@@ -297,6 +297,7 @@
     flex-direction: column;
     padding: 20px 5%;
     gap: 15px;
+    margin-top: 30px;
   }
   
   .feature {
@@ -1115,6 +1116,7 @@
   .landing-features {
     flex-direction: column;
     padding: 10px 0;
+    margin-top: 30px;
   }
   .landing-features .feature {
     border-right: none;
