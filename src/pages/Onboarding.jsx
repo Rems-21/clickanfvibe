@@ -9,10 +9,10 @@ function Onboarding() {
   const [slideIndex, setSlideIndex] = useState(0);
 
   const testimonials = [
-    { text: "Incroyable ! J'ai créé un beat afrobeat pour mon intro YouTube en 2 clics. Le paiement par Orange Money a été instantané. Je recommande à 100% !", name: "Marc D.", role: "Créateur de contenu · Dakar", bg: "FF3366" },
-    { text: "C'est la première fois que je trouve un outil IA qui comprend vraiment la vibe Amapiano. Je recommande !", name: "Sarah T.", role: "Artiste indépendante · Abidjan", bg: "9933FF" },
-    { text: "Super pratique ! Mes sons sont uniques et la qualité studio est bluffante. Le support est aussi très réactif.", name: "Eric M.", role: "Producteur · Douala", bg: "0ea5e9" },
-    { text: "J'utilise Click & Vibe pour tous mes projets. La génération est ultra rapide et le résultat professionnel.", name: "Binta K.", role: "Influenceuse · Bamako", bg: "c084fc" },
+    { text: "J'ai offert une chanson à ma femme pour notre anniversaire de mariage. Elle a pleuré de joie ! Le paiement par Orange Money était instantané. Merci Click & Vibe !", name: "Kofi A.", role: "Cadeau de mariage · Accra", bg: "FF3366" },
+    { text: "Pour les 60 ans de ma maman, j'ai commandé une chanson personnalisée avec son prénom et toute notre histoire. Elle l'écoute encore tous les jours !", name: "Aminata S.", role: "Cadeau d'anniversaire · Dakar", bg: "9933FF" },
+    { text: "J'ai fait une déclaration d'amour musicale à ma petite amie. Elle a dit oui ! Sérieusement, c'est le meilleur outil pour surprendre quelqu'un.", name: "Jean-Paul M.", role: "Déclaration d'amour · Douala", bg: "0ea5e9" },
+    { text: "Nous avons utilisé Click & Vibe pour le deuil de notre père. La chanson d'hommage était tellement touchante. Toute la famille a été émue.", name: "Binta K.", role: "Chanson d'hommage · Bamako", bg: "c084fc" },
   ];
 
   const toggleFaq = (index) => {
@@ -32,17 +32,17 @@ function Onboarding() {
           <span>Click <span className="amp">&</span> Vibe</span>
         </div>
         <div className="landing-badge">
-          <Sparkles size={14} color="#C466FF" /> L'IA au service de ta créativité
+          <Sparkles size={14} color="#C466FF" /> Cadeaux musicaux personnalisés par IA
         </div>
       </div>
 
       <div className="landing-hero">
         <div className="landing-content">
-          <h1 className="landing-title">Crée des chansons <br/><span className="text-gradient">incroyables</span><br/>grâce à l'IA.</h1>
-          <p className="landing-subtitle">Décris simplement ton idée, choisis ton style musical et laisse Click & Vibe composer une chanson unique en quelques secondes.</p>
+          <h1 className="landing-title">Offrez une chanson<br/><span className="text-gradient">unique</span><br/>pour chaque instant.</h1>
+          <p className="landing-subtitle">Anniversaire, mariage, déclaration d'amour, félicitations... Créez un cadeau musical inoubliable personnalisé en quelques secondes, payable par Mobile Money.</p>
           
           <div className="landing-buttons">
-            <button className="btn-primary-glow" onClick={() => navigate('/home')}><Sparkles size={18}/> Commencer &rarr;</button>
+            <button className="btn-primary-glow" onClick={() => navigate('/home')}><Sparkles size={18}/> Créer un cadeau musical →</button>
             <button className="btn-outline-glow" onClick={() => navigate('/login')}>Se connecter &rarr;</button>
           </div>
         </div>
@@ -56,26 +56,26 @@ function Onboarding() {
       <div className="landing-features" style={{marginBottom: '60px'}}>
          <div className="feature">
             <div className="f-icon bg-pink"><Zap size={20} color="#FF3366"/></div>
-            <div className="f-text"><h4>Rapide</h4><p>Ta chanson en quelques secondes</p></div>
+            <div className="f-text"><h4>En 60 secondes</h4><p>Votre cadeau musical prêt à offrir</p></div>
          </div>
          <div className="feature">
             <div className="f-icon bg-purple"><Sparkles size={20} color="#9933FF"/></div>
-            <div className="f-text"><h4>Personnalisé</h4><p>Tous les styles, toutes les ambiances</p></div>
+            <div className="f-text"><h4>100% Personnalisé</h4><p>Prénom, histoire, émotion unique</p></div>
          </div>
          <div className="feature">
             <div className="f-icon bg-violet"><Settings size={20} color="#C466FF"/></div>
-            <div className="f-text"><h4>IA Avancée</h4><p>Une technologie de pointe au service de ta créativité</p></div>
+            <div className="f-text"><h4>IA Émotionnelle</h4><p>Comprend le contexte et les sentiments</p></div>
          </div>
          <div className="feature">
             <div className="f-icon bg-blue"><Lock size={20} color="#33CCFF"/></div>
-            <div className="f-text"><h4>Sécurisé</h4><p>Tes créations t'appartiennent à 100%</p></div>
+            <div className="f-text"><h4>Cadeau Digital</h4><p>Partagez par WhatsApp, SMS ou lien</p></div>
          </div>
       </div>
 
       <section className="premium-payment-section landing-section">
         <div className="premium-header text-center">
-          <h2 className="premium-section-title">Créez et payez <span className="text-gradient">sans carte bancaire</span></h2>
-          <p className="landing-section-subtitle text-center">Click & Vibe intègre les paiements Mobile Money. Une seule plateforme pour créer vos hits et payer facilement dans 15 pays africains.</p>
+          <h2 className="premium-section-title">Disponible partout <span className="text-gradient">en Afrique</span></h2>
+          <p className="landing-section-subtitle text-center">Offrez un cadeau musical unique depuis n'importe quel pays africain. Paiement 100% Mobile Money — sans carte bancaire, sans compte bancaire.</p>
           <div className="premium-stats-badges">
             <div className="stat-badge">
               <div className="stat-icon-wrapper pink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
@@ -137,40 +137,40 @@ function Onboarding() {
 
       <section className="how-it-works-section landing-section">
         <div className="section-label-pill"><Zap size={14}/> Comment ça marche</div>
-        <h3 className="premium-section-title text-center">De l'idée au <span className="text-gradient">hit en 3 étapes</span></h3>
+        <h3 className="premium-section-title text-center">Votre cadeau prêt <span className="text-gradient">en 3 étapes</span></h3>
         <div className="how-steps">
           <div className="how-step">
             <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=700')"}}></div>
             <div className="how-step-content">
               <div className="step-num">01</div>
-              <h4>Décrivez votre idée</h4>
-              <p>Un simple texte suffit. Dites-nous le style, l'ambiance, les paroles ou l'émotion que vous souhaitez transmettre.</p>
-              <div className="step-tags"><span>Afrobeat</span><span>Coupé-Décalé</span><span>Amapiano</span><span>Ndombolo</span></div>
+              <h4>Décrivez l'occasion</h4>
+              <p>Dites-nous l'événement, le prénom du destinataire et l'émotion que vous souhaitez exprimer. Amour, joie, tendresse...</p>
+              <div className="step-tags"><span>Anniversaire</span><span>Mariage</span><span>Naissance</span><span>Obsèques</span></div>
             </div>
           </div>
           <div className="how-step reverse">
             <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=700')"}}></div>
             <div className="how-step-content">
               <div className="step-num">02</div>
-              <h4>Notre IA compose</h4>
-              <p>Notre moteur analyse votre demande et crée une composition studio complète : beat, voix, harmonie et mixage professionnel.</p>
-              <div className="step-tags"><span>⚡ En quelques secondes</span><span>🎚 Qualité Studio</span></div>
+              <h4>L'IA compose votre chanson</h4>
+              <p>Notre moteur génère une chanson unique avec les paroles personnalisées, la mélodie et la voix adaptées à votre occasion.</p>
+              <div className="step-tags"><span>Paroles sur mesure</span><span>Voix réaliste</span><span>Style choisi</span></div>
             </div>
           </div>
           <div className="how-step">
             <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=700')"}}></div>
             <div className="how-step-content">
               <div className="step-num">03</div>
-              <h4>Exportez et monétisez</h4>
-              <p>Téléchargez votre titre en haute qualité. Vos droits, votre musique. Publiez sur les plateformes mondiales.</p>
-              <div className="step-tags"><span>Spotify</span><span>Apple Music</span><span>YouTube</span></div>
+              <h4>Offrez et épatez</h4>
+              <p>Partagez immédiatement par WhatsApp, SMS ou lien. Votre proche reçoit un cadeau sonore qu'il n'oubliera jamais.</p>
+              <div className="step-tags"><span>WhatsApp</span><span>SMS</span><span>Lien partageable</span></div>
             </div>
           </div>
         </div>
       </section>
 
       <div className="stats-strip">
-        <div className="stat-item"><span className="stat-num">5 000+</span><span className="stat-desc">Chansons créées</span></div>
+        <div className="stat-item"><span className="stat-num">5 000+</span><span className="stat-desc">Cadeaux créés</span></div>
         <div className="stat-divider"></div>
         <div className="stat-item"><span className="stat-num">12</span><span className="stat-desc">Pays couverts</span></div>
         <div className="stat-divider"></div>
@@ -181,7 +181,7 @@ function Onboarding() {
 
       <section className="premium-testimonials-section landing-section">
         <div className="section-label-pill"><Star size={14}/> Témoignages</div>
-        <h3 className="premium-section-title text-center">Ce qu'ils en pensent</h3>
+        <h3 className="premium-section-title text-center">Ils ont offert un cadeau <span className="text-gradient">inoubliable</span></h3>
         <div className="testimonials-grid">
           <div className="p-testimonial-card featured">
             <div className="stars"><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/></div>
@@ -212,13 +212,13 @@ function Onboarding() {
 
       <section className="premium-faq-section landing-section">
         <div className="section-label-pill"><MessageSquare size={14}/> FAQ</div>
-        <h3 className="premium-section-title text-center">Questions fréquentes</h3>
+        <h3 className="premium-section-title text-center">Tout ce que vous voulez savoir</h3>
         <div className="premium-faq-container">
           {[
-            {q:"Droits d'auteur et Monétisation ?", a:"Vous possédez 100% des droits commerciaux sur les chansons que vous générez. Diffusez-les sur Spotify, Apple Music, ou YouTube en toute tranquillité."},
-            {q:"Comment acheter des crédits sans carte ?", a:"Notre intégration permet les paiements directs via Orange Money, MTN, Moov, Wave et Airtel selon votre pays."},
-            {q:"Quels styles musicaux sont disponibles ?", a:"Afrobeat, Coupé-Décalé, Amapiano, Ndombolo, Bongo Flava, Highlife, Afropop et bien d'autres styles africains et internationaux."},
-            {q:"Puis-je modifier ma chanson après génération ?", a:"Oui ! Vous pouvez régénérer des sections, changer le tempo, le style vocal ou les paroles autant de fois que nécessaire."},
+            {q:"Pour quels événements puis-je commander ?", a:"Anniversaires, mariages, fiançailles, déclarations d'amour, naissances, félicitations, hommages funèbres, remises de diplômes, fêtes d'entreprise... Tous les moments importants de la vie !"},
+            {q:"Comment payer sans carte bancaire ?", a:"Notre intégration permet les paiements directs via Orange Money, MTN MoMo, Moov Money, Wave et Airtel Money selon votre pays. Aucun compte bancaire requis."},
+            {q:"Quelle est la durée d'une chanson ?", a:"La chanson générée dure entre 2 et 4 minutes. Elle comprend une introduction, des couplets avec les paroles personnalisées, un refrain mémorable et une conclusion."},
+            {q:"Comment partager mon cadeau musical ?", a:"Vous recevez un lien partageable et un fichier audio. Envoyez-le directement par WhatsApp, SMS, email ou réseaux sociaux. Le destinataire peut écouter depuis son téléphone sans application."},
           ].map((item, i) => (
             <div key={i} className={`p-faq-item ${openFaq === i ? 'open' : ''}`} onClick={() => toggleFaq(i)}>
               <div className="p-faq-question">
@@ -237,7 +237,7 @@ function Onboarding() {
           <h2>Prêt à lancer votre carrière ?</h2>
           <p>Le futur de la musique africaine est entre vos mains.<br/>Commencez gratuitement dès aujourd'hui.</p>
           <div className="cta-buttons">
-            <button className="btn-premium-action" onClick={() => navigate('/home')}><Sparkles size={18}/> Créer ma première chanson</button>
+            <button className="btn-premium-action" onClick={() => navigate('/home')}><Sparkles size={18}/> Créer un cadeau musical</button>
             <button className="btn-premium-secondary" onClick={() => navigate('/login')}>Se connecter →</button>
           </div>
           <div className="cta-trust">
@@ -255,7 +255,7 @@ function Onboarding() {
           <img className="avatar" src="https://ui-avatars.com/api/?name=S&background=0ea5e9&color=fff" alt="User" />
           <img className="avatar" src="https://ui-avatars.com/api/?name=A&background=FF3366&color=fff" alt="User" />
         </div>
-        <div className="footer-text"><Heart size={16} color="#FF3366" fill="#FF3366"/> Plus de 5 000 chansons créées par notre communauté</div>
+        <div className="footer-text"><Heart size={16} color="#FF3366" fill="#FF3366"/> Plus de 5 000 cadeaux musicaux offerts à travers l'Afrique</div>
       </div>
     </div>
   );
