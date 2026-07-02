@@ -244,8 +244,8 @@ function Onboarding() {
         <div className="section-label-pill"><Star size={14}/> Témoignages</div>
         <h3 className="premium-section-title text-center">Ils ont offert un cadeau <span className="text-gradient">inoubliable</span></h3>
         <div className="testimonials-carousel">
-          <div className="testimonials-track marquee-track">
-            {[...testimonials, ...testimonials].map((t, i) => (
+          <div className="testimonials-track" id="testi-track">
+            {testimonials.map((t, i) => (
               <div key={i} className="testimonial-slide">
                 <div className="p-testimonial-card featured">
                   <div className="stars">{[...Array(5)].map((_, s) => <Star key={s} size={18} fill="#FFB800" color="#FFB800"/>)}</div>

@@ -1376,23 +1376,25 @@
 }
 .testimonials-track {
   display: flex;
-  width: max-content;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
   gap: 20px;
   padding-bottom: 20px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-.testimonials-track.marquee-track {
-  animation: scrollTestimonials 35s linear infinite;
-}
-.testimonials-track.marquee-track:hover {
-  animation-play-state: paused;
-}
-@keyframes scrollTestimonials {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-50% - 10px)); }
+.testimonials-track::-webkit-scrollbar {
+  display: none;
 }
 .testimonial-slide {
   width: 350px;
   flex-shrink: 0;
+  display: flex;
+  scroll-snap-align: start;
+}
+.testimonial-slide > * {
+  width: 100%;
 }
 @media (max-width: 900px) {
   .testimonial-slide { width: 300px; }
