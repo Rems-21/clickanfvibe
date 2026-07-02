@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Music, Sparkles, Zap, Settings, Lock, Heart, MessageSquare, Share2, Star, Trophy, ShieldCheck, ChevronDown, Globe, Smartphone, Users, Mic2, Headphones, ArrowRight, MapPin } from 'lucide-react';
 import './Onboarding.css';
@@ -31,6 +31,18 @@ function Onboarding() {
     return () => clearInterval(slideInterval);
   }, []);
 
+  const eqBars = useMemo(() => Array.from({ length: 60 }).map(() => ({
+    delay: Math.random() * 2,
+    height: 10 + Math.random() * 70
+  })), []);
+
+  const floatingNotes = useMemo(() => Array.from({ length: 12 }).map(() => ({
+    left: 5 + Math.random() * 90,
+    delay: Math.random() * 15,
+    size: 14 + Math.random() * 20,
+    duration: 15 + Math.random() * 15
+  })), []);
+
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index);
   };
@@ -53,6 +65,32 @@ function Onboarding() {
       </div>
 
       <div className="landing-hero">
+        <div className="hero-sound-waves-bg">
+          <div className="equalizer-container">
+            {eqBars.map((bar, i) => (
+              <div key={i} className="eq-bar" style={{
+                '--delay': `${bar.delay}s`,
+                '--height': `${bar.height}%`
+              }}></div>
+            ))}
+          </div>
+          <svg className="sine-wave-svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <path className="sine-wave-path" d="M0,50 Q125,0 250,50 T500,50 T750,50 T1000,50" fill="none" />
+            <path className="sine-wave-path delay-1" d="M0,50 Q125,100 250,50 T500,50 T750,50 T1000,50" fill="none" />
+          </svg>
+          <div className="floating-notes-container">
+            {floatingNotes.map((note, i) => (
+              <Music key={i} className="floating-note" style={{
+                left: `${note.left}%`,
+                animationDelay: `${note.delay}s`,
+                animationDuration: `${note.duration}s`,
+                width: `${note.size}px`,
+                height: `${note.size}px`
+              }} />
+            ))}
+          </div>
+        </div>
+
         <div className="landing-content">
           <h1 className="landing-title">Offrez une chanson<br/><span className="text-gradient">unique</span><br/>pour chaque instant.</h1>
           <p className="landing-subtitle">Anniversaire, mariage, déclaration d'amour, félicitations... Créez un cadeau musical inoubliable personnalisé en quelques secondes, payable par Mobile Money.</p>
