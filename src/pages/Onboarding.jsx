@@ -447,9 +447,9 @@ function Onboarding() {
         <div className="footer-bottom">
           <p>&copy; 2026 Click & Vibe. Tous droits réservés.</p>
           <div className="footer-legal-links" style={{display: 'flex', gap: '15px'}}>
-            <a onClick={() => navigate('/terms')} style={{cursor: 'pointer', color: '#71717A', textDecoration: 'none'}}>Conditions d'utilisation</a>
-            <a onClick={() => navigate('/privacy')} style={{cursor: 'pointer', color: '#71717A', textDecoration: 'none'}}>Politique de confidentialité</a>
-            <a onClick={() => navigate('/refund-policy')} style={{cursor: 'pointer', color: '#71717A', textDecoration: 'none'}}>Politique de remboursement</a>
+            <a onClick={() => navigate('/terms')} className="legal-link">Conditions d'utilisation</a>
+            <a onClick={() => navigate('/privacy')} className="legal-link">Politique de confidentialité</a>
+            <a onClick={() => navigate('/refund-policy')} className="legal-link">Politique de remboursement</a>
           </div>
         </div>
       </footer>

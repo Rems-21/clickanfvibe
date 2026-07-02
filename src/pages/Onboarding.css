@@ -615,10 +615,23 @@
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   padding-top: 20px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 15px;
   color: #71717A;
   font-size: 13px;
+}
+
+.legal-link {
+  cursor: pointer;
+  color: #71717A;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.legal-link:hover {
+  color: #C466FF;
 }
 
 .avatars {
