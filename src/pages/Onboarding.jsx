@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { Music, Sparkles, Zap, Settings, Lock, Heart, MessageSquare, Share2, Star, Trophy, ShieldCheck, ChevronDown, Globe, Smartphone, Users, Mic2, Headphones, ArrowRight, MapPin } from 'lucide-react';
 import './Onboarding.css';
 
 function Onboarding() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [openFaq, setOpenFaq] = useState(null);
   const [slideIndex, setSlideIndex] = useState(0);
 
@@ -61,8 +63,8 @@ function Onboarding() {
           </div>
           <span>Click <span className="amp">&</span> Vibe</span>
         </div>
-        <div className="landing-badge">
-          <Sparkles size={14} color="#C466FF" /> Cadeaux musicaux personnalisés par IA
+        <div className="landing-badge" onClick={() => navigate(user ? '/home' : '/login')}>
+          <Sparkles size={14} color="#C466FF" /> {user ? 'Accéder au Dashboard' : 'Se connecter'}
         </div>
       </div>
 

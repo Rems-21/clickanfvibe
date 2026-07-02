@@ -36,12 +36,22 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
+  padding: 8px 16px;
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: 11px;
+  font-size: 13px;
+  font-weight: 500;
   color: #DDD;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.landing-badge:hover {
+  background: rgba(196, 102, 255, 0.15);
+  border-color: rgba(196, 102, 255, 0.3);
+  transform: translateY(-2px);
+  color: #fff;
 }
 
 .landing-hero {
