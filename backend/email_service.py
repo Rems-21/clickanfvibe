@@ -14,7 +14,7 @@ SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "") # Mot de passe d'application Goog
 
 def send_email(to_email: str, subject: str, html_content: str):
     if not SMTP_PASSWORD:
-        print("ATTENTION: SMTP_PASSWORD non configuré. L'email n'a pas été envoyé à", to_email)
+        print("ATTENTION: SMTP_PASSWORD non configuré. L'email n'a pas été envoyé à", to_email, flush=True)
         return False
         
     msg = MIMEMultipart("alternative")
@@ -33,7 +33,7 @@ def send_email(to_email: str, subject: str, html_content: str):
         server.quit()
         return True
     except Exception as e:
-        print(f"Erreur d'envoi d'email à {to_email}: {e}")
+        print(f"Erreur d'envoi d'email à {to_email}: {e}", flush=True)
         return False
 
 def get_base_html(title, content):
@@ -122,7 +122,7 @@ BREVO_API_KEY = os.getenv("BREVO_API_KEY", "")
 
 def send_brevo_email(to_email: str, to_name: str, subject: str, html_content: str):
     if not BREVO_API_KEY:
-        print("ATTENTION: BREVO_API_KEY non configuré. L'email n'a pas été envoyé à", to_email)
+        print("ATTENTION: BREVO_API_KEY non configuré. L'email n'a pas été envoyé à", to_email, flush=True)
         return False
         
     url = "https://api.brevo.com/v3/smtp/email"
@@ -142,10 +142,11 @@ def send_brevo_email(to_email: str, to_name: str, subject: str, html_content: st
     try:
         response = requests.post(url, headers=headers, json=payload)
         if response.status_code == 201:
+            print(f"Brevo: Email envoyé avec succès à {to_email}", flush=True)
             return True
         else:
-            print(f"Brevo API error: {response.text}")
+            print(f"Brevo API error: {response.text}", flush=True)
             return False
     except Exception as e:
-        print(f"Erreur d'envoi via Brevo à {to_email}: {e}")
+        print(f"Erreur d'envoi via Brevo à {to_email}: {e}", flush=True)
         return False
