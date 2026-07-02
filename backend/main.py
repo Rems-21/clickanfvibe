@@ -1297,7 +1297,6 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
     }
     
     if req.phoneNumber and req.provider:
-        payload["mode"] = "USSD"
         payload["phoneNumber"] = req.phoneNumber
         payload["provider"] = req.provider
         if getattr(req, 'fullName', None):
@@ -1337,13 +1336,13 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
             return data
         
         print("KPay Init Error:", response.text)
-        raise HTTPException(status_code=400, detail=f"Erreur KPay: {response.text}")
+        raise HTTPException(status_code=400, detail=f"Erreur KPay: {response.text} | Payload envoyé: {json.dumps(payload)}")
     except HTTPException:
         raise
     except Exception as e:
         import traceback
         traceback.print_exc()
-        raise HTTPException(status_code=500, detail=f"Erreur backend: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erreur backend: {str(e)} | Payload: {json.dumps(payload)}")
 
 @app.post("/api/webhooks/kpay")
 async def kpay_webhook(request: Request, db: Session = Depends(get_db)):
