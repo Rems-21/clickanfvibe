@@ -596,7 +596,16 @@ function Credits() {
                     placeholder="Ex. 6XXXXXXXX (sans code pays)" 
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    style={{width: '100%', padding: '14px', borderRadius: '8px', background: 'var(--bg-color, #111)', border: '1px solid var(--border-color, #333)', color: 'white', fontSize: '0.95rem', outline: 'none'}}
+                    style={{
+                      width: '100%', 
+                      padding: '14px', 
+                      borderRadius: '8px', 
+                      background: 'var(--bg-color, #111)', 
+                      border: paymentError && (paymentError.toLowerCase().includes('numéro') || (!phoneNumber && paymentError.includes('champs'))) ? '1px solid #ef4444' : '1px solid var(--border-color, #333)', 
+                      color: 'white', 
+                      fontSize: '0.95rem', 
+                      outline: 'none'
+                    }}
                   />
                 </div>
 
