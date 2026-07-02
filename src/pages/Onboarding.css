@@ -631,6 +631,9 @@
 }
 
 .legal-link:hover {
+  color: #C466FF;
+}
+
 .landing-social-proof-banner {
   display: flex;
   align-items: center;
