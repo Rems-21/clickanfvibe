@@ -419,21 +419,16 @@ function Onboarding() {
           
           <div className="footer-links-group">
             <div className="footer-col">
-              <h4>Produit</h4>
+              <h4>Navigation</h4>
               <ul>
-                <li><a href="#">Créer un cadeau</a></li>
-                <li><a href="#">Écouter des exemples</a></li>
-                <li><a href="#">Tarifs</a></li>
-                <li><a href="#">FAQ</a></li>
+                <li><a onClick={() => navigate('/home')} style={{cursor: 'pointer'}}>Créer un cadeau musical</a></li>
+                <li><a onClick={() => navigate('/login')} style={{cursor: 'pointer'}}>Se connecter</a></li>
               </ul>
             </div>
             <div className="footer-col">
-              <h4>Légal</h4>
+              <h4>Contact</h4>
               <ul>
-                <li><a href="#">Conditions d'utilisation</a></li>
-                <li><a href="#">Confidentialité</a></li>
-                <li><a href="#">Mentions légales</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="mailto:support@clickandvibe.com">Nous contacter</a></li>
               </ul>
             </div>
           </div>
