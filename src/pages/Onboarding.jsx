@@ -67,8 +67,8 @@ function Onboarding() {
             {/* PREMIUM PAYMENT SECTION */}
       <section className="premium-payment-section landing-section">
         <div className="premium-header text-center">
-          <h2 className="premium-section-title">Votre passerelle vers <span className="text-accent-orange">15 marchés</span> africains</h2>
-          <p className="landing-section-subtitle text-center">Une seule intégration pour créer et accepter les paiements Mobile Money dans toute l'Afrique francophone.</p>
+          <h2 className="premium-section-title">Cr�ez et payez <span className="text-accent-orange">sans carte bancaire</span></h2>
+          <p className="landing-section-subtitle text-center">Click & Vibe int�gre les paiements Mobile Money. Une seule plateforme pour cr�er vos hits et payer facilement dans 15 pays africains.</p>
           
           <div className="premium-stats-badges">
             <div className="stat-badge">
@@ -77,7 +77,7 @@ function Onboarding() {
             </div>
             <div className="stat-badge">
               <div className="stat-icon-wrapper orange"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
-              <div className="stat-text"><strong>14+</strong> Opérateurs</div>
+              <div className="stat-text"><strong>14+</strong> Op�rateurs</div>
             </div>
           </div>
         </div>
@@ -98,13 +98,13 @@ function Onboarding() {
                 <span className="title-count orange">10</span>
               </div>
               <div className="pills-grid">
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Bénin <span className="pill-count">4</span></div>
+                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> B�nin <span className="pill-count">4</span></div>
                 <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Burkina Faso <span className="pill-count">3</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Côte d'Ivoire <span className="pill-count">4</span></div>
+                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> C�te d'Ivoire <span className="pill-count">4</span></div>
                 <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Gambie <span className="pill-count">1</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Guinée <span className="pill-count">2</span></div>
+                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Guin�e <span className="pill-count">2</span></div>
                 <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Mali <span className="pill-count">2</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Sénégal <span className="pill-count">4</span></div>
+                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> S�n�gal <span className="pill-count">4</span></div>
                 <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Togo <span className="pill-count">2</span></div>
               </div>
             </div>
@@ -123,7 +123,7 @@ function Onboarding() {
                 <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Tchad <span className="pill-count dark">2</span></div>
               </div>
               <div className="region-footer">
-                <span className="footer-label">Total opérateurs</span>
+                <span className="footer-label">Total op�rateurs</span>
                 <span className="footer-value">13+</span>
               </div>
             </div>
@@ -131,65 +131,103 @@ function Onboarding() {
         </div>
       </section>
 
-      {/* HOW IT WORKS - REDESIGNED */}
+      {/* HOW IT WORKS - REDESIGNED WITH IMAGES */}
       <section className="premium-features-section landing-section">
-        <h3 className="premium-section-title text-center">La création musicale <span className="text-accent-pink">réinventée</span></h3>
+        <h3 className="premium-section-title text-center">La cr�ation musicale <span className="text-accent-pink">r�invent�e</span></h3>
+        <p className="landing-section-subtitle text-center" style={{marginBottom: "50px"}}>3 �tapes simples pour donner vie � tes id�es.</p>
         <div className="premium-cards-grid">
-          <div className="premium-card">
-            <div className="p-card-icon"><MessageSquare size={28} /></div>
-            <h4>1. Votre idée</h4>
-            <p>Un simple texte suffit pour donner la direction. Vous maîtrisez le style et le thème.</p>
+          <div className="premium-card with-image">
+            <div className="p-card-image" style={{backgroundImage: "url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=600')", backgroundSize: "cover", backgroundPosition: "center"}}></div>
+            <div className="p-card-content">
+              <div className="p-card-icon"><MessageSquare size={24} /></div>
+              <h4>1. Votre id�e</h4>
+              <p>Un simple texte suffit pour donner la direction. Vous ma�trisez le style, l'ambiance et le th�me de A � Z.</p>
+            </div>
           </div>
-          <div className="premium-card">
-            <div className="p-card-icon"><Zap size={28} /></div>
-            <h4>2. Notre IA</h4>
-            <p>Le moteur d'IA génère une composition studio complète (beat, voix, mixage).</p>
+          <div className="premium-card with-image">
+            <div className="p-card-image" style={{backgroundImage: "url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600')", backgroundSize: "cover", backgroundPosition: "center"}}></div>
+            <div className="p-card-content">
+              <div className="p-card-icon"><Zap size={24} /></div>
+              <h4>2. Notre IA</h4>
+              <p>Notre moteur intelligent g�n�re une composition studio compl�te : beat percutant, voix r�alistes et mixage pro.</p>
+            </div>
           </div>
-          <div className="premium-card">
-            <div className="p-card-icon"><Share2 size={28} /></div>
-            <h4>3. Votre Hit</h4>
-            <p>Exportez et monétisez votre création sans aucune restriction de droits.</p>
+          <div className="premium-card with-image">
+            <div className="p-card-image" style={{backgroundImage: "url('https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=600')", backgroundSize: "cover", backgroundPosition: "center"}}></div>
+            <div className="p-card-content">
+              <div className="p-card-icon"><Share2 size={24} /></div>
+              <h4>3. Votre Hit</h4>
+              <p>Exportez votre chanson et mon�tisez-la sur Spotify, Apple Music ou YouTube sans restriction de droits.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS - REDESIGNED */}
+      <section className="premium-testimonials-section landing-section">
+        <h3 className="premium-section-title text-center">Ce qu'ils en pensent</h3>
+        <div className="premium-cards-grid" style={{marginTop: "40px"}}>
+          <div className="p-testimonial-card">
+            <div className="stars"><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/></div>
+            <p>"Incroyable ! J'ai cr�� un beat afrobeat pour mon intro YouTube en 2 clics. Le paiement par Orange Money a �t� instantan�."</p>
+            <div className="author-info">
+              <img src="https://ui-avatars.com/api/?name=Marc+D&background=1e293b&color=fff" alt="Marc" className="author-avatar" />
+              <div>
+                <div className="author-name">Marc D.</div>
+                <div className="author-role">Cr�ateur de contenu</div>
+              </div>
+            </div>
+          </div>
+          <div className="p-testimonial-card">
+            <div className="stars"><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/></div>
+            <p>"C'est la premi�re fois que je trouve un outil IA qui comprend vraiment la vibe Amapiano. Je recommande !"</p>
+            <div className="author-info">
+              <img src="https://ui-avatars.com/api/?name=Sarah+T&background=334155&color=fff" alt="Sarah" className="author-avatar" />
+              <div>
+                <div className="author-name">Sarah T.</div>
+                <div className="author-role">Artiste ind�pendante</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* FAQ - REDESIGNED */}
       <section className="premium-faq-section landing-section">
-        <h3 className="premium-section-title text-center">Questions fréquentes</h3>
+        <h3 className="premium-section-title text-center">Questions fr�quentes</h3>
         <div className="premium-faq-container">
           <div className={`p-faq-item ${openFaq === 0 ? 'open' : ''}`} onClick={() => toggleFaq(0)}>
             <div className="p-faq-question">
-              <h4>Droits d'auteur et Monétisation ?</h4>
+              <h4>Droits d'auteur et Mon�tisation ?</h4>
               <ChevronDown size={20} className="p-faq-icon" />
             </div>
             <div className="p-faq-answer">
-              <p>Vous possédez 100% des droits commerciaux sur les chansons que vous générez. Diffusez-les sur Spotify, Apple Music, ou YouTube en toute tranquillité.</p>
+              <p>Vous poss�dez 100% des droits commerciaux sur les chansons que vous g�n�rez. Diffusez-les sur Spotify, Apple Music, ou YouTube en toute tranquillit�.</p>
             </div>
           </div>
           <div className={`p-faq-item ${openFaq === 1 ? 'open' : ''}`} onClick={() => toggleFaq(1)}>
             <div className="p-faq-question">
-              <h4>Comment acheter des crédits ?</h4>
+              <h4>Comment acheter des cr�dits sans carte ?</h4>
               <ChevronDown size={20} className="p-faq-icon" />
             </div>
             <div className="p-faq-answer">
-              <p>Notre intégration locale permet les paiements directs via Orange Money, MTN, Moov, Wave et Airtel selon votre pays.</p>
+              <p>Notre int�gration permet les paiements directs via Orange Money, MTN, Moov, Wave et Airtel selon votre pays.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA FINAL - REDESIGNED */}
+      {/* CTA FINAL - REDESIGNED WITH IMAGE BACKGROUND */}
       <section className="premium-cta-section landing-section" style={{ paddingBottom: '80px' }}>
-        <div className="premium-cta-card">
-          <h2>Prêt à lancer votre carrière ?</h2>
-          <p>Le futur de la musique est entre vos mains. Commencez dès maintenant.</p>
+        <div className="premium-cta-card with-bg" style={{backgroundImage: "linear-gradient(rgba(15, 23, 42, 0.85), rgba(30, 41, 59, 0.95)), url('https://images.unsplash.com/photo-1493225457124-a1a2a5f5cb46?q=80&w=1200')", backgroundSize: "cover", backgroundPosition: "center"}}>
+          <h2>Pr�t � lancer votre carri�re ?</h2>
+          <p>Le futur de la musique est entre vos mains. Commencez d�s maintenant.</p>
           <button className="btn-premium-action" onClick={() => navigate('/home')}>
-            Créer ma première chanson <Zap size={18} />
+            Cr�er ma premi�re chanson <Zap size={18} />
           </button>
         </div>
       </section>
-
-<div className="landing-footer">
+\n      <div className="landing-footer">
         <div className="avatars">
           {/* using generic ui-avatars for the placeholder community images */}
           <img className="avatar" src="https://ui-avatars.com/api/?name=J&background=111&color=fff" alt="User" />
