@@ -13,6 +13,7 @@ function Onboarding() {
     { text: "Pour les 60 ans de ma maman, j'ai commandé une chanson personnalisée avec son prénom et toute notre histoire. Elle l'écoute encore tous les jours !", name: "Aminata S.", role: "Cadeau d'anniversaire · Dakar", bg: "9933FF" },
     { text: "J'ai fait une déclaration d'amour musicale à ma petite amie. Elle a dit oui ! Sérieusement, c'est le meilleur outil pour surprendre quelqu'un.", name: "Jean-Paul M.", role: "Déclaration d'amour · Douala", bg: "0ea5e9" },
     { text: "Nous avons utilisé Click & Vibe pour le deuil de notre père. La chanson d'hommage était tellement touchante. Toute la famille a été émue.", name: "Binta K.", role: "Chanson d'hommage · Bamako", bg: "c084fc" },
+    { text: "J'ai composé un hit afrobeat pour la naissance de mon neveu. C'était le cadeau le plus original de la fête !", name: "Cédric L.", role: "Cadeau de naissance · Abidjan", bg: "FFB800" },
   ];
 
   const toggleFaq = (index) => {
@@ -243,7 +244,7 @@ function Onboarding() {
         <div className="section-label-pill"><Star size={14}/> Témoignages</div>
         <h3 className="premium-section-title text-center">Ils ont offert un cadeau <span className="text-gradient">inoubliable</span></h3>
         <div className="testimonials-carousel">
-          <div className="testimonials-track" style={{transform: `translateX(-${slideIndex * 100}%)`}}>
+          <div className="testimonials-track" id="testi-track">
             {testimonials.map((t, i) => (
               <div key={i} className="testimonial-slide">
                 <div className="p-testimonial-card featured">
@@ -257,14 +258,9 @@ function Onboarding() {
               </div>
             ))}
           </div>
-          <div className="carousel-dots">
-            {testimonials.map((_, i) => (
-              <button key={i} className={`carousel-dot ${i === slideIndex ? 'active' : ''}`} onClick={() => setSlideIndex(i)} aria-label={`Slide ${i+1}`}/>
-            ))}
-          </div>
           <div className="carousel-arrows">
-            <button className="carousel-arrow" onClick={() => setSlideIndex(Math.max(0, slideIndex-1))} aria-label="Précédent"><ChevronDown size={20} style={{transform:'rotate(90deg)'}}/></button>
-            <button className="carousel-arrow" onClick={() => setSlideIndex(Math.min(testimonials.length-1, slideIndex+1))} aria-label="Suivant"><ChevronDown size={20} style={{transform:'rotate(-90deg)'}}/></button>
+            <button className="carousel-arrow" onClick={() => document.getElementById('testi-track').scrollBy({left: -350, behavior: 'smooth'})} aria-label="Précédent"><ChevronDown size={20} style={{transform:'rotate(90deg)'}}/></button>
+            <button className="carousel-arrow" onClick={() => document.getElementById('testi-track').scrollBy({left: 350, behavior: 'smooth'})} aria-label="Suivant"><ChevronDown size={20} style={{transform:'rotate(-90deg)'}}/></button>
           </div>
         </div>
       </section>
