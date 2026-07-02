@@ -242,30 +242,29 @@ function Onboarding() {
       <section className="premium-testimonials-section landing-section">
         <div className="section-label-pill"><Star size={14}/> Témoignages</div>
         <h3 className="premium-section-title text-center">Ils ont offert un cadeau <span className="text-gradient">inoubliable</span></h3>
-        <div className="testimonials-grid">
-          <div className="p-testimonial-card featured">
-            <div className="stars"><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/></div>
-            <p>"Incroyable ! J'ai créé un beat afrobeat pour mon intro YouTube en 2 clics. Le paiement par Orange Money a été instantané. Je recommande à 100% !"</p>
-            <div className="author-info">
-              <img src="https://ui-avatars.com/api/?name=Marc+D&background=FF3366&color=fff&bold=true" alt="Marc" className="author-avatar" />
-              <div><div className="author-name">Marc D.</div><div className="author-role">Créateur de contenu · Dakar</div></div>
-            </div>
+        <div className="testimonials-carousel">
+          <div className="testimonials-track" style={{transform: `translateX(-${slideIndex * 100}%)`}}>
+            {testimonials.map((t, i) => (
+              <div key={i} className="testimonial-slide">
+                <div className="p-testimonial-card featured">
+                  <div className="stars">{[...Array(5)].map((_, s) => <Star key={s} size={18} fill="#FFB800" color="#FFB800"/>)}</div>
+                  <p>"{t.text}"</p>
+                  <div className="author-info">
+                    <img src={`https://ui-avatars.com/api/?name=${t.name.replace(' ','+')}&background=${t.bg}&color=fff&bold=true`} alt={t.name} className="author-avatar" />
+                    <div><div className="author-name">{t.name}</div><div className="author-role">{t.role}</div></div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="p-testimonial-card">
-            <div className="stars"><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/></div>
-            <p>"C'est la première fois que je trouve un outil IA qui comprend vraiment la vibe Amapiano. Je recommande !"</p>
-            <div className="author-info">
-              <img src="https://ui-avatars.com/api/?name=Sarah+T&background=9933FF&color=fff&bold=true" alt="Sarah" className="author-avatar" />
-              <div><div className="author-name">Sarah T.</div><div className="author-role">Artiste indépendante · Abidjan</div></div>
-            </div>
+          <div className="carousel-dots">
+            {testimonials.map((_, i) => (
+              <button key={i} className={`carousel-dot ${i === slideIndex ? 'active' : ''}`} onClick={() => setSlideIndex(i)} aria-label={`Slide ${i+1}`}/>
+            ))}
           </div>
-          <div className="p-testimonial-card">
-            <div className="stars"><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/></div>
-            <p>"Super pratique ! Mes sons sont uniques et la qualité studio est bluffante. Le support est aussi très réactif."</p>
-            <div className="author-info">
-              <img src="https://ui-avatars.com/api/?name=Eric+M&background=0ea5e9&color=fff&bold=true" alt="Eric" className="author-avatar" />
-              <div><div className="author-name">Eric M.</div><div className="author-role">Producteur · Douala</div></div>
-            </div>
+          <div className="carousel-arrows">
+            <button className="carousel-arrow" onClick={() => setSlideIndex(Math.max(0, slideIndex-1))} aria-label="Précédent"><ChevronDown size={20} style={{transform:'rotate(90deg)'}}/></button>
+            <button className="carousel-arrow" onClick={() => setSlideIndex(Math.min(testimonials.length-1, slideIndex+1))} aria-label="Suivant"><ChevronDown size={20} style={{transform:'rotate(-90deg)'}}/></button>
           </div>
         </div>
       </section>
