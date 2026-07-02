@@ -44,6 +44,8 @@ class PaymentInitiateRequest(BaseModel):
     credits_to_add: int
     payment_method: str = None
     origin: str = None
+    phoneNumber: str = None
+    provider: str = None
 
 from sqlalchemy.orm import Session
 from sqlalchemy import text
@@ -1285,8 +1287,6 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
     payload = {
         "amount": req.amount_fcfa,
         "externalId": external_id,
-        "returnUrl": f"{origin_url}/payment-success",
-        "cancelUrl": f"{origin_url}/payment-failed",
         "metadata": {
             "user_id": str(current_user.id),
             "credits_to_add": req.credits_to_add,
@@ -1294,28 +1294,41 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
             "payment_method": req.payment_method or "kpay"
         }
     }
+    
+    if req.phoneNumber and req.provider:
+        payload["phoneNumber"] = req.phoneNumber
+        payload["provider"] = req.provider
+    else:
+        payload["returnUrl"] = f"{origin_url}/payment-success"
+        payload["cancelUrl"] = f"{origin_url}/payment-failed"
 
     try:
         response = requests.post(url, headers=headers, json=payload)
         
         if response.status_code == 201:
             data = response.json()
+            
+            # Track payment_init
+            try:
+                import json
+                evt = models.AnalyticsEvent(
+                    event_type="payment_init", 
+                    source=current_user.country or "direct", 
+                    user_id=current_user.id,
+                    extra=json.dumps({"amount_fcfa": req.amount_fcfa, "credits": req.credits_to_add})
+                )
+                db.add(evt)
+                db.commit()
+            except Exception as e:
+                print("Analytics payment_init error:", e)
+
             gateway_url = data.get("gatewayUrl")
             if gateway_url:
-                # Track payment_init
-                try:
-                    import json
-                    evt = models.AnalyticsEvent(
-                        event_type="payment_init", 
-                        source=current_user.country or "direct", 
-                        user_id=current_user.id,
-                        extra=json.dumps({"amount_fcfa": req.amount_fcfa, "credits": req.credits_to_add})
-                    )
-                    db.add(evt)
-                    db.commit()
-                except Exception as e:
-                    print("Analytics payment_init error:", e)
                 return {"checkout_url": gateway_url}
+            
+            # If USSD mode, return status PENDING
+            if data.get("status") == "PENDING":
+                return {"status": "PENDING", "externalId": external_id}
         
         print("KPay Init Error:", response.text)
         raise HTTPException(status_code=400, detail="Impossible d'initier le paiement avec KPay.")

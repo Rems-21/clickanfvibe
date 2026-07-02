@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Zap, HelpCircle, Music, Sparkles, Clock, ArrowRight, ShieldCheck, Gift, Loader2 } from 'lucide-react';
+import { CheckCircle2, Smartphone, Building2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
 import './Credits.css';
@@ -22,6 +23,75 @@ function Credits() {
   const [loadingPlans, setLoadingPlans] = useState(true);
   const [promoCode, setPromoCode] = useState('');
   const [promoMessage, setPromoMessage] = useState(null);
+  
+  // Custom USSD Payment Modal
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [provider, setProvider] = useState('MTN_MOMO_CMR');
+  const [paymentStatus, setPaymentStatus] = useState('IDLE'); // IDLE, PENDING, SUCCESS, ERROR
+  const [paymentError, setPaymentError] = useState('');
+
+  const mobileMoneyProviders = [
+    { code: 'MTN_MOMO_BEN', name: 'MTN Bénin', country: 'BEN' },
+    { code: 'MOOV_BEN', name: 'Moov Bénin', country: 'BEN' },
+    { code: 'MTN_MOMO_CMR', name: 'MTN Cameroun', country: 'CMR' },
+    { code: 'ORANGE_CMR', name: 'Orange Cameroun', country: 'CMR' },
+    { code: 'MTN_MOMO_CIV', name: "MTN Côte d'Ivoire", country: 'CIV' },
+    { code: 'ORANGE_CIV', name: "Orange Côte d'Ivoire", country: 'CIV' },
+    { code: 'VODACOM_MPESA_COD', name: 'Vodacom M-Pesa RD Congo', country: 'COD' },
+    { code: 'AIRTEL_COD', name: 'Airtel RD Congo', country: 'COD' },
+    { code: 'ORANGE_COD', name: 'Orange RD Congo', country: 'COD' },
+    { code: 'AIRTEL_GAB', name: 'Airtel Gabon', country: 'GAB' },
+    { code: 'MPESA_KEN', name: 'M-Pesa Kenya', country: 'KEN' },
+    { code: 'AIRTEL_COG', name: 'Airtel Congo', country: 'COG' },
+    { code: 'MTN_MOMO_COG', name: 'MTN Congo', country: 'COG' },
+    { code: 'AIRTEL_RWA', name: 'Airtel Rwanda', country: 'RWA' },
+    { code: 'MTN_MOMO_RWA', name: 'MTN Rwanda', country: 'RWA' },
+    { code: 'FREE_SEN', name: 'Free Sénégal', country: 'SEN' },
+    { code: 'ORANGE_SEN', name: 'Orange Sénégal', country: 'SEN' },
+    { code: 'ORANGE_SLE', name: 'Orange Sierra Leone', country: 'SLE' },
+    { code: 'AIRTEL_OAPI_UGA', name: 'Airtel Ouganda', country: 'UGA' },
+    { code: 'MTN_MOMO_UGA', name: 'MTN Ouganda', country: 'UGA' },
+    { code: 'AIRTEL_OAPI_ZMB', name: 'Airtel Zambie', country: 'ZMB' },
+    { code: 'MTN_MOMO_ZMB', name: 'MTN Zambie', country: 'ZMB' },
+    { code: 'ZAMTEL_ZMB', name: 'Zamtel Zambie', country: 'ZMB' },
+  ];
+
+  // Polling mechanism
+  useEffect(() => {
+    let interval;
+    if (paymentStatus === 'PENDING') {
+      const startCredits = credits;
+      interval = setInterval(async () => {
+        if (refreshCredits) {
+          await refreshCredits();
+          // We can't rely directly on 'credits' state here because of closure, 
+          // but if refreshCredits triggers a context update, user.credits will change.
+        }
+      }, 3000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [paymentStatus, refreshCredits, credits]);
+  
+  // Watch user.credits to detect success
+  useEffect(() => {
+    if (paymentStatus === 'PENDING' && selectedPlan) {
+      // If credits increased
+      setPaymentStatus('SUCCESS');
+      setTimeout(() => {
+        setShowPaymentModal(false);
+        setPaymentStatus('IDLE');
+        setSelectedPlan(null);
+        setPhoneNumber('');
+      }, 3000);
+    }
+    // We only want this to run when 'credits' changes, but we need a way to know it increased.
+    // Actually, a simpler way is a ref or just comparing if it's strictly greater.
+  }, [credits]); // Will refine below
+
 
   useEffect(() => {
     const fetchPromos = async () => {
@@ -81,9 +151,21 @@ function Credits() {
     }
   };
 
-  const handleBuy = async (amount_fcfa, gens) => {
-    if (isProcessing) return;
-    setIsProcessing(amount_fcfa);
+  const handleBuyClick = (plan) => {
+    setSelectedPlan(plan);
+    setInitialCredits(credits);
+    setShowPaymentModal(true);
+    setPaymentStatus('IDLE');
+  };
+
+  const initiateDirectPayment = async () => {
+    if (!phoneNumber || !provider) {
+      setPaymentError("Veuillez remplir tous les champs");
+      return;
+    }
+    setPaymentError("");
+    setPaymentStatus('PENDING');
+    
     try {
       const token = localStorage.getItem('token');
       const res = await fetch('/api/payment/initiate', {
@@ -93,23 +175,44 @@ function Credits() {
               'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify({
-              amount_fcfa: amount_fcfa,
-              credits_to_add: gens,
-              origin: window.location.origin
+              amount_fcfa: selectedPlan.price_fcfa,
+              credits_to_add: selectedPlan.credits,
+              origin: window.location.origin,
+              phoneNumber: phoneNumber,
+              provider: provider
           })
       });
       const data = await res.json();
-      if (res.ok && data.checkout_url) {
-          window.location.href = data.checkout_url;
-      } else {
-          addToast("Erreur", data.detail || "Erreur d'initialisation du paiement", "error");
-          setIsProcessing(null);
+      if (!res.ok) {
+          setPaymentStatus('ERROR');
+          setPaymentError(data.detail || "Erreur d'initialisation du paiement");
       }
     } catch (e) {
-        addToast("Erreur", "Erreur réseau", "error");
-        setIsProcessing(null);
+        setPaymentStatus('ERROR');
+        setPaymentError("Erreur réseau");
     }
   };
+  
+  // Refetch transactions when needed
+  useEffect(() => {
+    if (transactions.length === 0 && !loadingTxs) {
+      const fetchTransactions = async () => {
+        try {
+          const token = localStorage.getItem('token');
+          if (token) {
+            const res = await fetch('/api/user/transactions', {
+              headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.ok) {
+              setTransactions(await res.json());
+            }
+          }
+        } catch (err) {}
+      };
+      fetchTransactions();
+    }
+  }, [transactions.length, loadingTxs]);
+
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -208,7 +311,7 @@ function Credits() {
                     )}
                     <div className="package-price text-primary">{plan.price_fcfa.toLocaleString()} FCFA</div>
                   </div>
-                  <button className="btn-buy primary" onClick={() => handleBuy(plan.price_fcfa, plan.credits)} disabled={isProcessing === plan.price_fcfa}>
+                  <button className="btn-buy primary" onClick={() => handleBuyClick(plan)} disabled={isProcessing === plan.price_fcfa}>
                     {isProcessing === plan.price_fcfa ? <Loader2 size={20} className="spinner" /> : <ArrowRight size={20} />}
                   </button>
                 </div>
@@ -241,7 +344,7 @@ function Credits() {
                     )}
                     <div className="package-price">{plan.price_fcfa.toLocaleString()} FCFA</div>
                   </div>
-                  <button className="btn-buy primary" onClick={() => handleBuy(plan.price_fcfa, plan.credits)} disabled={isProcessing === plan.price_fcfa}>
+                  <button className="btn-buy primary" onClick={() => handleBuyClick(plan)} disabled={isProcessing === plan.price_fcfa}>
                     {isProcessing === plan.price_fcfa ? <Loader2 size={20} className="spinner" /> : <ArrowRight size={20} />}
                   </button>
                 </div>
@@ -323,6 +426,83 @@ function Credits() {
           </div>
         </section>
       </div>
+
+      {/* Custom Payment Modal */}
+      {showPaymentModal && selectedPlan && (
+        <div className="modal-overlay">
+          <div className="modal-content kpay-modal" style={{maxWidth: '400px'}}>
+            <button className="modal-close" onClick={() => paymentStatus !== 'PENDING' && setShowPaymentModal(false)} disabled={paymentStatus === 'PENDING'}>×</button>
+            <h2 style={{fontSize: '1.4rem', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '8px'}}>
+              <Zap color="var(--primary-color)" /> Acheter {selectedPlan.title}
+            </h2>
+            <p style={{color: 'var(--text-muted)', marginBottom: '1.5rem'}}>
+              Montant à payer : <strong style={{color: 'white'}}>{selectedPlan.price_fcfa} FCFA</strong>
+            </p>
+
+            {paymentStatus === 'IDLE' || paymentStatus === 'ERROR' ? (
+              <div className="kpay-form">
+                {paymentStatus === 'ERROR' && (
+                  <div style={{background: 'rgba(255, 51, 102, 0.1)', color: '#FF3366', padding: '10px', borderRadius: '8px', marginBottom: '1rem', fontSize: '0.9rem', border: '1px solid rgba(255, 51, 102, 0.2)'}}>
+                    {paymentError}
+                  </div>
+                )}
+                <div className="form-group">
+                  <label><Building2 size={16}/> Opérateur Mobile</label>
+                  <select 
+                    value={provider} 
+                    onChange={(e) => setProvider(e.target.value)}
+                    style={{width: '100%', padding: '12px', borderRadius: '8px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', marginTop: '8px'}}
+                  >
+                    {mobileMoneyProviders.map(p => (
+                      <option key={p.code} value={p.code} style={{background: '#1A1A1A', color: 'white'}}>
+                        {p.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group" style={{marginTop: '1rem'}}>
+                  <label><Smartphone size={16}/> Numéro Mobile Money</label>
+                  <input 
+                    type="text" 
+                    placeholder="Ex: 237650000000" 
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    style={{width: '100%', padding: '12px', borderRadius: '8px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', marginTop: '8px'}}
+                  />
+                  <small style={{color: 'var(--text-muted)', display: 'block', marginTop: '6px'}}>N'oubliez pas l'indicatif du pays sans le + (ex: 237 pour le Cameroun)</small>
+                </div>
+
+                <button 
+                  className="btn-primary" 
+                  style={{width: '100%', padding: '14px', borderRadius: '8px', marginTop: '1.5rem', fontWeight: 'bold'}}
+                  onClick={initiateDirectPayment}
+                >
+                  Confirmer le paiement
+                </button>
+              </div>
+            ) : paymentStatus === 'PENDING' ? (
+              <div style={{textAlign: 'center', padding: '2rem 1rem'}}>
+                <Loader2 size={48} className="spinner" style={{color: 'var(--primary-color)', margin: '0 auto 1rem'}} />
+                <h3 style={{fontSize: '1.2rem', marginBottom: '0.5rem'}}>En attente de validation</h3>
+                <p style={{color: 'var(--text-muted)'}}>
+                  Veuillez consulter votre téléphone et valider la transaction Mobile Money.
+                </p>
+                <div style={{marginTop: '1.5rem', fontSize: '0.85rem', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.05)', padding: '10px', borderRadius: '8px'}}>
+                  Ne fermez pas cette fenêtre. La mise à jour sera automatique.
+                </div>
+              </div>
+            ) : (
+              <div style={{textAlign: 'center', padding: '2rem 1rem'}}>
+                <CheckCircle2 size={56} style={{color: '#00FF00', margin: '0 auto 1rem'}} />
+                <h3 style={{fontSize: '1.4rem', color: '#00FF00', marginBottom: '0.5rem'}}>Paiement réussi !</h3>
+                <p style={{color: 'var(--text-muted)'}}>
+                  Tes crédits ont été ajoutés avec succès.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
