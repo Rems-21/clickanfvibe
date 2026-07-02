@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Bell, Zap, Music, Play, Pause, Heart, Compass, MoreVertical, Share2, Drum, Piano, Mic2, Church, Gift, Star, Flame, Users, ShieldCheck, Headphones, TrendingUp, CheckCircle2, ChevronDown, MessageSquare, Trophy, Check } from 'lucide-react';
+import { Bell, Zap, Music, Play, Pause, Heart, Compass, MoreVertical, Share2, Drum, Piano, Mic2, Church, Gift, Star, Flame, Users, ShieldCheck, Headphones, TrendingUp } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useAudio } from '../context/AudioContext';
 import './Home.css';
@@ -17,11 +17,6 @@ function Home() {
   const [timeLeft, setTimeLeft] = useState('');
   const [demoPlaying, setDemoPlaying] = useState(null);
   const demoRefs = useRef({});
-  const [openFaq, setOpenFaq] = useState(null);
-
-  const toggleFaq = (index) => {
-    setOpenFaq(openFaq === index ? null : index);
-  };
 
   const calculateTimeLeft = (endDateStr) => {
     if (!endDateStr) return null;
@@ -367,133 +362,7 @@ function Home() {
           </div>
         </section>
 
-        {/* HOW IT WORKS SECTION */}
-        <section className="how-it-works-section section-block">
-          <h3 className="section-title text-center">Comment ça marche ?</h3>
-          <p className="section-subtitle text-center">Crée ton hit en 3 étapes simples</p>
-          <div className="steps-grid">
-            <div className="step-card">
-              <div className="step-number">1</div>
-              <div className="step-icon"><MessageSquare size={32} color="#FF3366" /></div>
-              <h4>Décris ton idée</h4>
-              <p>Écris un petit texte, choisis le style (Afro, Rap...) et l'ambiance de ta musique.</p>
-            </div>
-            <div className="step-card">
-              <div className="step-number">2</div>
-              <div className="step-icon"><Zap size={32} color="#3b82f6" /></div>
-              <h4>L'IA compose</h4>
-              <p>En quelques secondes, l'intelligence artificielle génère l'instrumental et les paroles.</p>
-            </div>
-            <div className="step-card">
-              <div className="step-number">3</div>
-              <div className="step-icon"><Share2 size={32} color="#ec4899" /></div>
-              <h4>Partage ton Hit</h4>
-              <p>Télécharge ton morceau en haute qualité et fais-le écouter à tes amis !</p>
-            </div>
-          </div>
-        </section>
-
-        {/* FEATURES / BENEFITS */}
-        <section className="features-section section-block">
-           <h3 className="section-title text-center">Pourquoi utiliser Click & Vibe ?</h3>
-           <div className="features-grid">
-              <div className="feature-item">
-                <div className="feature-icon"><Star size={24} color="#FFB800" /></div>
-                <div>
-                  <h4>Qualité Studio</h4>
-                  <p>Des voix ultra-réalistes et des rythmiques parfaitement mixées.</p>
-                </div>
-              </div>
-              <div className="feature-item">
-                <div className="feature-icon"><Zap size={24} color="#3b82f6" /></div>
-                <div>
-                  <h4>Ultra Rapide</h4>
-                  <p>Ta chanson complète générée en moins de 2 minutes chrono.</p>
-                </div>
-              </div>
-              <div className="feature-item">
-                <div className="feature-icon"><Trophy size={24} color="#ec4899" /></div>
-                <div>
-                  <h4>Musique Unique</h4>
-                  <p>100% originale. Chaque génération crée une musique inédite.</p>
-                </div>
-              </div>
-              <div className="feature-item">
-                <div className="feature-icon"><ShieldCheck size={24} color="#10b981" /></div>
-                <div>
-                  <h4>Paiements Locaux</h4>
-                  <p>Achète des crédits facilement avec Mobile Money dans ton pays.</p>
-                </div>
-              </div>
-           </div>
-        </section>
-
-        {/* TESTIMONIALS */}
-        <section className="testimonials-section section-block">
-          <h3 className="section-title text-center">Ce qu'ils en pensent</h3>
-          <div className="horizontal-scroll" style={{ paddingBottom: '10px' }}>
-            <div className="testimonial-card">
-              <div className="stars"><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/></div>
-              <p className="testimonial-text">"Incroyable ! J'ai créé un beat afrobeat pour mon intro YouTube en 2 clics. La qualité est bluffante."</p>
-              <div className="testimonial-author">- Marc D.</div>
-            </div>
-            <div className="testimonial-card">
-              <div className="stars"><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/></div>
-              <p className="testimonial-text">"C'est la première fois que je trouve un outil IA qui comprend vraiment la vibe Amapiano. Je recommande !"</p>
-              <div className="testimonial-author">- Sarah T.</div>
-            </div>
-            <div className="testimonial-card">
-              <div className="stars"><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/></div>
-              <p className="testimonial-text">"Super pratique. J'ai généré une chanson d'anniversaire personnalisée pour ma mère, elle a adoré."</p>
-              <div className="testimonial-author">- Eric M.</div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section className="faq-section section-block">
-          <h3 className="section-title text-center">Questions fréquentes</h3>
-          <div className="faq-container">
-            <div className={`faq-item ${openFaq === 0 ? 'open' : ''}`} onClick={() => toggleFaq(0)}>
-              <div className="faq-question">
-                <h4>Puis-je monétiser la musique créée sur YouTube ou Spotify ?</h4>
-                <ChevronDown size={20} className="faq-icon" />
-              </div>
-              <div className="faq-answer">
-                <p>Oui ! Les chansons générées avec Click & Vibe vous appartiennent. Vous pouvez les utiliser librement pour vos vidéos YouTube, podcasts, ou même les distribuer sur les plateformes de streaming.</p>
-              </div>
-            </div>
-            <div className={`faq-item ${openFaq === 1 ? 'open' : ''}`} onClick={() => toggleFaq(1)}>
-              <div className="faq-question">
-                <h4>Quels sont les moyens de paiement acceptés ?</h4>
-                <ChevronDown size={20} className="faq-icon" />
-              </div>
-              <div className="faq-answer">
-                <p>Nous acceptons les paiements via Mobile Money (Orange, MTN, Wave, Moov...) dans plusieurs pays d'Afrique, ainsi que les paiements par carte bancaire ou PayPal.</p>
-              </div>
-            </div>
-            <div className={`faq-item ${openFaq === 2 ? 'open' : ''}`} onClick={() => toggleFaq(2)}>
-              <div className="faq-question">
-                <h4>Combien coûte la génération d'une chanson ?</h4>
-                <ChevronDown size={20} className="faq-icon" />
-              </div>
-              <div className="faq-answer">
-                <p>Chaque génération consomme 1 crédit (environ 150 FCFA selon votre pack). Des packs de crédits sont disponibles pour rendre le coût par chanson encore moins cher.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA FINAL */}
-        <section className="cta-final-section section-block" style={{ paddingBottom: '100px' }}>
-          <div className="cta-final-card glass-panel" style={{textAlign: 'center', padding: '40px 20px', borderRadius: '24px', background: 'linear-gradient(145deg, rgba(255, 51, 102, 0.1) 0%, rgba(153, 51, 255, 0.1) 100%)', border: '1px solid rgba(255, 255, 255, 0.1)'}}>
-            <h2 style={{fontSize: '1.8rem', marginBottom: '15px', color: 'white'}}>Prêt à créer le prochain hit ?</h2>
-            <p style={{color: 'var(--text-secondary)', marginBottom: '30px', maxWidth: '400px', margin: '0 auto 30px'}}>Rejoins des milliers de créateurs et donne vie à tes idées musicales dès aujourd'hui.</p>
-            <button className="btn-primary-gradient" onClick={() => navigate('/create')} style={{padding: '16px 32px', fontSize: '1.1rem', borderRadius: '30px'}}>
-              <Music size={20} style={{marginRight: '8px', verticalAlign: 'middle'}}/> Lancer la création
-            </button>
-          </div>
-        </section>
+        
       </div>
     </div>
   );
