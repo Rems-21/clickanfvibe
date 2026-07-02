@@ -443,48 +443,7 @@ function Onboarding() {
           </div>
         </div>
 
-        <div className="footer-trust-banner">
-          <div className="trust-item">
-            <ShieldCheck size={28} color="#C466FF"/>
-            <div>
-              <h5>Paiements 100% sécurisés</h5>
-              <p>Vos transactions sont protégées et chiffrées.</p>
-            </div>
-          </div>
-          <div className="trust-item">
-            <Zap size={28} color="#C466FF"/>
-            <div>
-              <h5>Livraison instantanée</h5>
-              <p>Le cadeau est envoyé en quelques secondes.</p>
-            </div>
-          </div>
-          <div className="trust-item">
-            <Headphones size={28} color="#C466FF"/>
-            <div>
-              <h5>Support réactif</h5>
-              <p>Nous répondons à toutes vos questions 7j/7.</p>
-            </div>
-          </div>
-          <div className="trust-item">
-            <Lock size={28} color="#C466FF"/>
-            <div>
-              <h5>Confidentialité garantie</h5>
-              <p>Vos données protégées et jamais partagées.</p>
-            </div>
-          </div>
-        </div>
 
-        <div className="footer-payments-section">
-          <p>Paiements disponibles</p>
-          <div className="payment-logos">
-            <span className="payment-logo mtn">MTN</span>
-            <span className="payment-logo orange">Orange Money</span>
-            <span className="payment-logo visa">VISA</span>
-            <span className="payment-logo mastercard">Mastercard</span>
-            <span className="payment-logo moov">Moov Money</span>
-          </div>
-        </div>
-        
         <div className="footer-bottom">
           <p>&copy; 2026 Click & Vibe. Tous droits réservés.</p>
         </div>
