@@ -11,7 +11,7 @@ function AdminCampaigns() {
   const [formData, setFormData] = useState({
     title: '',
     subject: '',
-    html_content: '<p>Bonjour {nom},</p>\\n\\n<p>Ceci est un message de relance.</p>\\n\\n<p>L\\'équipe Click & Vibe</p>',
+    html_content: "<p>Bonjour {nom},</p>\\n\\n<p>Ceci est un message de relance.</p>\\n\\n<p>L'équipe Click & Vibe</p>",
     target_audience: 'ALL'
   });
 
