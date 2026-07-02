@@ -1313,7 +1313,6 @@ def initiate_payment(req: PaymentInitiateRequest, request: Request, db: Session 
             
             # Track payment_init
             try:
-                import json
                 evt = models.AnalyticsEvent(
                     event_type="payment_init", 
                     source=req.provider or current_user.country or "direct", 

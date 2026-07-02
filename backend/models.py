@@ -45,7 +45,7 @@ class Music(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(255))
-    prompt = Column(String(255))
+    prompt = Column(Text)
     style = Column(String(255))
     mood = Column(String(255))
     duration_str = Column(String(255))

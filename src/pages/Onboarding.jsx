@@ -447,6 +447,52 @@ function Onboarding() {
         </div>
       </div>
 
+      <div className="landing-pricing-section">
+        <h2 className="landing-section-title text-center">Des tarifs <span className="gradient-text">simples et clairs</span></h2>
+        <p className="landing-section-subtitle text-center">Pas d'abonnement. Paie uniquement ce que tu crées par Mobile Money.</p>
+
+        <div className="pricing-cards-container">
+          <div className="pricing-card">
+            <div className="pricing-icon"><Music size={32} color="#C466FF" /></div>
+            <h3>1 Gen</h3>
+            <div className="price">1 250 <span>FCFA</span></div>
+            <ul className="pricing-features">
+              <li><Check size={16} color="#C466FF" /> 1 Chanson sur mesure</li>
+              <li><Check size={16} color="#C466FF" /> Téléchargement MP3</li>
+              <li><Check size={16} color="#C466FF" /> Génération des paroles</li>
+            </ul>
+            <button className="btn-outline-glow" style={{width: '100%', marginTop: 'auto'}} onClick={() => navigate(user ? '/home' : '/login')}>Essayer</button>
+          </div>
+
+          <div className="pricing-card popular">
+            <div className="popular-badge">Populaire</div>
+            <div className="pricing-icon"><Sparkles size={32} color="#FF3366" /></div>
+            <h3>3 Gens</h3>
+            <div className="price">3 200 <span>FCFA</span></div>
+            <div className="original-price">3 750 FCFA</div>
+            <ul className="pricing-features">
+              <li><Check size={16} color="#FF3366" /> 3 Chansons sur mesure</li>
+              <li><Check size={16} color="#FF3366" /> Téléchargement MP3 & Vidéo</li>
+              <li><Check size={16} color="#FF3366" /> Qualité haute définition</li>
+            </ul>
+            <button className="btn-primary" style={{width: '100%', marginTop: 'auto'}} onClick={() => navigate(user ? '/home' : '/login')}>Choisir ce pack</button>
+          </div>
+
+          <div className="pricing-card">
+            <div className="pricing-icon"><Zap size={32} color="#00BFFF" /></div>
+            <h3>10 Gens</h3>
+            <div className="price">9 000 <span>FCFA</span></div>
+            <div className="original-price">12 500 FCFA</div>
+            <ul className="pricing-features">
+              <li><Check size={16} color="#00BFFF" /> 10 Chansons sur mesure</li>
+              <li><Check size={16} color="#00BFFF" /> Génération ultra rapide</li>
+              <li><Check size={16} color="#00BFFF" /> Idéal pour les événements</li>
+            </ul>
+            <button className="btn-outline-glow" style={{width: '100%', marginTop: 'auto'}} onClick={() => navigate(user ? '/home' : '/login')}>Pack Créateur</button>
+          </div>
+        </div>
+      </div>
+
       <footer className="landing-footer-main">
         <div className="footer-content">
           <div className="footer-brand">
