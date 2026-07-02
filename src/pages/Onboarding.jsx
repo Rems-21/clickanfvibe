@@ -113,7 +113,7 @@ function Onboarding() {
         <h3 className="premium-section-title text-center">Une chanson pour <span className="text-gradient">chaque occasion</span></h3>
         <p className="landing-section-subtitle text-center">Quel que soit l'événement, Click &amp; Vibe crée un cadeau sonore qui touche les cœurs.</p>
         <div className="occasions-grid">
-          <div className="occasion-card" style={{backgroundImage:"url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=600')",backgroundSize:'cover',backgroundPosition:'center'}}>
+          <div className="occasion-card" style={{backgroundImage:"url('/images/occasion_birthday_1782996408671.png')",backgroundSize:'cover',backgroundPosition:'center'}}>
             <div className="occasion-overlay"></div>
             <div className="occasion-content">
               <div className="occasion-icon"><Star size={28} color="#FFB800" fill="#FFB800"/></div>
@@ -122,7 +122,7 @@ function Onboarding() {
               <span className="occasion-tag">Fête inoubliable</span>
             </div>
           </div>
-          <div className="occasion-card" style={{backgroundImage:"url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600')",backgroundSize:'cover',backgroundPosition:'center'}}>
+          <div className="occasion-card" style={{backgroundImage:"url('/images/occasion_wedding_1782996425486.png')",backgroundSize:'cover',backgroundPosition:'center'}}>
             <div className="occasion-overlay"></div>
             <div className="occasion-content">
               <div className="occasion-icon"><Heart size={28} color="#FF3366" fill="#FF3366"/></div>
@@ -131,7 +131,7 @@ function Onboarding() {
               <span className="occasion-tag">Premier danse</span>
             </div>
           </div>
-          <div className="occasion-card" style={{backgroundImage:"url('https://images.unsplash.com/photo-1474552226712-ac0f0961a954?q=80&w=600')",backgroundSize:'cover',backgroundPosition:'center'}}>
+          <div className="occasion-card" style={{backgroundImage:"url('/images/occasion_love_1782996433746.png')",backgroundSize:'cover',backgroundPosition:'center'}}>
             <div className="occasion-overlay"></div>
             <div className="occasion-content">
               <div className="occasion-icon"><Music size={28} color="#C466FF"/></div>
@@ -140,7 +140,7 @@ function Onboarding() {
               <span className="occasion-tag">Coup de cœur</span>
             </div>
           </div>
-          <div className="occasion-card" style={{backgroundImage:"url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=600')",backgroundSize:'cover',backgroundPosition:'center'}}>
+          <div className="occasion-card" style={{backgroundImage:"url('/images/occasion_congrats_1782996451185.png')",backgroundSize:'cover',backgroundPosition:'center'}}>
             <div className="occasion-overlay"></div>
             <div className="occasion-content">
               <div className="occasion-icon"><Trophy size={28} color="#FFB800"/></div>
@@ -149,7 +149,7 @@ function Onboarding() {
               <span className="occasion-tag">Succès &amp; Victoire</span>
             </div>
           </div>
-          <div className="occasion-card" style={{backgroundImage:"url('https://images.unsplash.com/photo-1513759565286-20e9c5fad06b?q=80&w=600')",backgroundSize:'cover',backgroundPosition:'center'}}>
+          <div className="occasion-card" style={{backgroundImage:"url('/images/occasion_memorial_1782996462673.png')",backgroundSize:'cover',backgroundPosition:'center'}}>
             <div className="occasion-overlay"></div>
             <div className="occasion-content">
               <div className="occasion-icon"><ShieldCheck size={28} color="#94a3b8"/></div>
@@ -284,7 +284,7 @@ function Onboarding() {
 
       <section className="premium-cta-section landing-section" style={{ paddingBottom: '80px' }}>
         <div className="cta-split-card">
-          <div className="cta-split-image" style={{backgroundImage:"url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800')"}}>
+          <div className="cta-split-image" style={{backgroundImage:"url('/images/cta_gift_1782996398218.png')"}}>
             <div className="cta-image-overlay"></div>
           </div>
           <div className="cta-split-content">
