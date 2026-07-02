@@ -20,7 +20,7 @@ logger.addHandler(log_handler)
 logger.info("Démarrage de l'API Click & Vibe")
 import random
 from email_service import send_verification_email, send_password_reset_email
-from fastapi import FastAPI, HTTPException, Depends, status, File, UploadFile
+from fastapi import FastAPI, HTTPException, Depends, status, File, UploadFile, BackgroundTasks
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
