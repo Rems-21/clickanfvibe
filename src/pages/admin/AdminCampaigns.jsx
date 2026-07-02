@@ -11,7 +11,7 @@ function AdminCampaigns() {
   const [formData, setFormData] = useState({
     title: '',
     subject: '',
-    html_content: "<p>Bonjour {nom},</p>\\n\\n<p>Ceci est un message de relance.</p>\\n\\n<p>L'équipe Click & Vibe</p>",
+    html_content: "Bonjour {nom},\\n\\nCeci est un message de relance.\\n\\nL'équipe Click & Vibe",
     target_audience: 'ALL'
   });
 
@@ -40,13 +40,16 @@ function AdminCampaigns() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
+      const finalContent = formData.html_content.includes('<') ? formData.html_content : formData.html_content.replace(/\\n/g, '<br/>');
+      const payload = { ...formData, html_content: finalContent };
+
       const res = await fetch('/api/admin/campaigns', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       });
       
       if (res.ok) {
@@ -141,7 +144,8 @@ function AdminCampaigns() {
                       <span className="badge-outline">
                         {c.target_audience === 'ALL' ? 'Tous' : 
                          c.target_audience === 'NO_CREDIT' ? 'Sans crédits' : 
-                         c.target_audience === 'PAYING' ? 'Clients payants' : 'Inactifs'}
+                         c.target_audience === 'PAYING' ? 'Clients payants' : 
+                         c.target_audience === 'PAYMENT_INITIATED' ? 'Paiement initié' : 'Inactifs'}
                       </span>
                     </td>
                     <td>{getStatusBadge(c.status)}</td>
@@ -183,6 +187,7 @@ function AdminCampaigns() {
                   onChange={(e) => setFormData({...formData, title: e.target.value})} 
                   placeholder="Ex: Relance inscription J+3"
                   required 
+                  style={{ background: '#222', border: '1px solid #444', color: '#fff' }}
                 />
               </div>
               
@@ -194,6 +199,7 @@ function AdminCampaigns() {
                   onChange={(e) => setFormData({...formData, subject: e.target.value})} 
                   placeholder="Ex: Il vous reste 5 générations offertes !"
                   required 
+                  style={{ background: '#222', border: '1px solid #444', color: '#fff' }}
                 />
               </div>
               
@@ -202,8 +208,10 @@ function AdminCampaigns() {
                 <select 
                   value={formData.target_audience} 
                   onChange={(e) => setFormData({...formData, target_audience: e.target.value})}
+                  style={{ background: '#222', border: '1px solid #444', color: '#fff' }}
                 >
                   <option value="ALL">Tous les utilisateurs</option>
+                  <option value="PAYMENT_INITIATED">Utilisateurs ayant déclenché un paiement</option>
                   <option value="NO_CREDIT">Utilisateurs avec 0 crédit</option>
                   <option value="PAYING">Utilisateurs ayant déjà payé</option>
                   <option value="NON_PAYING">Utilisateurs n'ayant jamais payé</option>
@@ -211,21 +219,21 @@ function AdminCampaigns() {
               </div>
 
               <div className="form-group">
-                <label>Contenu de l'email (HTML autorisé)</label>
+                <label>Contenu de l'email (HTML ou Texte simple)</label>
                 <p style={{fontSize: 12, color: 'var(--text-secondary)', marginBottom: 8}}>
-                  Variables disponibles : <code>{'{nom}'}</code>
+                  Variables disponibles : <code>{'{nom}'}</code>. Les sauts de ligne sont respectés automatiquement.
                 </p>
                 <textarea 
                   value={formData.html_content} 
                   onChange={(e) => setFormData({...formData, html_content: e.target.value})} 
                   rows="8"
-                  style={{ fontFamily: 'monospace' }}
+                  style={{ background: '#222', border: '1px solid #444', color: '#fff', resize: 'vertical' }}
                   required 
                 ></textarea>
               </div>
 
-              <div className="form-actions" style={{ marginTop: 20 }}>
-                <button type="button" className="btn-secondary" onClick={() => setShowModal(false)}>Annuler</button>
+              <div className="form-actions" style={{ marginTop: 25, display: 'flex', justifyContent: 'flex-end', gap: '15px' }}>
+                <button type="button" className="btn-secondary" onClick={() => setShowModal(false)} style={{ background: '#333', color: '#fff', border: 'none' }}>Annuler</button>
                 <button type="submit" className="btn-primary">Enregistrer le brouillon</button>
               </div>
             </form>

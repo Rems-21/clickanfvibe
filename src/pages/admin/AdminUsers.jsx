@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Star, PlusCircle, Check, Trash2 } from 'lucide-react';
+import { Search, Star, PlusCircle, Check, Trash2, Mail } from 'lucide-react';
 import Pagination from '../../components/Pagination';
+import SendEmailModal from '../../components/SendEmailModal';
 import { useAuth } from '../../context/AuthContext';
 import './AdminDashboard.css';
 
@@ -8,6 +9,8 @@ function AdminUsers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
   const { token } = useAuth();
@@ -176,6 +179,16 @@ function AdminUsers() {
                         {u.is_suspended ? 'Activer' : 'Suspendre'}
                       </button>
                       <button 
+                        onClick={() => {
+                          setSelectedUser(u);
+                          setEmailModalOpen(true);
+                        }}
+                        style={{ background: 'rgba(255, 51, 102, 0.1)', color: '#FF3366', border: '1px solid #FF3366', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px' }}
+                        title="Envoyer un email"
+                      >
+                        <Mail size={14} />
+                      </button>
+                      <button 
                         onClick={() => deleteUser(u.id)}
                         style={{ background: 'transparent', color: '#ef4444', border: '1px solid #ef4444', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px' }}
                         title="Supprimer définitivement"
@@ -197,6 +210,12 @@ function AdminUsers() {
         </>
         )}
       </div>
+
+      <SendEmailModal 
+        isOpen={emailModalOpen} 
+        onClose={() => setEmailModalOpen(false)} 
+        targetUser={selectedUser} 
+      />
     </div>
   );
 }

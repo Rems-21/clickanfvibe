@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { CreditCard, Search, ArrowDownCircle, CheckCircle, XCircle } from 'lucide-react';
+import { CreditCard, Search, ArrowDownCircle, CheckCircle, XCircle, Mail } from 'lucide-react';
+import SendEmailModal from '../../components/SendEmailModal';
 
 function AdminPaymentAttempts() {
   const [attempts, setAttempts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     fetchAttempts();
@@ -67,12 +70,13 @@ function AdminPaymentAttempts() {
               <th>Montant (FCFA)</th>
               <th>Crédits</th>
               <th>Statut</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {filteredAttempts.length === 0 ? (
               <tr>
-                <td colSpan="7" style={{ textAlign: 'center', padding: '20px' }}>Aucune tentative de paiement trouvée.</td>
+                <td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>Aucune tentative de paiement trouvée.</td>
               </tr>
             ) : (
               filteredAttempts.map((att) => {
@@ -99,8 +103,21 @@ function AdminPaymentAttempts() {
                         color: isRecent ? '#f97316' : 'var(--text-secondary)'
                       }}>
                         <ArrowDownCircle size={14} /> 
-                        Initié
+                        {isRecent ? 'Initié Récemment' : 'Initié'}
                       </span>
+                    </td>
+                    <td>
+                      <button 
+                        className="btn-icon" 
+                        title="Envoyer un email"
+                        onClick={() => {
+                          setSelectedUser({ email: att.user_email, name: att.user_name });
+                          setEmailModalOpen(true);
+                        }}
+                        style={{ padding: '6px', background: 'rgba(255, 51, 102, 0.1)', color: '#FF3366', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+                      >
+                        <Mail size={16} />
+                      </button>
                     </td>
                   </tr>
                 );
@@ -109,6 +126,12 @@ function AdminPaymentAttempts() {
           </tbody>
         </table>
       </div>
+      
+      <SendEmailModal 
+        isOpen={emailModalOpen} 
+        onClose={() => setEmailModalOpen(false)} 
+        targetUser={selectedUser} 
+      />
     </div>
   );
 }
