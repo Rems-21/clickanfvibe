@@ -64,6 +64,11 @@ function Onboarding() {
         </div>
         
         <div className="landing-image-wrapper">
+           <div className="sound-pulse-waves">
+             <div className="pulse-ring pulse-1"></div>
+             <div className="pulse-ring pulse-2"></div>
+             <div className="pulse-ring pulse-3"></div>
+           </div>
            <div className="landing-glow-circle"></div>
            
            <div className="hero-slider-container">
