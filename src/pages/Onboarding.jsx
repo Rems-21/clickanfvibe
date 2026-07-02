@@ -9,6 +9,7 @@ function Onboarding() {
   const { user } = useAuth();
   const [openFaq, setOpenFaq] = useState(null);
   const [slideIndex, setSlideIndex] = useState(0);
+  const [plans, setPlans] = useState([]);
 
   const testimonials = [
     { text: "J'ai offert une chanson à ma femme pour notre anniversaire de mariage. Elle a pleuré de joie ! Le paiement par Orange Money était instantané. Merci Click & Vibe !", name: "Kofi A.", role: "Cadeau de mariage · Accra", bg: "FF3366" },
@@ -31,6 +32,17 @@ function Onboarding() {
       setCurrentHeroSlide((prev) => (prev + 1) % heroImages.length);
     }, 4000);
     return () => clearInterval(slideInterval);
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/plans')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setPlans(data);
+        }
+      })
+      .catch(err => console.error(err));
   }, []);
 
   const eqBars = useMemo(() => Array.from({ length: 60 }).map(() => ({
@@ -452,44 +464,44 @@ function Onboarding() {
         <p className="landing-section-subtitle text-center">Pas d'abonnement. Paie uniquement ce que tu crées par Mobile Money.</p>
 
         <div className="pricing-cards-container">
-          <div className="pricing-card">
-            <div className="pricing-icon"><Music size={32} color="#C466FF" /></div>
-            <h3>1 Gen</h3>
-            <div className="price">1 250 <span>FCFA</span></div>
-            <ul className="pricing-features">
-              <li><Check size={16} color="#C466FF" /> 1 Chanson sur mesure</li>
-              <li><Check size={16} color="#C466FF" /> Téléchargement MP3</li>
-              <li><Check size={16} color="#C466FF" /> Génération des paroles</li>
-            </ul>
-            <button className="btn-outline-glow" style={{width: '100%', marginTop: 'auto'}} onClick={() => navigate(user ? '/home' : '/login')}>Essayer</button>
-          </div>
-
-          <div className="pricing-card popular">
-            <div className="popular-badge">Populaire</div>
-            <div className="pricing-icon"><Sparkles size={32} color="#FF3366" /></div>
-            <h3>3 Gens</h3>
-            <div className="price">3 200 <span>FCFA</span></div>
-            <div className="original-price">3 750 FCFA</div>
-            <ul className="pricing-features">
-              <li><Check size={16} color="#FF3366" /> 3 Chansons sur mesure</li>
-              <li><Check size={16} color="#FF3366" /> Téléchargement MP3 & Vidéo</li>
-              <li><Check size={16} color="#FF3366" /> Qualité haute définition</li>
-            </ul>
-            <button className="btn-primary" style={{width: '100%', marginTop: 'auto'}} onClick={() => navigate(user ? '/home' : '/login')}>Choisir ce pack</button>
-          </div>
-
-          <div className="pricing-card">
-            <div className="pricing-icon"><Zap size={32} color="#00BFFF" /></div>
-            <h3>10 Gens</h3>
-            <div className="price">9 000 <span>FCFA</span></div>
-            <div className="original-price">12 500 FCFA</div>
-            <ul className="pricing-features">
-              <li><Check size={16} color="#00BFFF" /> 10 Chansons sur mesure</li>
-              <li><Check size={16} color="#00BFFF" /> Génération ultra rapide</li>
-              <li><Check size={16} color="#00BFFF" /> Idéal pour les événements</li>
-            </ul>
-            <button className="btn-outline-glow" style={{width: '100%', marginTop: 'auto'}} onClick={() => navigate(user ? '/home' : '/login')}>Pack Créateur</button>
-          </div>
+          {plans.length > 0 ? plans.map(plan => {
+            const isPopular = plan.badge && plan.badge.toLowerCase().includes('populaire');
+            let hexColor = '#C466FF';
+            if (plan.icon_color === 'pink') hexColor = '#FF3366';
+            if (plan.icon_color === 'purple') hexColor = '#C466FF';
+            if (plan.icon_color === 'orange') hexColor = '#FFB800';
+            if (plan.icon_color === 'blue') hexColor = '#00BFFF';
+            
+            return (
+              <div key={plan.id} className={`pricing-card ${isPopular ? 'popular' : ''}`}>
+                {plan.badge && <div className="popular-badge" style={{background: hexColor}}>{plan.badge}</div>}
+                <div className="pricing-icon">
+                  {plan.credits <= 2 ? <Music size={32} color={hexColor} /> : 
+                   plan.credits <= 5 ? <Sparkles size={32} color={hexColor} /> : 
+                   <Zap size={32} color={hexColor} />}
+                </div>
+                <h3>{plan.title}</h3>
+                <div className="price">{plan.price_fcfa} <span>FCFA</span></div>
+                {plan.original_price_fcfa > plan.price_fcfa && (
+                  <div className="original-price">{plan.original_price_fcfa} FCFA</div>
+                )}
+                <ul className="pricing-features">
+                  <li><Check size={16} color={hexColor} /> {plan.credits} {plan.credits > 1 ? 'Chansons sur mesure' : 'Chanson sur mesure'}</li>
+                  <li><Check size={16} color={hexColor} /> Téléchargement MP3</li>
+                  {plan.description ? (
+                    <li><Check size={16} color={hexColor} /> {plan.description}</li>
+                  ) : (
+                    <li><Check size={16} color={hexColor} /> Génération des paroles</li>
+                  )}
+                </ul>
+                <button className={isPopular ? "btn-primary" : "btn-outline-glow"} style={{width: '100%', marginTop: 'auto'}} onClick={() => navigate(user ? '/home' : '/login')}>
+                  {isPopular ? 'Choisir ce pack' : 'Essayer'}
+                </button>
+              </div>
+            );
+          }) : (
+            <p className="text-center" style={{width: '100%'}}>Chargement des tarifs...</p>
+          )}
         </div>
       </div>
 
