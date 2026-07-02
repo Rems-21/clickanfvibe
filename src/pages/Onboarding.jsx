@@ -283,18 +283,21 @@ function Onboarding() {
       </section>
 
       <section className="premium-cta-section landing-section" style={{ paddingBottom: '80px' }}>
-        <div className="premium-cta-card with-bg" style={{backgroundImage:"linear-gradient(rgba(5,5,10,0.82), rgba(15,23,42,0.97)), url('https://images.unsplash.com/photo-1493225457124-a1a2a5f5cb46?q=80&w=1400')", backgroundSize:"cover", backgroundPosition:"center"}}>
-          <div className="cta-badge"><Trophy size={16}/> Rejoignez 10 000+ artistes</div>
-          <h2>Prêt à lancer votre carrière ?</h2>
-          <p>Le futur de la musique africaine est entre vos mains.<br/>Commencez gratuitement dès aujourd'hui.</p>
-          <div className="cta-buttons">
-            <button className="btn-premium-action" onClick={() => navigate('/home')}><Sparkles size={18}/> Créer un cadeau musical</button>
-            <button className="btn-premium-secondary" onClick={() => navigate('/login')}>Se connecter →</button>
+        <div className="cta-split-card">
+          <div className="cta-split-image" style={{backgroundImage:"url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800')"}}>
+            <div className="cta-image-overlay"></div>
           </div>
-          <div className="cta-trust">
-            <span>✓ Sans carte bancaire</span>
-            <span>✓ Mobile Money accepté</span>
-            <span>✓ 100% vos droits</span>
+          <div className="cta-split-content">
+            <div className="cta-badge"><Heart size={16} fill="#FF3366" color="#FF3366" style={{marginRight: '6px'}}/> Prêt à surprendre ?</div>
+            <h2>Offrez une émotion inoubliable</h2>
+            <p>Le meilleur cadeau n'est pas matériel, c'est une chanson unique qui raconte votre histoire.<br/>Créez-la en quelques clics.</p>
+            <div className="cta-buttons">
+              <button className="btn-premium-action" onClick={() => navigate('/home')}><Sparkles size={18}/> Créer un cadeau musical</button>
+            </div>
+            <div className="cta-trust">
+              <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17l-5-5"></path></svg> Sans carte bancaire</span>
+              <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17l-5-5"></path></svg> Mobile Money accepté</span>
+            </div>
           </div>
         </div>
       </section>
@@ -306,7 +309,7 @@ function Onboarding() {
           <img className="avatar" src="https://ui-avatars.com/api/?name=S&background=0ea5e9&color=fff" alt="User" />
           <img className="avatar" src="https://ui-avatars.com/api/?name=A&background=FF3366&color=fff" alt="User" />
         </div>
-        <div className="footer-text"><Heart size={16} color="#FF3366" fill="#FF3366"/> Plus de 5 000 cadeaux musicaux offerts à travers l'Afrique</div>
+        <div className="footer-text"><Heart size={16} color="#FF3366" fill="#FF3366"/> Plus de 1 000 cadeaux musicaux offerts à travers l'Afrique</div>
       </div>
     </div>
   );
