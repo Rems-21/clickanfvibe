@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Music, Sparkles, Zap, Settings, Lock, Heart, MessageSquare, Share2, Star, Trophy, ShieldCheck, ChevronDown } from 'lucide-react';
+import { Music, Sparkles, Zap, Settings, Lock, Heart, MessageSquare, Share2, Star, Trophy, ShieldCheck, ChevronDown, Globe, Smartphone, Users, Mic2, Headphones, ArrowRight, MapPin } from 'lucide-react';
 import './Onboarding.css';
 
 function Onboarding() {
   const navigate = useNavigate();
   const [openFaq, setOpenFaq] = useState(null);
+  const [slideIndex, setSlideIndex] = useState(0);
+
+  const testimonials = [
+    { text: "Incroyable ! J'ai créé un beat afrobeat pour mon intro YouTube en 2 clics. Le paiement par Orange Money a été instantané. Je recommande à 100% !", name: "Marc D.", role: "Créateur de contenu · Dakar", bg: "FF3366" },
+    { text: "C'est la première fois que je trouve un outil IA qui comprend vraiment la vibe Amapiano. Je recommande !", name: "Sarah T.", role: "Artiste indépendante · Abidjan", bg: "9933FF" },
+    { text: "Super pratique ! Mes sons sont uniques et la qualité studio est bluffante. Le support est aussi très réactif.", name: "Eric M.", role: "Producteur · Douala", bg: "0ea5e9" },
+    { text: "J'utilise Click & Vibe pour tous mes projets. La génération est ultra rapide et le résultat professionnel.", name: "Binta K.", role: "Influenceuse · Bamako", bg: "c084fc" },
+  ];
 
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -93,7 +101,7 @@ function Onboarding() {
                 <span className="title-count pink">10</span>
               </div>
               <div className="pills-grid">
-                {['Bénin','Burkina Faso','Côte d\'Ivoire','Gambie','Guinée','Mali','Sénégal','Togo'].map((c,i) => (
+                {['Bénin','Burkina Faso','Côte d\'Ivoire','Gambie','Guinée','Mali','Sénégal','Togo','Niger','Mauritanie'].map((c,i) => (
                   <div key={i} className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> {c}</div>
                 ))}
               </div>
@@ -101,10 +109,10 @@ function Onboarding() {
             <div className="region-block center-region">
               <div className="region-header-title">
                 <span className="title-text">AFRIQUE CENTRALE</span>
-                <span className="title-count dark">5</span>
+                <span className="title-count dark">4</span>
               </div>
               <div className="pills-grid">
-                {['Cameroun','Congo Brazza','Gabon','R.D.C','Tchad'].map((c,i) => (
+                {['Cameroun','Congo Brazza','Gabon','R.D.C'].map((c,i) => (
                   <div key={i} className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> {c}</div>
                 ))}
               </div>
@@ -122,13 +130,13 @@ function Onboarding() {
           {['Orange Money','MTN MoMo','Wave','Moov Money','Airtel Money','Free Money','Togocel','Expresso','YAS','Uba'].concat(
            ['Orange Money','MTN MoMo','Wave','Moov Money','Airtel Money','Free Money','Togocel','Expresso','YAS','Uba']
           ).map((op, i) => (
-            <span key={i} className="op-pill">📱 {op}</span>
+            <span key={i} className="op-pill">{op}</span>
           ))}
         </div>
       </div>
 
       <section className="how-it-works-section landing-section">
-        <div className="section-label-pill"><Sparkles size={14}/> Comment ça marche</div>
+        <div className="section-label-pill"><Zap size={14}/> Comment ça marche</div>
         <h3 className="premium-section-title text-center">De l'idée au <span className="text-gradient">hit en 3 étapes</span></h3>
         <div className="how-steps">
           <div className="how-step">
@@ -162,17 +170,17 @@ function Onboarding() {
       </section>
 
       <div className="stats-strip">
-        <div className="stat-item"><span className="stat-num">10 000+</span><span className="stat-desc">Chansons créées</span></div>
+        <div className="stat-item"><span className="stat-num">5 000+</span><span className="stat-desc">Chansons créées</span></div>
         <div className="stat-divider"></div>
-        <div className="stat-item"><span className="stat-num">15</span><span className="stat-desc">Pays couverts</span></div>
+        <div className="stat-item"><span className="stat-num">12</span><span className="stat-desc">Pays couverts</span></div>
         <div className="stat-divider"></div>
-        <div className="stat-item"><span className="stat-num">14+</span><span className="stat-desc">Opérateurs Mobile</span></div>
+        <div className="stat-item"><span className="stat-num">23</span><span className="stat-desc">Opérateurs Mobile Money</span></div>
         <div className="stat-divider"></div>
         <div className="stat-item"><span className="stat-num">4.9 ⭐</span><span className="stat-desc">Note moyenne</span></div>
       </div>
 
       <section className="premium-testimonials-section landing-section">
-        <div className="section-label-pill"><Heart size={14}/> Témoignages</div>
+        <div className="section-label-pill"><Star size={14}/> Témoignages</div>
         <h3 className="premium-section-title text-center">Ce qu'ils en pensent</h3>
         <div className="testimonials-grid">
           <div className="p-testimonial-card featured">
@@ -247,7 +255,7 @@ function Onboarding() {
           <img className="avatar" src="https://ui-avatars.com/api/?name=S&background=0ea5e9&color=fff" alt="User" />
           <img className="avatar" src="https://ui-avatars.com/api/?name=A&background=FF3366&color=fff" alt="User" />
         </div>
-        <div className="footer-text"><Heart size={16} color="#FF3366" fill="#FF3366"/> Plus de 10 000 chansons créées par notre communauté</div>
+        <div className="footer-text"><Heart size={16} color="#FF3366" fill="#FF3366"/> Plus de 5 000 chansons créées par notre communauté</div>
       </div>
     </div>
   );
