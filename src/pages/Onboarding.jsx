@@ -49,17 +49,20 @@ function Onboarding() {
 
   return (
     <div className="landing-container">
-      {/* Global background floating notes */}
-      <div className="global-floating-notes">
-        {floatingNotes.map((note, i) => (
-          <Music key={i} className="floating-note" style={{
-            left: `${note.left}%`,
-            animationDelay: `${note.delay}s`,
-            animationDuration: `${note.duration}s`,
-            width: `${note.size}px`,
-            height: `${note.size}px`
-          }} />
-        ))}
+      {/* Global background sound waves */}
+      <div className="global-sound-waves-bg">
+        <div className="equalizer-container">
+          {eqBars.map((bar, i) => (
+            <div key={i} className="eq-bar" style={{
+              '--delay': `${bar.delay}s`,
+              '--height': `${bar.height}%`
+            }}></div>
+          ))}
+        </div>
+        <svg className="sine-wave-svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+          <path className="sine-wave-path" d="M0,50 Q125,0 250,50 T500,50 T750,50 T1000,50" fill="none" />
+          <path className="sine-wave-path delay-1" d="M0,50 Q125,100 250,50 T500,50 T750,50 T1000,50" fill="none" />
+        </svg>
       </div>
 
       <div className="landing-topbar">
@@ -78,19 +81,16 @@ function Onboarding() {
       </div>
 
       <div className="landing-hero">
-        <div className="hero-sound-waves-bg">
-          <div className="equalizer-container">
-            {eqBars.map((bar, i) => (
-              <div key={i} className="eq-bar" style={{
-                '--delay': `${bar.delay}s`,
-                '--height': `${bar.height}%`
-              }}></div>
-            ))}
-          </div>
-          <svg className="sine-wave-svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
-            <path className="sine-wave-path" d="M0,50 Q125,0 250,50 T500,50 T750,50 T1000,50" fill="none" />
-            <path className="sine-wave-path delay-1" d="M0,50 Q125,100 250,50 T500,50 T750,50 T1000,50" fill="none" />
-          </svg>
+        <div className="hero-floating-notes">
+          {floatingNotes.map((note, i) => (
+            <Music key={i} className="floating-note" style={{
+              left: `${note.left}%`,
+              animationDelay: `${note.delay}s`,
+              animationDuration: `${note.duration}s`,
+              width: `${note.size}px`,
+              height: `${note.size}px`
+            }} />
+          ))}
         </div>
 
         <div className="landing-content">
