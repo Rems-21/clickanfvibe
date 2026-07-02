@@ -631,43 +631,182 @@
 }
 
 .legal-link:hover {
-  color: #C466FF;
+.landing-social-proof-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(10, 5, 20, 0.95);
+  border: 1px solid rgba(196, 102, 255, 0.3);
+  border-radius: 30px;
+  padding: 30px 40px;
+  max-width: 1100px;
+  margin: 60px auto;
+  box-shadow: 0 10px 40px rgba(196, 102, 255, 0.15), inset 0 0 20px rgba(196, 102, 255, 0.05);
+  position: relative;
+  z-index: 10;
+  gap: 20px;
 }
 
-.landing-social-proof {
+.social-proof-avatars-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.floating-note {
+  position: absolute;
+  animation: float 3s ease-in-out infinite;
+  opacity: 0.8;
+}
+.note-1 { top: -20px; left: 0px; animation-delay: 0s; }
+.note-2 { top: 40px; right: -10px; animation-delay: 1s; }
+.note-3 { top: -10px; right: 20px; animation-delay: 2s; }
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+.social-avatars-glow {
+  display: flex;
+  align-items: center;
+}
+
+.avatar-glow {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 2px solid #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  padding: 30px 20px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #fff;
+  margin-left: -15px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
   position: relative;
-  z-index: 10;
+  z-index: 2;
+}
+.avatar-glow:first-child { margin-left: 0; z-index: 5; }
+.avatar-glow:nth-child(2) { z-index: 4; }
+.avatar-glow:nth-child(3) { z-index: 3; }
+
+.social-proof-divider {
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.2), rgba(255,255,255,0));
 }
 
-.avatars {
-  display: flex;
-}
-
-.avatar {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 2px solid #05050A;
-  background: #333;
-  margin-left: -8px;
-}
-.avatar:first-child { margin-left: 0; }
-
-.footer-text {
-  font-size: 12px;
-  color: #A0A0B0;
+.social-proof-text-section {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 20px;
 }
+
+.heart-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.5));
+}
+
+.social-proof-main-text h2 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.gradient-text-blue-pink {
+  background: linear-gradient(to right, #FF1493, #8A2BE2, #00BFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.social-proof-main-text p {
+  font-size: 16px;
+  color: #A0A0B0;
+  margin: 5px 0 0 0;
+}
+
+.underline-glow {
+  color: #fff;
+  position: relative;
+  display: inline-block;
+}
+.underline-glow::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, #FF1493, #8A2BE2);
+  border-radius: 2px;
+  box-shadow: 0 0 10px #FF1493;
+}
+
+.social-proof-features-section {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.proof-feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.proof-icon-ring {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid rgba(196, 102, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(196, 102, 255, 0.05);
+  box-shadow: inset 0 0 15px rgba(196, 102, 255, 0.1);
+}
+
+.proof-feature-text h4 {
+  font-size: 13px;
+  color: #fff;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.proof-feature-text p {
+  font-size: 11px;
+  color: #A0A0B0;
+  margin: 0;
+}
+
+
 
 /* Responsive adjustments */
 @media (max-width: 1024px) {
+  .landing-social-proof-banner {
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px;
+  }
+  .social-proof-divider {
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.2), rgba(255,255,255,0));
+  }
+  .social-proof-features-section {
+    flex-direction: column;
+    gap: 20px;
+  }
   .landing-image-wrapper {
     width: 55%;
     right: -5%;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Music, Sparkles, Zap, Settings, Lock, Heart, MessageSquare, Share2, Star, Trophy, ShieldCheck, ChevronDown, Globe, Smartphone, Users, Mic2, Headphones, ArrowRight, MapPin, Send, Mail, ChevronRight, Phone } from 'lucide-react';
+import { Music, Sparkles, Zap, Settings, Lock, Heart, MessageSquare, Share2, Star, Trophy, ShieldCheck, ChevronDown, Globe, Smartphone, Users, Mic2, Headphones, ArrowRight, MapPin, Send, Mail, ChevronRight, Phone, Gift } from 'lucide-react';
 import './Onboarding.css';
 
 function Onboarding() {
@@ -387,14 +387,64 @@ function Onboarding() {
         </div>
       </section>
 
-      <div className="landing-social-proof">
-        <div className="avatars">
-          <img className="avatar" src="https://ui-avatars.com/api/?name=J&background=FF3366&color=fff" alt="User" />
-          <img className="avatar" src="https://ui-avatars.com/api/?name=M&background=9933FF&color=fff" alt="User" />
-          <img className="avatar" src="https://ui-avatars.com/api/?name=S&background=0ea5e9&color=fff" alt="User" />
-          <img className="avatar" src="https://ui-avatars.com/api/?name=A&background=FF3366&color=fff" alt="User" />
+      <div className="landing-social-proof-banner">
+        <div className="social-proof-avatars-section">
+          <Music size={16} color="#FF3366" className="floating-note note-1" />
+          <Music size={12} color="#C466FF" className="floating-note note-2" />
+          <Music size={20} color="#00BFFF" className="floating-note note-3" />
+          <div className="social-avatars-glow">
+            <div className="avatar-glow" style={{background: 'linear-gradient(135deg, #FF1493, #FF3366)'}}>I</div>
+            <div className="avatar-glow" style={{background: 'linear-gradient(135deg, #8A2BE2, #C466FF)'}}>M</div>
+            <div className="avatar-glow" style={{background: 'linear-gradient(135deg, #00BFFF, #0ea5e9)'}}>S</div>
+            <div className="avatar-glow" style={{background: 'linear-gradient(135deg, #FF1493, #FF3366)'}}>A</div>
+          </div>
         </div>
-        <div className="footer-text"><Heart size={16} color="#FF3366" fill="#FF3366"/> Plus de 5 000 cadeaux musicaux offerts à travers l'Afrique</div>
+
+        <div className="social-proof-divider"></div>
+
+        <div className="social-proof-text-section">
+          <div className="heart-icon-wrapper">
+            <Heart size={42} color="#FF3366" fill="url(#heart-gradient-social)" stroke="none" />
+            <svg width="0" height="0">
+              <linearGradient id="heart-gradient-social" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop stopColor="#FF1493" offset="0%" />
+                <stop stopColor="#8A2BE2" offset="100%" />
+              </linearGradient>
+            </svg>
+          </div>
+          <div className="social-proof-main-text">
+            <h2>Plus de <span className="gradient-text-blue-pink">5 000</span><br/>cadeaux musicaux</h2>
+            <p>offerts à travers <span className="underline-glow">l'Afrique</span></p>
+          </div>
+        </div>
+
+        <div className="social-proof-divider"></div>
+
+        <div className="social-proof-features-section">
+          <div className="proof-feature">
+            <div className="proof-icon-ring"><Gift size={24} color="#FF1493" /></div>
+            <div className="proof-feature-text">
+              <h4>Des cadeaux uniques</h4>
+              <p>Pour chaque occasion</p>
+            </div>
+          </div>
+          <div className="proof-feature">
+            <div className="proof-icon-ring"><Music size={24} color="#8A2BE2" /></div>
+            <div className="proof-feature-text">
+              <h4>Personnalisés par IA</h4>
+              <p>Créés avec émotion</p>
+            </div>
+          </div>
+          <div className="proof-feature">
+            <div className="proof-icon-ring">
+              <Globe size={24} color="#00BFFF" />
+            </div>
+            <div className="proof-feature-text">
+              <h4>Fait en Afrique</h4>
+              <p>Pour le monde entier</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <footer className="landing-footer-main">
