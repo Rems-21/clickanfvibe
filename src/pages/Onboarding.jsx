@@ -144,8 +144,8 @@ function Onboarding() {
               <div className="stat-text"><strong>15</strong> Pays couverts</div>
             </div>
             <div className="stat-badge">
-              <div className="stat-icon-wrapper pink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
-              <div className="stat-text"><strong>14+</strong> Opérateurs</div>
+              <div className="stat-icon-wrapper pink"><Smartphone size={16} color="currentColor"/></div>
+              <div className="stat-text"><strong>5</strong> Opérateurs Mobile</div>
             </div>
           </div>
         </div>
@@ -180,7 +180,7 @@ function Onboarding() {
               </div>
               <div className="region-footer">
                 <span className="footer-label">Total opérateurs</span>
-                <span className="footer-value">13+</span>
+                <span className="footer-value">5</span>
               </div>
             </div>
           </div>
@@ -189,10 +189,8 @@ function Onboarding() {
 
       <div className="operators-banner">
         <div className="operators-track">
-          {['Orange Money','MTN MoMo','Wave','Moov Money','Airtel Money','Free Money','Togocel','Expresso','YAS','Uba'].concat(
-           ['Orange Money','MTN MoMo','Wave','Moov Money','Airtel Money','Free Money','Togocel','Expresso','YAS','Uba']
-          ).map((op, i) => (
-            <span key={i} className="op-pill">{op}</span>
+          {['Orange Money','MTN MoMo','Moov Money','Wave','Airtel Money','Orange Money','MTN MoMo','Moov Money','Wave','Airtel Money'].map((op, i) => (
+            <span key={i} className="op-pill"><Smartphone size={12}/> {op}</span>
           ))}
         </div>
       </div>
@@ -232,13 +230,13 @@ function Onboarding() {
       </section>
 
       <div className="stats-strip">
-        <div className="stat-item"><span className="stat-num">5 000+</span><span className="stat-desc">Cadeaux créés</span></div>
+        <div className="stat-item"><span className="stat-num">1 000+</span><span className="stat-desc">Cadeaux créés</span></div>
         <div className="stat-divider"></div>
-        <div className="stat-item"><span className="stat-num">12</span><span className="stat-desc">Pays couverts</span></div>
+        <div className="stat-item"><span className="stat-num">14</span><span className="stat-desc">Pays couverts</span></div>
         <div className="stat-divider"></div>
-        <div className="stat-item"><span className="stat-num">23</span><span className="stat-desc">Opérateurs Mobile Money</span></div>
+        <div className="stat-item"><span className="stat-num">5</span><span className="stat-desc">Opérateurs Mobile Money</span></div>
         <div className="stat-divider"></div>
-        <div className="stat-item"><span className="stat-num">4.9 ⭐</span><span className="stat-desc">Note moyenne</span></div>
+        <div className="stat-item"><span className="stat-num">4.9 / 5</span><span className="stat-desc">Note moyenne</span></div>
       </div>
 
       <section className="premium-testimonials-section landing-section">
