@@ -64,24 +64,21 @@ function Onboarding() {
          </div>
       </div>
 
-            {/* PREMIUM PAYMENT SECTION */}
       <section className="premium-payment-section landing-section">
         <div className="premium-header text-center">
           <h2 className="premium-section-title">Créez et payez <span className="text-gradient">sans carte bancaire</span></h2>
           <p className="landing-section-subtitle text-center">Click & Vibe intègre les paiements Mobile Money. Une seule plateforme pour créer vos hits et payer facilement dans 15 pays africains.</p>
-          
           <div className="premium-stats-badges">
             <div className="stat-badge">
-              <div className="stat-icon-wrapper pink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
+              <div className="stat-icon-wrapper pink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
               <div className="stat-text"><strong>15</strong> Pays couverts</div>
             </div>
             <div className="stat-badge">
-              <div className="stat-icon-wrapper pink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
+              <div className="stat-icon-wrapper pink"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
               <div className="stat-text"><strong>14+</strong> Opérateurs</div>
             </div>
           </div>
         </div>
-
         <div className="premium-map-card">
           <div className="map-card-header">
             <div className="region-selector">
@@ -89,38 +86,27 @@ function Onboarding() {
               <span className="region-radio"><span className="radio-dot green"></span> Centre</span>
             </div>
           </div>
-          
           <div className="map-regions-container">
-            {/* OUEST */}
             <div className="region-block">
               <div className="region-header-title">
-                <span className="title-text">AFRIQUE DE L'OUEST</span> 
+                <span className="title-text">AFRIQUE DE L'OUEST</span>
                 <span className="title-count pink">10</span>
               </div>
               <div className="pills-grid">
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Bénin <span className="pill-count">4</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Burkina Faso <span className="pill-count">3</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Côte d'Ivoire <span className="pill-count">4</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Gambie <span className="pill-count">1</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Guinée <span className="pill-count">2</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Mali <span className="pill-count">2</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Sénégal <span className="pill-count">4</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Togo <span className="pill-count">2</span></div>
+                {['Bénin','Burkina Faso','Côte d\'Ivoire','Gambie','Guinée','Mali','Sénégal','Togo'].map((c,i) => (
+                  <div key={i} className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF3366" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> {c}</div>
+                ))}
               </div>
             </div>
-            
-            {/* CENTRE */}
             <div className="region-block center-region">
               <div className="region-header-title">
-                <span className="title-text">AFRIQUE CENTRALE</span> 
+                <span className="title-text">AFRIQUE CENTRALE</span>
                 <span className="title-count dark">5</span>
               </div>
               <div className="pills-grid">
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Cameroun <span className="pill-count dark">2</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Congo Brazza <span className="pill-count dark">2</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Gabon <span className="pill-count dark">2</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> R.D.C <span className="pill-count dark">5</span></div>
-                <div className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Tchad <span className="pill-count dark">2</span></div>
+                {['Cameroun','Congo Brazza','Gabon','R.D.C','Tchad'].map((c,i) => (
+                  <div key={i} className="country-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> {c}</div>
+                ))}
               </div>
               <div className="region-footer">
                 <span className="footer-label">Total opérateurs</span>
@@ -131,121 +117,135 @@ function Onboarding() {
         </div>
       </section>
 
-      {/* HOW IT WORKS - REDESIGNED WITH IMAGES */}
-      <section className="premium-features-section landing-section">
-        <h3 className="premium-section-title text-center">La création musicale <span className="text-accent-pink">réinventée</span></h3>
-        <p className="landing-section-subtitle text-center" style={{marginBottom: "50px"}}>3 étapes simples pour donner vie à tes idées.</p>
-        <div className="premium-cards-grid">
-          <div className="premium-card with-image">
-            <div className="p-card-image" style={{backgroundImage: "url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=600')", backgroundSize: "cover", backgroundPosition: "center"}}></div>
-            <div className="p-card-content">
-              <div className="p-card-icon"><MessageSquare size={24} /></div>
-              <h4>1. Votre idée</h4>
-              <p>Un simple texte suffit pour donner la direction. Vous maîtrisez le style, l'ambiance et le thème de A à Z.</p>
+      <div className="operators-banner">
+        <div className="operators-track">
+          {['Orange Money','MTN MoMo','Wave','Moov Money','Airtel Money','Free Money','Togocel','Expresso','YAS','Uba'].concat(
+           ['Orange Money','MTN MoMo','Wave','Moov Money','Airtel Money','Free Money','Togocel','Expresso','YAS','Uba']
+          ).map((op, i) => (
+            <span key={i} className="op-pill">📱 {op}</span>
+          ))}
+        </div>
+      </div>
+
+      <section className="how-it-works-section landing-section">
+        <div className="section-label-pill"><Sparkles size={14}/> Comment ça marche</div>
+        <h3 className="premium-section-title text-center">De l'idée au <span className="text-gradient">hit en 3 étapes</span></h3>
+        <div className="how-steps">
+          <div className="how-step">
+            <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=700')"}}></div>
+            <div className="how-step-content">
+              <div className="step-num">01</div>
+              <h4>Décrivez votre idée</h4>
+              <p>Un simple texte suffit. Dites-nous le style, l'ambiance, les paroles ou l'émotion que vous souhaitez transmettre.</p>
+              <div className="step-tags"><span>Afrobeat</span><span>Coupé-Décalé</span><span>Amapiano</span><span>Ndombolo</span></div>
             </div>
           </div>
-          <div className="premium-card with-image">
-            <div className="p-card-image" style={{backgroundImage: "url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600')", backgroundSize: "cover", backgroundPosition: "center"}}></div>
-            <div className="p-card-content">
-              <div className="p-card-icon"><Zap size={24} /></div>
-              <h4>2. Notre IA</h4>
-              <p>Notre moteur intelligent génère une composition studio complète : beat percutant, voix réalistes et mixage pro.</p>
+          <div className="how-step reverse">
+            <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=700')"}}></div>
+            <div className="how-step-content">
+              <div className="step-num">02</div>
+              <h4>Notre IA compose</h4>
+              <p>Notre moteur analyse votre demande et crée une composition studio complète : beat, voix, harmonie et mixage professionnel.</p>
+              <div className="step-tags"><span>⚡ En quelques secondes</span><span>🎚 Qualité Studio</span></div>
             </div>
           </div>
-          <div className="premium-card with-image">
-            <div className="p-card-image" style={{backgroundImage: "url('https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=600')", backgroundSize: "cover", backgroundPosition: "center"}}></div>
-            <div className="p-card-content">
-              <div className="p-card-icon"><Share2 size={24} /></div>
-              <h4>3. Votre Hit</h4>
-              <p>Exportez votre chanson et monétisez-la sur Spotify, Apple Music ou YouTube sans restriction de droits.</p>
+          <div className="how-step">
+            <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=700')"}}></div>
+            <div className="how-step-content">
+              <div className="step-num">03</div>
+              <h4>Exportez et monétisez</h4>
+              <p>Téléchargez votre titre en haute qualité. Vos droits, votre musique. Publiez sur les plateformes mondiales.</p>
+              <div className="step-tags"><span>Spotify</span><span>Apple Music</span><span>YouTube</span></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* TESTIMONIALS - REDESIGNED */}
+      <div className="stats-strip">
+        <div className="stat-item"><span className="stat-num">10 000+</span><span className="stat-desc">Chansons créées</span></div>
+        <div className="stat-divider"></div>
+        <div className="stat-item"><span className="stat-num">15</span><span className="stat-desc">Pays couverts</span></div>
+        <div className="stat-divider"></div>
+        <div className="stat-item"><span className="stat-num">14+</span><span className="stat-desc">Opérateurs Mobile</span></div>
+        <div className="stat-divider"></div>
+        <div className="stat-item"><span className="stat-num">4.9 ⭐</span><span className="stat-desc">Note moyenne</span></div>
+      </div>
+
       <section className="premium-testimonials-section landing-section">
+        <div className="section-label-pill"><Heart size={14}/> Témoignages</div>
         <h3 className="premium-section-title text-center">Ce qu'ils en pensent</h3>
-        <div className="testimonials-slider" style={{marginTop: "40px"}}>
-          <div className="p-testimonial-card">
+        <div className="testimonials-grid">
+          <div className="p-testimonial-card featured">
             <div className="stars"><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/></div>
-            <p>"Incroyable ! J'ai créé un beat afrobeat pour mon intro YouTube en 2 clics. Le paiement par Orange Money a été instantané."</p>
+            <p>"Incroyable ! J'ai créé un beat afrobeat pour mon intro YouTube en 2 clics. Le paiement par Orange Money a été instantané. Je recommande à 100% !"</p>
             <div className="author-info">
-              <img src="https://ui-avatars.com/api/?name=Marc+D&background=1e293b&color=fff" alt="Marc" className="author-avatar" />
-              <div>
-                <div className="author-name">Marc D.</div>
-                <div className="author-role">Créateur de contenu</div>
-              </div>
+              <img src="https://ui-avatars.com/api/?name=Marc+D&background=FF3366&color=fff&bold=true" alt="Marc" className="author-avatar" />
+              <div><div className="author-name">Marc D.</div><div className="author-role">Créateur de contenu · Dakar</div></div>
             </div>
           </div>
           <div className="p-testimonial-card">
             <div className="stars"><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/></div>
             <p>"C'est la première fois que je trouve un outil IA qui comprend vraiment la vibe Amapiano. Je recommande !"</p>
             <div className="author-info">
-              <img src="https://ui-avatars.com/api/?name=Sarah+T&background=334155&color=fff" alt="Sarah" className="author-avatar" />
-              <div>
-                <div className="author-name">Sarah T.</div>
-                <div className="author-role">Artiste indépendante</div>
-              </div>
+              <img src="https://ui-avatars.com/api/?name=Sarah+T&background=9933FF&color=fff&bold=true" alt="Sarah" className="author-avatar" />
+              <div><div className="author-name">Sarah T.</div><div className="author-role">Artiste indépendante · Abidjan</div></div>
             </div>
           </div>
           <div className="p-testimonial-card">
             <div className="stars"><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/><Star size={16} fill="#FFB800" color="#FFB800"/></div>
             <p>"Super pratique ! Mes sons sont uniques et la qualité studio est bluffante. Le support est aussi très réactif."</p>
             <div className="author-info">
-              <img src="https://ui-avatars.com/api/?name=Eric+M&background=3b82f6&color=fff" alt="Eric" className="author-avatar" />
-              <div>
-                <div className="author-name">Eric M.</div>
-                <div className="author-role">Producteur</div>
-              </div>
+              <img src="https://ui-avatars.com/api/?name=Eric+M&background=0ea5e9&color=fff&bold=true" alt="Eric" className="author-avatar" />
+              <div><div className="author-name">Eric M.</div><div className="author-role">Producteur · Douala</div></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ - REDESIGNED */}
       <section className="premium-faq-section landing-section">
+        <div className="section-label-pill"><MessageSquare size={14}/> FAQ</div>
         <h3 className="premium-section-title text-center">Questions fréquentes</h3>
         <div className="premium-faq-container">
-          <div className={`p-faq-item ${openFaq === 0 ? 'open' : ''}`} onClick={() => toggleFaq(0)}>
-            <div className="p-faq-question">
-              <h4>Droits d'auteur et Monétisation ?</h4>
-              <ChevronDown size={20} className="p-faq-icon" />
+          {[
+            {q:"Droits d'auteur et Monétisation ?", a:"Vous possédez 100% des droits commerciaux sur les chansons que vous générez. Diffusez-les sur Spotify, Apple Music, ou YouTube en toute tranquillité."},
+            {q:"Comment acheter des crédits sans carte ?", a:"Notre intégration permet les paiements directs via Orange Money, MTN, Moov, Wave et Airtel selon votre pays."},
+            {q:"Quels styles musicaux sont disponibles ?", a:"Afrobeat, Coupé-Décalé, Amapiano, Ndombolo, Bongo Flava, Highlife, Afropop et bien d'autres styles africains et internationaux."},
+            {q:"Puis-je modifier ma chanson après génération ?", a:"Oui ! Vous pouvez régénérer des sections, changer le tempo, le style vocal ou les paroles autant de fois que nécessaire."},
+          ].map((item, i) => (
+            <div key={i} className={`p-faq-item ${openFaq === i ? 'open' : ''}`} onClick={() => toggleFaq(i)}>
+              <div className="p-faq-question">
+                <h4>{item.q}</h4>
+                <ChevronDown size={20} className="p-faq-icon" />
+              </div>
+              <div className="p-faq-answer"><p>{item.a}</p></div>
             </div>
-            <div className="p-faq-answer">
-              <p>Vous possédez 100% des droits commerciaux sur les chansons que vous générez. Diffusez-les sur Spotify, Apple Music, ou YouTube en toute tranquillité.</p>
-            </div>
-          </div>
-          <div className={`p-faq-item ${openFaq === 1 ? 'open' : ''}`} onClick={() => toggleFaq(1)}>
-            <div className="p-faq-question">
-              <h4>Comment acheter des crédits sans carte ?</h4>
-              <ChevronDown size={20} className="p-faq-icon" />
-            </div>
-            <div className="p-faq-answer">
-              <p>Notre intégration permet les paiements directs via Orange Money, MTN, Moov, Wave et Airtel selon votre pays.</p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* CTA FINAL - REDESIGNED WITH IMAGE BACKGROUND */}
       <section className="premium-cta-section landing-section" style={{ paddingBottom: '80px' }}>
-        <div className="premium-cta-card with-bg" style={{backgroundImage: "linear-gradient(rgba(15, 23, 42, 0.85), rgba(30, 41, 59, 0.95)), url('https://images.unsplash.com/photo-1493225457124-a1a2a5f5cb46?q=80&w=1200')", backgroundSize: "cover", backgroundPosition: "center"}}>
+        <div className="premium-cta-card with-bg" style={{backgroundImage:"linear-gradient(rgba(5,5,10,0.82), rgba(15,23,42,0.97)), url('https://images.unsplash.com/photo-1493225457124-a1a2a5f5cb46?q=80&w=1400')", backgroundSize:"cover", backgroundPosition:"center"}}>
+          <div className="cta-badge"><Trophy size={16}/> Rejoignez 10 000+ artistes</div>
           <h2>Prêt à lancer votre carrière ?</h2>
-          <p>Le futur de la musique est entre vos mains. Commencez dès maintenant.</p>
-          <button className="btn-premium-action" onClick={() => navigate('/home')}>
-            Créer ma première chanson <Zap size={18} />
-          </button>
+          <p>Le futur de la musique africaine est entre vos mains.<br/>Commencez gratuitement dès aujourd'hui.</p>
+          <div className="cta-buttons">
+            <button className="btn-premium-action" onClick={() => navigate('/home')}><Sparkles size={18}/> Créer ma première chanson</button>
+            <button className="btn-premium-secondary" onClick={() => navigate('/login')}>Se connecter →</button>
+          </div>
+          <div className="cta-trust">
+            <span>✓ Sans carte bancaire</span>
+            <span>✓ Mobile Money accepté</span>
+            <span>✓ 100% vos droits</span>
+          </div>
         </div>
       </section>
 
       <div className="landing-footer">
         <div className="avatars">
-          {/* using generic ui-avatars for the placeholder community images */}
-          <img className="avatar" src="https://ui-avatars.com/api/?name=J&background=111&color=fff" alt="User" />
-          <img className="avatar" src="https://ui-avatars.com/api/?name=M&background=333&color=fff" alt="User" />
-          <img className="avatar" src="https://ui-avatars.com/api/?name=S&background=111&color=fff" alt="User" />
-          <img className="avatar" src="https://ui-avatars.com/api/?name=A&background=333&color=fff" alt="User" />
+          <img className="avatar" src="https://ui-avatars.com/api/?name=J&background=FF3366&color=fff" alt="User" />
+          <img className="avatar" src="https://ui-avatars.com/api/?name=M&background=9933FF&color=fff" alt="User" />
+          <img className="avatar" src="https://ui-avatars.com/api/?name=S&background=0ea5e9&color=fff" alt="User" />
+          <img className="avatar" src="https://ui-avatars.com/api/?name=A&background=FF3366&color=fff" alt="User" />
         </div>
         <div className="footer-text"><Heart size={16} color="#FF3366" fill="#FF3366"/> Plus de 10 000 chansons créées par notre communauté</div>
       </div>
