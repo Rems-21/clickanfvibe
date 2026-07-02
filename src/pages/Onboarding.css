@@ -483,3 +483,412 @@
   line-height: 1.5;
   margin: 0;
 }
+/* ========================================================================= */
+/* PREMIUM REDESIGN - DARK / GLASSMORPHISM / ORANGE ACCENTS
+/* ========================================================================= */
+
+.premium-payment-section, .premium-features-section, .premium-faq-section, .premium-cta-section {
+  padding: 80px 5%;
+  background-color: #05050A; /* Deep dark background */
+  color: #F8FAFC;
+}
+
+.premium-section-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  letter-spacing: -1px;
+}
+
+.text-accent-orange {
+  color: #f97316; /* Tailwind orange-500 */
+}
+
+.text-accent-pink {
+  color: #FF3366;
+}
+
+/* --- PAYMENT & MAP CARD --- */
+.premium-header {
+  max-width: 800px;
+  margin: 0 auto 50px;
+}
+
+.premium-header p {
+  color: #94A3B8;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.premium-stats-badges {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.stat-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stat-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.05);
+}
+
+.stat-icon-wrapper.orange {
+  background: rgba(249, 115, 22, 0.15);
+  color: #f97316;
+}
+
+.stat-text {
+  font-size: 0.95rem;
+  color: #CBD5E1;
+}
+.stat-text strong {
+  color: white;
+  font-size: 1.1rem;
+}
+
+/* Glassmorphism Card */
+.premium-map-card {
+  background: rgba(15, 23, 42, 0.6); /* Tailwind slate-900 with opacity */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gradient background glow inside the card */
+.premium-map-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 300px;
+  background: radial-gradient(ellipse at top, rgba(249, 115, 22, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.map-card-header {
+  margin-bottom: 30px;
+}
+
+.region-selector {
+  display: flex;
+  gap: 30px;
+}
+
+.region-radio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748B;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.region-radio.active {
+  color: #F8FAFC;
+}
+
+.radio-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #334155;
+  position: relative;
+}
+
+.region-radio.active .radio-dot {
+  border-color: #f97316;
+}
+
+.region-radio.active .radio-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px; height: 8px;
+  background-color: #f97316;
+  border-radius: 50%;
+}
+
+.map-regions-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.region-block {
+  background: rgba(30, 41, 59, 0.5); /* slate-800 */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.region-header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.title-text {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #F8FAFC;
+}
+
+.title-count {
+  background: #f97316;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 20px;
+}
+
+.title-count.dark {
+  background: #0F172A;
+  color: #F8FAFC;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.pills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.country-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  color: #E2E8F0;
+  transition: all 0.3s ease;
+}
+
+.country-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.pill-count {
+  background: rgba(249, 115, 22, 0.2);
+  color: #f97316;
+  width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+.pill-count.dark {
+  background: rgba(255, 255, 255, 0.1);
+  color: #94A3B8;
+}
+
+.region-block.center-region {
+  opacity: 0.7; /* Make the right side slightly dimmed like the screenshot */
+}
+
+.region-footer {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 15px;
+  font-size: 0.85rem;
+}
+
+.footer-label {
+  color: #64748B;
+}
+
+.footer-value {
+  color: #F8FAFC;
+  font-weight: 600;
+}
+
+/* --- PREMIUM FEATURES CARDS --- */
+.premium-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 1000px;
+  margin: 40px auto 0;
+}
+
+.premium-card {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 30px;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.premium-card:hover {
+  transform: translateY(-5px);
+  background: rgba(30, 41, 59, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.p-card-icon {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, rgba(255,51,102,0.2) 0%, rgba(153,51,255,0.2) 100%);
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  color: #FF3366;
+  margin-bottom: 20px;
+}
+
+.premium-card h4 {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+  color: white;
+}
+
+.premium-card p {
+  color: #94A3B8;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* --- PREMIUM FAQ --- */
+.premium-faq-container {
+  max-width: 800px;
+  margin: 40px auto 0;
+}
+
+.p-faq-item {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.p-faq-item:hover {
+  background: rgba(30, 41, 59, 0.5);
+}
+
+.p-faq-question {
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.p-faq-question h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #E2E8F0;
+  margin: 0;
+}
+
+.p-faq-icon {
+  color: #94A3B8;
+  transition: transform 0.3s ease;
+}
+
+.p-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.p-faq-item.open .p-faq-answer {
+  max-height: 200px;
+}
+
+.p-faq-item.open .p-faq-icon {
+  transform: rotate(180deg);
+}
+
+.p-faq-answer p {
+  padding: 0 24px 24px;
+  color: #94A3B8;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --- PREMIUM CTA --- */
+.premium-cta-card {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.8) 100%);
+  border: 1px solid rgba(255, 51, 102, 0.3);
+  border-radius: 24px;
+  padding: 60px 40px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 0 40px rgba(255, 51, 102, 0.1);
+}
+
+.premium-cta-card h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.premium-cta-card p {
+  color: #94A3B8;
+  font-size: 1.1rem;
+  margin-bottom: 40px;
+}
+
+.btn-premium-action {
+  background: linear-gradient(to right, #FF3366, #9933FF);
+  color: white;
+  border: none;
+  padding: 16px 40px;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-premium-action:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(255, 51, 102, 0.4);
+}
+
+@media (max-width: 768px) {
+  .map-regions-container {
+    grid-template-columns: 1fr;
+  }
+  .premium-section-title {
+    font-size: 2rem;
+  }
+  .premium-map-card {
+    padding: 24px;
+  }
+}
