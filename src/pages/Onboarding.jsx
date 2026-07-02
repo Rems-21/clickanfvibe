@@ -73,6 +73,40 @@ function Onboarding() {
          </div>
        </div>
 
+      <section className="how-it-works-section landing-section">
+        <div className="section-label-pill"><Zap size={14}/> Comment ça marche</div>
+        <h3 className="premium-section-title text-center">Votre cadeau prêt <span className="text-gradient">en 3 étapes</span></h3>
+        <div className="how-steps">
+          <div className="how-step">
+            <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=700')"}}></div>
+            <div className="how-step-content">
+              <div className="step-num">01</div>
+              <h4>Décrivez l'occasion</h4>
+              <p>Dites-nous l'événement, le prénom du destinataire et l'émotion que vous souhaitez exprimer. Amour, joie, tendresse...</p>
+              <div className="step-tags"><span>Anniversaire</span><span>Mariage</span><span>Naissance</span><span>Obsèques</span></div>
+            </div>
+          </div>
+          <div className="how-step reverse">
+            <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=700')"}}></div>
+            <div className="how-step-content">
+              <div className="step-num">02</div>
+              <h4>L'IA compose votre chanson</h4>
+              <p>Notre moteur génère une chanson unique avec les paroles personnalisées, la mélodie et la voix adaptées à votre occasion.</p>
+              <div className="step-tags"><span>Paroles sur mesure</span><span>Voix réaliste</span><span>Style choisi</span></div>
+            </div>
+          </div>
+          <div className="how-step">
+            <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=700')"}}></div>
+            <div className="how-step-content">
+              <div className="step-num">03</div>
+              <h4>Offrez et épatez</h4>
+              <p>Partagez immédiatement par WhatsApp, SMS ou lien. Votre proche reçoit un cadeau sonore qu'il n'oubliera jamais.</p>
+              <div className="step-tags"><span>WhatsApp</span><span>SMS</span><span>Lien partageable</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* OCCASIONS SECTION */}
       <section className="occasions-section landing-section">
         <div className="section-label-pill"><Heart size={14}/> Pour chaque moment</div>
@@ -135,6 +169,37 @@ function Onboarding() {
         </div>
       </section>
 
+      <section className="premium-testimonials-section landing-section">
+        <div className="section-label-pill"><Star size={14}/> Témoignages</div>
+        <h3 className="premium-section-title text-center">Ils ont offert un cadeau <span className="text-gradient">inoubliable</span></h3>
+        <div className="testimonials-carousel">
+          <div className="testimonials-track" id="testi-track">
+            {testimonials.map((t, i) => (
+              <div key={i} className="testimonial-slide">
+                <div className="p-testimonial-card featured">
+                  <div className="stars">{[...Array(5)].map((_, s) => <Star key={s} size={18} fill="#FFB800" color="#FFB800"/>)}</div>
+                  <p>"{t.text}"</p>
+                  <div className="author-info">
+                    <img src={`https://ui-avatars.com/api/?name=${t.name.replace(' ','+')}&background=${t.bg}&color=fff&bold=true`} alt={t.name} className="author-avatar" />
+                    <div><div className="author-name">{t.name}</div><div className="author-role">{t.role}</div></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="stats-strip">
+        <div className="stat-item"><span className="stat-num">1 000+</span><span className="stat-desc">Cadeaux créés</span></div>
+        <div className="stat-divider"></div>
+        <div className="stat-item"><span className="stat-num">12</span><span className="stat-desc">Pays couverts</span></div>
+        <div className="stat-divider"></div>
+        <div className="stat-item"><span className="stat-num">23</span><span className="stat-desc">Opérateurs Mobile Money</span></div>
+        <div className="stat-divider"></div>
+        <div className="stat-item"><span className="stat-num">4.9 / 5</span><span className="stat-desc">Note moyenne</span></div>
+      </div>
+
       <section className="premium-payment-section landing-section">
         <div className="premium-header text-center">
           <h2 className="premium-section-title">Disponible partout <span className="text-gradient">en Afrique</span></h2>
@@ -195,71 +260,6 @@ function Onboarding() {
           ))}
         </div>
       </div>
-
-      <section className="how-it-works-section landing-section">
-        <div className="section-label-pill"><Zap size={14}/> Comment ça marche</div>
-        <h3 className="premium-section-title text-center">Votre cadeau prêt <span className="text-gradient">en 3 étapes</span></h3>
-        <div className="how-steps">
-          <div className="how-step">
-            <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=700')"}}></div>
-            <div className="how-step-content">
-              <div className="step-num">01</div>
-              <h4>Décrivez l'occasion</h4>
-              <p>Dites-nous l'événement, le prénom du destinataire et l'émotion que vous souhaitez exprimer. Amour, joie, tendresse...</p>
-              <div className="step-tags"><span>Anniversaire</span><span>Mariage</span><span>Naissance</span><span>Obsèques</span></div>
-            </div>
-          </div>
-          <div className="how-step reverse">
-            <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=700')"}}></div>
-            <div className="how-step-content">
-              <div className="step-num">02</div>
-              <h4>L'IA compose votre chanson</h4>
-              <p>Notre moteur génère une chanson unique avec les paroles personnalisées, la mélodie et la voix adaptées à votre occasion.</p>
-              <div className="step-tags"><span>Paroles sur mesure</span><span>Voix réaliste</span><span>Style choisi</span></div>
-            </div>
-          </div>
-          <div className="how-step">
-            <div className="how-step-img" style={{backgroundImage:"url('https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=700')"}}></div>
-            <div className="how-step-content">
-              <div className="step-num">03</div>
-              <h4>Offrez et épatez</h4>
-              <p>Partagez immédiatement par WhatsApp, SMS ou lien. Votre proche reçoit un cadeau sonore qu'il n'oubliera jamais.</p>
-              <div className="step-tags"><span>WhatsApp</span><span>SMS</span><span>Lien partageable</span></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="stats-strip">
-        <div className="stat-item"><span className="stat-num">1 000+</span><span className="stat-desc">Cadeaux créés</span></div>
-        <div className="stat-divider"></div>
-        <div className="stat-item"><span className="stat-num">12</span><span className="stat-desc">Pays couverts</span></div>
-        <div className="stat-divider"></div>
-        <div className="stat-item"><span className="stat-num">23</span><span className="stat-desc">Opérateurs Mobile Money</span></div>
-        <div className="stat-divider"></div>
-        <div className="stat-item"><span className="stat-num">4.9 / 5</span><span className="stat-desc">Note moyenne</span></div>
-      </div>
-
-      <section className="premium-testimonials-section landing-section">
-        <div className="section-label-pill"><Star size={14}/> Témoignages</div>
-        <h3 className="premium-section-title text-center">Ils ont offert un cadeau <span className="text-gradient">inoubliable</span></h3>
-        <div className="testimonials-carousel">
-          <div className="testimonials-track" id="testi-track">
-            {testimonials.map((t, i) => (
-              <div key={i} className="testimonial-slide">
-                <div className="p-testimonial-card featured">
-                  <div className="stars">{[...Array(5)].map((_, s) => <Star key={s} size={18} fill="#FFB800" color="#FFB800"/>)}</div>
-                  <p>"{t.text}"</p>
-                  <div className="author-info">
-                    <img src={`https://ui-avatars.com/api/?name=${t.name.replace(' ','+')}&background=${t.bg}&color=fff&bold=true`} alt={t.name} className="author-avatar" />
-                    <div><div className="author-name">{t.name}</div><div className="author-role">{t.role}</div></div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       <section className="premium-faq-section landing-section">
         <div className="section-label-pill"><MessageSquare size={14}/> FAQ</div>
